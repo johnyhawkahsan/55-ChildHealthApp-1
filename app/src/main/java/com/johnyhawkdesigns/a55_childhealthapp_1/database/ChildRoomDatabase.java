@@ -4,6 +4,7 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 
+import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildDao;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.typeConverters.DateTypeConverter;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 

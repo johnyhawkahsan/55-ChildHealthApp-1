@@ -53,4 +53,14 @@ public class Child implements Serializable{
     @ColumnInfo(name = "profileUpdateDate")
     private Date profileUpdateDate;
 
+    // Constructor
+    public Child(@NonNull int chID, String name, String gender, String bloodGroup, String imagePath, Date dateOfBirth, Date profileUpdateDate) {
+        this.chID = chID;
+        this.name = name;
+        this.gender = gender;
+        this.bloodGroup = bloodGroup;
+        this.imagePath = imagePath;
+        this.dateOfBirth = dateOfBirth;
+        this.profileUpdateDate = profileUpdateDate;
+    }
 }
