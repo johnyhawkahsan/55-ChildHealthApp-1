@@ -4,14 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class NewChildActivity extends AppCompatActivity {
+public class AddChildActivity extends AppCompatActivity {
 
-    private static final String TAG = NewChildActivity.class.getSimpleName();
+    private static final String TAG = AddChildActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_child);
+        setContentView(R.layout.activity_add_child);
 
         Log.d(TAG, "onCreate: ");
 

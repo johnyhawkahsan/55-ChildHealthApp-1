@@ -27,16 +27,16 @@ public class MainActivity extends AppCompatActivity {
         //Setting up RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
 
-        //When Floating button is clicked, we are redirected to NewChildActivity
+        //When Floating button is clicked, we are redirected to AddChildActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, NewChildActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddChildActivity.class);
                 startActivityForResult(intent, NEW_CHILD_ACTIVITY_REQUEST_CODE);
 
-                Log.d(TAG, "onClick: launching NewChildActivity");
+                Log.d(TAG, "onClick: launching AddChildActivity");
             }
         });
     }
