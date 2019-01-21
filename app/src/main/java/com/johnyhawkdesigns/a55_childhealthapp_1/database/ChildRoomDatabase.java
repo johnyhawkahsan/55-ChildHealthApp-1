@@ -7,6 +7,8 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildDao;
+import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildMedicalHistoryDao;
+import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildVaccinationRecordDao;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.typeConverters.DateTypeConverter;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.ChildMedicalHistory;
@@ -25,8 +27,10 @@ public abstract class ChildRoomDatabase extends RoomDatabase {
 
     private static final String TAG = ChildRoomDatabase.class.getSimpleName();
 
-    // This method will get ChildDAO object
+    // This method will get DAO objects
     public abstract ChildDao getChildDAO();
+    public abstract ChildMedicalHistoryDao getMedicalHistoryDao();
+    public abstract ChildVaccinationRecordDao getChildVaccinationRecordDao();
 
     //We only need one instance of this class, so we make it singleton
     private static ChildRoomDatabase DBINSTANCE;

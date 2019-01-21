@@ -54,7 +54,7 @@ public class Child implements Serializable{
     private Date profileUpdateDate;
 
     // Constructor
-    public Child(@NonNull int chID, String name, String gender, String bloodGroup, String imagePath, Date dateOfBirth, Date profileUpdateDate) {
+    public Child(@NonNull int chID,@Nullable String name,@Nullable String gender,@Nullable String bloodGroup,@Nullable String imagePath,@Nullable Date dateOfBirth,@Nullable Date profileUpdateDate) {
         this.chID = chID;
         this.name = name;
         this.gender = gender;

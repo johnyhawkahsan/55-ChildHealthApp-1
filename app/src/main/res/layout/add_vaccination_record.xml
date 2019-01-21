@@ -12,7 +12,7 @@
         android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="@android:dimen/thumbnail_width"
         android:layout_gravity="center_horizontal"
-        app:srcCompat="@drawable/VaccinationSchedule" />
+        app:srcCompat="@drawable/vaccination_schedule" />
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
