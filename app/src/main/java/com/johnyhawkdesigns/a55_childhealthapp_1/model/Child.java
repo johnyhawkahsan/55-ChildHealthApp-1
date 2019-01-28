@@ -71,4 +71,92 @@ public class Child implements Serializable{
     @TypeConverters({DateTypeConverter.class})
     private Date profileUpdateDate;
 
+    public int getChID() {
+        return chID;
+    }
+
+    public void setChID(int chID) {
+        this.chID = chID;
+    }
+
+    @Nullable
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@Nullable String name) {
+        this.name = name;
+    }
+
+    @Nullable
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(@Nullable String gender) {
+        this.gender = gender;
+    }
+
+    @Nullable
+    public String getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(@Nullable String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
+    @Nullable
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(@Nullable String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    @Nullable
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(@Nullable Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    @Nullable
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(@Nullable int age) {
+        this.age = age;
+    }
+
+    @Nullable
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(@Nullable int height) {
+        this.height = height;
+    }
+
+    @Nullable
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(@Nullable int weight) {
+        this.weight = weight;
+    }
+
+    @Nullable
+    public Date getProfileUpdateDate() {
+        return profileUpdateDate;
+    }
+
+    public void setProfileUpdateDate(@Nullable Date profileUpdateDate) {
+        this.profileUpdateDate = profileUpdateDate;
+    }
 }

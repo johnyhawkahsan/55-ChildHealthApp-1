@@ -1,6 +1,7 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1.Dao;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -11,6 +12,7 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.model.ChildMedicalHistory;
 
 import java.util.List;
 
+@Dao
 public interface ChildMedicalHistoryDao {
 
     @Query("Select * FROM medHistory_table")

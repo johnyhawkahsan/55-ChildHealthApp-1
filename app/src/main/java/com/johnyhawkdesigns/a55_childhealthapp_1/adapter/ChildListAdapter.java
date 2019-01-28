@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.ChildViewHolder>{
 
-    private static final String TAG = "WordListAdapter";
+    private static final String TAG = ChildListAdapter.class.getSimpleName();
     Context mContext;
     private final LayoutInflater mInflator;
     private List<Child> mChilds;
@@ -30,13 +30,14 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
     //ChildViewHolder class
     class ChildViewHolder extends RecyclerView.ViewHolder{
 
-        private final TextView chID, chName, gender;
+        private final TextView chID, chName, gender, age;
 
         public ChildViewHolder(@NonNull View itemView) {
             super(itemView);
             chID = itemView.findViewById(R.id.chID);
             chName = itemView.findViewById(R.id.chName);
             gender = itemView.findViewById(R.id.gender);
+            age = itemView.findViewById(R.id.age);
 
         }
     }

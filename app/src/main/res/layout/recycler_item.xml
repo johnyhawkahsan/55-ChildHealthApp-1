@@ -23,6 +23,7 @@ app:cardElevation="@dimen/cardview_default_elevation">
         android:layout_height="@dimen/profile_image_size"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/default_margin"
+        android:contentDescription="ChildPicture"
         app:srcCompat="@drawable/random_baby" />
 
     <TextView

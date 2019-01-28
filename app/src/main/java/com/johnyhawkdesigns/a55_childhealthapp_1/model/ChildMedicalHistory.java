@@ -49,5 +49,64 @@ public class ChildMedicalHistory {
     private String imagePath;
 
 
+    public int getMedID() {
+        return medID;
+    }
 
+    public void setMedID(int medID) {
+        this.medID = medID;
+    }
+
+    public int getForeignChID() {
+        return foreignChID;
+    }
+
+    public void setForeignChID(int foreignChID) {
+        this.foreignChID = foreignChID;
+    }
+
+    @Nullable
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(@Nullable String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    @Nullable
+    public Date getVisitDate() {
+        return visitDate;
+    }
+
+    public void setVisitDate(@Nullable Date visitDate) {
+        this.visitDate = visitDate;
+    }
+
+    @Nullable
+    public String getDiseaseDec() {
+        return diseaseDec;
+    }
+
+    public void setDiseaseDec(@Nullable String diseaseDec) {
+        this.diseaseDec = diseaseDec;
+    }
+
+    @Nullable
+    public String getPrescMedicine() {
+        return prescMedicine;
+    }
+
+    public void setPrescMedicine(@Nullable String prescMedicine) {
+        this.prescMedicine = prescMedicine;
+    }
+
+    @Nullable
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(@Nullable String imagePath) {
+        this.imagePath = imagePath;
+    }
 }

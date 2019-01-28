@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
+import android.util.Log;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildDao;
 import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildMedicalHistoryDao;
@@ -26,6 +27,7 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.model.ChildVaccinationRecord;
 public abstract class ChildRoomDatabase extends RoomDatabase {
 
     private static final String TAG = ChildRoomDatabase.class.getSimpleName();
+    private static String DB_NAME = "child-db";
 
     // This method will get DAO objects
     public abstract ChildDao getChildDAO();
@@ -38,9 +40,10 @@ public abstract class ChildRoomDatabase extends RoomDatabase {
     //Singleton pattern method
     public static ChildRoomDatabase getDBINSTANCE(Context context){
         if (DBINSTANCE == null){
+            Log.d(TAG, "getDatabase: INSTANCE == null, Build new Database INSTANCE");
             DBINSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     ChildRoomDatabase.class,
-                    "child-db")
+                    DB_NAME)
                     //.allowMainThreadQueries() // Allow queries in Main thread instead of AsyncTask - This is not recommended.
                     .build();
         }

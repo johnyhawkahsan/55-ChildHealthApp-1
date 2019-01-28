@@ -3,6 +3,9 @@ package com.johnyhawkdesigns.a55_childhealthapp_1.database.typeConverters;
 import android.arch.persistence.room.TypeConverter;
 import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /*
@@ -18,6 +21,8 @@ public class DateTypeConverter {
 
     private static final String TAG = DateTypeConverter.class.getSimpleName();
 
+
+/*
     // Convert Date to long time
     @TypeConverter
     public long convertDateToLong(Date date){
@@ -33,5 +38,28 @@ public class DateTypeConverter {
         Log.d(TAG, "convertLongToDate: dateFromLong = " + dateFromLong);
         return dateFromLong;
     }
+*/
+
+    static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    @TypeConverter
+    public static Date fromTimestamp(String value) {
+        if (value != null) {
+            try {
+                return df.parse(value);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return null;
+        } else {
+            return null;
+        }
+    }
+
+    @TypeConverter
+    public static String dateToTimestamp(Date value) {
+        return value == null ? null : df.format(value);
+    }
+
 
 }
