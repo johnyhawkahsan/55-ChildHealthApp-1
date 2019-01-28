@@ -5,8 +5,11 @@ package com.johnyhawkdesigns.a55_childhealthapp_1.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.johnyhawkdesigns.a55_childhealthapp_1.database.typeConverters.DateTypeConverter;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -46,24 +49,26 @@ public class Child implements Serializable{
     private String imagePath;
 
     @Nullable
+    @TypeConverters({DateTypeConverter.class})
     @ColumnInfo(name = "dateOfBirth")
     private Date dateOfBirth;
 
     @Nullable
+    @ColumnInfo(name = "age")
+    private int age;
+
+    @Nullable
+    @ColumnInfo(name = "height")
+    private int height;
+
+    @Nullable
+    @ColumnInfo(name = "weight")
+    private int weight;
+
+
+    @Nullable
     @ColumnInfo(name = "profileUpdateDate")
+    @TypeConverters({DateTypeConverter.class})
     private Date profileUpdateDate;
-
-    // Constructor
-    public Child(@NonNull int chID,@Nullable String name,@Nullable String gender,@Nullable String bloodGroup,@Nullable String imagePath,@Nullable Date dateOfBirth,@Nullable Date profileUpdateDate) {
-        this.chID = chID;
-        this.name = name;
-        this.gender = gender;
-        this.bloodGroup = bloodGroup;
-        this.imagePath = imagePath;
-        this.dateOfBirth = dateOfBirth;
-        this.profileUpdateDate = profileUpdateDate;
-    }
-
-
 
 }

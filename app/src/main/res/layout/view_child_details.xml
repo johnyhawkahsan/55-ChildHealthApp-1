@@ -58,48 +58,230 @@
                 android:orientation="vertical"
                 android:padding="@dimen/default_padding">
 
-                <TextView
-                    android:id="@+id/tvChName"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/default_margin"
-                    android:drawablePadding="@dimen/default_margin"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    tools:text="Name" />
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/default_margin">
 
-                <TextView
-                    android:id="@+id/tvGender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/default_margin"
-                    android:drawablePadding="@dimen/default_margin"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    tools:text="Gender" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        style="@style/ContactLabelTextView"
+                        android:layout_marginEnd="@dimen/default_margin"
+                        android:text="Name"/>
 
-                <TextView
-                    android:id="@+id/tvBloodGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/default_margin"
-                    android:drawablePadding="@dimen/default_margin"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    tools:text="Blood Group" />
+                    <TextView
+                        android:id="@+id/tvChName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        style="@style/ContactTextView"
+                        tools:text="Maryam"/>
 
-                <TextView
-                    android:id="@+id/tvDOB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/default_margin"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    tools:text="Date of Birth" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvLastProfileUpdateDate"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/default_margin"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    tools:text="Last Profile Update Date" />
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/default_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        style="@style/ContactLabelTextView"
+                        android:layout_marginEnd="@dimen/default_margin"
+                        android:text="Gender"/>
+
+                    <TextView
+                        android:id="@+id/tvGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        style="@style/ContactTextView"
+                        tools:text="Female" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/default_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        style="@style/ContactLabelTextView"
+                        android:layout_marginEnd="@dimen/default_margin"
+                        android:text="Blood Group"/>
+
+                    <TextView
+                        android:id="@+id/tvBloodGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        style="@style/ContactTextView"
+                        tools:text="Blood Group" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/default_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        style="@style/ContactLabelTextView"
+                        android:layout_marginEnd="@dimen/default_margin"
+                        android:text="Date of Birth"/>
+
+                    <TextView
+                        android:id="@+id/tvDOB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        style="@style/ContactTextView"
+                        tools:text="12-Feb-2016" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/default_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        style="@style/ContactLabelTextView"
+                        android:layout_marginEnd="@dimen/default_margin"
+                        android:text="Age"/>
+
+                    <TextView
+                        android:id="@+id/tvAge"
+                        style="@style/ContactTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="3 Years" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/default_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        style="@style/ContactLabelTextView"
+                        android:layout_marginEnd="@dimen/default_margin"
+                        android:text="Height"/>
+
+                    <TextView
+                        android:id="@+id/tvHeight"
+                        style="@style/ContactTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="3ft" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/default_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        style="@style/ContactLabelTextView"
+                        android:layout_marginEnd="@dimen/default_margin"
+                        android:text="Weight"/>
+
+                    <TextView
+                        android:id="@+id/tvWeight"
+                        style="@style/ContactTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="20kg" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/default_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        style="@style/ContactLabelTextView"
+                        android:layout_marginEnd="@dimen/default_margin"
+                        android:text="Last Profile Updated on"/>
+
+                    <TextView
+                        android:id="@+id/tvLastProfileUpdateDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/default_margin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        style="@style/ContactTextView"
+                        tools:text="12-Jan-2019" />
+
+                </LinearLayout>
+
 
                 <Button
                     android:id="@+id/editChildData"
