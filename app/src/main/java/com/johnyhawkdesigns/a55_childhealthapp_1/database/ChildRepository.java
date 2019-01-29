@@ -2,8 +2,6 @@ package com.johnyhawkdesigns.a55_childhealthapp_1.database;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildDao;
@@ -28,7 +26,7 @@ public class ChildRepository {
     // https://github.com/googlesamples
     public ChildRepository(Application application){
         ChildRoomDatabase childRoomDatabase = ChildRoomDatabase.getDBINSTANCE(application); //Created ChildRoomDatabase using singleton pattern.
-        childDao = childRoomDatabase.getChildDAO(); // we receive childDAO from childRoomDatabase
+        childDao = childRoomDatabase.childDAO(); // we receive childDAO from childRoomDatabase
         mAllChilds = childDao.getAllChild();
     }
 

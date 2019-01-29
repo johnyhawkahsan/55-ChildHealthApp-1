@@ -30,9 +30,9 @@ public abstract class ChildRoomDatabase extends RoomDatabase {
     private static String DB_NAME = "child-db";
 
     // This method will get DAO objects
-    public abstract ChildDao getChildDAO();
-    public abstract ChildMedicalHistoryDao getMedicalHistoryDao();
-    public abstract ChildVaccinationRecordDao getChildVaccinationRecordDao();
+    public abstract ChildDao childDAO();
+    public abstract ChildMedicalHistoryDao medicalHistoryDao();
+    public abstract ChildVaccinationRecordDao childVaccinationRecordDao();
 
     //We only need one instance of this class, so we make it singleton
     private static ChildRoomDatabase DBINSTANCE;
@@ -40,12 +40,16 @@ public abstract class ChildRoomDatabase extends RoomDatabase {
     //Singleton pattern method
     public static ChildRoomDatabase getDBINSTANCE(Context context){
         if (DBINSTANCE == null){
-            Log.d(TAG, "getDatabase: INSTANCE == null, Build new Database INSTANCE");
-            DBINSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    ChildRoomDatabase.class,
-                    DB_NAME)
-                    //.allowMainThreadQueries() // Allow queries in Main thread instead of AsyncTask - This is not recommended.
-                    .build();
+            synchronized (ChildRoomDatabase.class){
+                if (DBINSTANCE == null){
+                    Log.d(TAG, "getDatabase: INSTANCE == null, Build new Database INSTANCE");
+                    DBINSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            ChildRoomDatabase.class,
+                            DB_NAME)
+                            //.allowMainThreadQueries() // Allow queries in Main thread instead of AsyncTask - This is not recommended.
+                            .build();
+                }
+            }
         }
         return DBINSTANCE;
     }

@@ -42,6 +42,7 @@ public class DateTypeConverter {
 
     static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    // Convert string formatted text to Date
     @TypeConverter
     public static Date fromTimestamp(String value) {
         if (value != null) {
@@ -56,6 +57,7 @@ public class DateTypeConverter {
         }
     }
 
+    // Convert Date to a string
     @TypeConverter
     public static String dateToTimestamp(Date value) {
         return value == null ? null : df.format(value);
