@@ -46,19 +46,24 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
     @NonNull
     @Override
     public ChildViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return null;
+        View itemView = mInflator.inflate(R.layout.recycler_item, viewGroup, false);
+        return new ChildViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChildViewHolder childViewHolder, int i) {
-
+    public void onBindViewHolder(@NonNull ChildViewHolder childViewHolder, int position) {
+        Child currentChild = mChilds.get(position);
+        childViewHolder.chID.setText(currentChild.getChID());
+        childViewHolder.gender.setText(currentChild.getGender());
+        childViewHolder.chName.setText(currentChild.getName());
+        childViewHolder.age.setText(currentChild.getAge());
     }
 
     // getItemCount() is called many times, and when it is first called,
     // mWords has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
-        return 0;
+        return mChilds.size();
     }
 
 
