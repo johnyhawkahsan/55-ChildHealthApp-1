@@ -56,7 +56,8 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
         childViewHolder.chID.setText(currentChild.getChID());
         childViewHolder.gender.setText(currentChild.getGender());
         childViewHolder.chName.setText(currentChild.getName());
-        childViewHolder.age.setText(currentChild.getAge());
+        String ageStr = String.valueOf(currentChild.getAge());
+        childViewHolder.age.setText(ageStr);
     }
 
     // getItemCount() is called many times, and when it is first called,

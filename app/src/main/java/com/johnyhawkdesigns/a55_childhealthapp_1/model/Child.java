@@ -48,22 +48,23 @@ public class Child implements Serializable{
     @ColumnInfo(name = "imagePath")
     private String imagePath;
 
+    // To avoid complication, I'm converting Date of birth to string for now
     @Nullable
-    @TypeConverters({DateTypeConverter.class})
+    //@TypeConverters({DateTypeConverter.class})
     @ColumnInfo(name = "dateOfBirth")
-    private Date dateOfBirth;
+    private String dateOfBirth;
 
     @Nullable
     @ColumnInfo(name = "age")
-    private int age;
+    private float age;
 
     @Nullable
     @ColumnInfo(name = "height")
-    private int height;
+    private float height;
 
     @Nullable
     @ColumnInfo(name = "weight")
-    private int weight;
+    private float weight;
 
 
     @Nullable
@@ -116,38 +117,38 @@ public class Child implements Serializable{
     }
 
     @Nullable
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(@Nullable Date dateOfBirth) {
+    public void setDateOfBirth(@Nullable String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
     @Nullable
-    public int getAge() {
+    public float getAge() {
         return age;
     }
 
-    public void setAge(@Nullable int age) {
+    public void setAge(@Nullable float age) {
         this.age = age;
     }
 
     @Nullable
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 
-    public void setHeight(@Nullable int height) {
+    public void setHeight(@Nullable float height) {
         this.height = height;
     }
 
     @Nullable
-    public int getWeight() {
+    public float getWeight() {
         return weight;
     }
 
-    public void setWeight(@Nullable int weight) {
+    public void setWeight(@Nullable float weight) {
         this.weight = weight;
     }
 
