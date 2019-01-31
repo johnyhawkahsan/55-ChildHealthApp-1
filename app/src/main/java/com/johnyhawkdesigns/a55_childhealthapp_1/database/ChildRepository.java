@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildDao;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
+import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
 import java.util.List;
 
@@ -27,14 +28,14 @@ public class ChildRepository {
     public ChildRepository(Application application){
         ChildRoomDatabase childRoomDatabase = ChildRoomDatabase.getDBINSTANCE(application); //Created ChildRoomDatabase using singleton pattern.
         childDao = childRoomDatabase.childDAO(); // we receive childDAO from childRoomDatabase
-        mAllChilds = childDao.getAllChild();
+        mAllChilds = childDao.getAllChild(); // We are receiving all childs data in constructor
     }
 
 
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    LiveData<List<Child>> getAllChilds(){
+    public LiveData<List<Child>> getAllChilds(){
         return mAllChilds;
     }
 
@@ -45,8 +46,20 @@ public class ChildRepository {
     }
 
 
-    private static class insertAsyncTask extends AsyncTask<Child, Void, Void> {
+    public void updateTask(final Child child) {
+        child.setProfileUpdateDate(AppUtils.getCurrentDateTime()); // Set time to new time.
 
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                childDao.update(child);
+                return null;
+            }
+        }.execute();
+    }
+
+
+    private static class insertAsyncTask extends AsyncTask<Child, Void, Void> {
         private ChildDao mAsyncTaskDao;
 
         //Constructor
@@ -60,5 +73,11 @@ public class ChildRepository {
             return null;
         }
     }
+
+
+
+
+
+
 
 }
