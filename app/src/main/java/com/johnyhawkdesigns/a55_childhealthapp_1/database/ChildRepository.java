@@ -2,6 +2,7 @@ package com.johnyhawkdesigns.a55_childhealthapp_1.database;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildDao;
@@ -18,6 +19,8 @@ import java.util.List;
 
 public class ChildRepository {
 
+    // We declare a MutableLiveData variable named searchResults into which the results of a search operation are stored whenever a asynchronous search task completes
+    private MutableLiveData<List<Child>> searchResults = new MutableLiveData<>();
     private ChildDao childDao;
     private LiveData<List<Child>> mAllChilds;
 
@@ -45,18 +48,16 @@ public class ChildRepository {
         new insertAsyncTask(childDao).execute(child);
     }
 
-
-    public void updateTask(final Child child) {
-        child.setProfileUpdateDate(AppUtils.getCurrentDateTime()); // Set time to new time.
-
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                childDao.update(child);
-                return null;
-            }
-        }.execute();
+    public void deleteChild(String name) {
+        new deleteAsyncTask(childDao).execute(name);
     }
+
+    public void findChild(String name) {
+        queryAsyncTask task = new queryAsyncTask(childDao);
+        task.delegate = this;
+        task.execute(name);
+    }
+
 
 
     private static class insertAsyncTask extends AsyncTask<Child, Void, Void> {
@@ -72,6 +73,62 @@ public class ChildRepository {
             mAsyncTaskDao.insert(params[0]);//Insert
             return null;
         }
+    }
+
+
+
+    private static class queryAsyncTask extends AsyncTask<String, Void, List<Child>> {
+        private static final String TAG = queryAsyncTask.class.getSimpleName();
+
+        private ChildDao asyncTaskDao;
+        private ChildRepository delegate = null;
+
+        // constructor method needs to be be passed a reference to the DAO object
+        queryAsyncTask(ChildDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        // passed a String containing the product name for which the search is to be performed, passes it to the findProduct() method of the DAO and returns a list of matching Product entity objects findProduct() method of the DAO
+        @Override
+        protected List<Child> doInBackground(String... params) {
+            return asyncTaskDao.findChildByName(params[0]);
+        }
+
+        // returns the results to the repository instance where it is stored in the searchResults MutableLiveData object.
+        @Override
+        protected void onPostExecute(List<Child> result) {
+            delegate.asyncFinished(result);
+        }
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<String, Void, Void> {
+
+        private ChildDao asyncTaskDao;
+
+        deleteAsyncTask(ChildDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final String... params) {
+            asyncTaskDao.delete(params[0]);
+            return null;
+        }
+    }
+
+
+
+
+    public void updateTask(final Child child) {
+        child.setProfileUpdateDate(AppUtils.getCurrentDateTime()); // Set time to new time.
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                childDao.update(child);
+                return null;
+            }
+        }.execute();
     }
 
 

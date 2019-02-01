@@ -27,6 +27,11 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
         mInflator = LayoutInflater.from(context);
     }
 
+    // Instead of using childList in a constructor, we use it here so we can use in MainActivity's observer.
+    public void setChildList(List<Child> children){
+        this.mChilds = children;
+    }
+
     //ChildViewHolder class
     class ChildViewHolder extends RecyclerView.ViewHolder{
 
