@@ -35,12 +35,12 @@ public class ChildViewModel extends AndroidViewModel{
         childRepository.insert(child);
     }
 
-    public void findProduct(String name) {
-        childRepository.findChild(name);
+    public void findChildWithID(int chID) {
+        childRepository.findChildWithID(chID);
     }
 
-    public void deleteProduct(String name) {
-        childRepository.deleteChild(name);
+    public void deleteChild(Child child) {
+        childRepository.deleteChild(child);
     }
 
 }

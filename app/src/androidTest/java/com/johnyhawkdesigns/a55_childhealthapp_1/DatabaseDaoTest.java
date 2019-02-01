@@ -1,5 +1,6 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1;
 
+import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -8,6 +9,7 @@ import android.util.Log;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildDao;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildRoomDatabase;
+import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 
 import org.junit.After;
@@ -31,13 +33,17 @@ public class DatabaseDaoTest {
 
     private static final String TAG = DatabaseDaoTest.class.getSimpleName();
     Context appContext;
+    Application application;
     private ChildRoomDatabase childRoomDatabase;
     private ChildDao childDao;
+    //private ChildViewModel childViewModel;
 
     @Before
     public void setupDatabase(){
 
         appContext = InstrumentationRegistry.getTargetContext();
+
+
 
         try {
             //childRoomDatabase = ChildRoomDatabase.getDBINSTANCE(appContext); // This standard method is not working for this JUnit test
@@ -45,6 +51,9 @@ public class DatabaseDaoTest {
             childRoomDatabase = Room.inMemoryDatabaseBuilder(appContext, ChildRoomDatabase.class).allowMainThreadQueries().build();
 
             childDao = childRoomDatabase.childDAO();
+            //childViewModel = new ChildViewModel(appContext);
+
+
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -126,6 +135,28 @@ public class DatabaseDaoTest {
         List<Child> allChilds = LiveDataTestUtil.getValue(childDao.getAllChild());
         assertTrue(allChilds.isEmpty());
     }
+
+/*
+    @Test
+    public void testViewModel() throws InterruptedException {
+
+        Child newChild = new Child();
+        newChild.setName("Maryam");
+        newChild.setAge(3);
+        newChild.setBloodGroup("AB+");
+
+        childViewModel.insert(newChild);
+        List<Child> allChilds = LiveDataTestUtil.getValue(childViewModel.getAllChilds());
+
+        String receivedName = allChilds.get(0).getName();
+
+        Log.d(TAG, "testRetreiveAllChild: receivedName = " + receivedName);
+
+        Log.d(TAG, "testInsertChild: allChilds.get(0).getName() = " + receivedName );
+        assertEquals(receivedName, newChild);
+    }
+*/
+
 
 
 

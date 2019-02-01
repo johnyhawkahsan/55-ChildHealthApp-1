@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<Child> children) {
                 Log.d(TAG, "onChanged: child list size = " + children.size());
 
+                childListAdapter.setChildList(children);
                 if (children.size() > 0 ) {
-                    childListAdapter.setChildList(children);
                     emptyTextView.setVisibility(View.GONE);
                 }
 
@@ -85,7 +85,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: resultCode = " + resultCode);
+
         if (requestCode == RC_CREATE_CHILD && resultCode == RESULT_OK) {
+
             //loadChildList();
         } else if (requestCode == RC_UPDATE_CHILD && resultCode == RESULT_OK) {
             //loadChildList();

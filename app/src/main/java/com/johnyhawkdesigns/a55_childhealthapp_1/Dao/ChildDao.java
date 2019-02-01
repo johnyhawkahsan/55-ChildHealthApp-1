@@ -33,7 +33,7 @@ public interface ChildDao {
 
 
     @Query("SELECT * FROM child_table WHERE ChID = :ChID")
-    LiveData<Child> getChild(int ChID);
+    Child getChildWithID(int ChID);
 
     //Find child by name
     @Query("SELECT * FROM child_table WHERE name LIKE '%' || :name || '%'")
@@ -46,10 +46,10 @@ public interface ChildDao {
     void insert(Child... child);
 
     @Update
-    void update(Child... child);
+    void update(Child child);
 
     @Delete
-    void delete(Child... child);
+    void delete(Child child);
 
     @Query("DELETE FROM child_table WHERE ChID = :ChID")
     void deleteChildWithID(int ChID);
