@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -44,13 +45,23 @@ public class MainActivity extends AppCompatActivity {
 
         //Setting up RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         childViewModel = new ChildViewModel(getApplication());
+
+        childListAdapter = new ChildListAdapter(getApplicationContext());
+        recyclerView.setAdapter(childListAdapter);
 
         childViewModel.getAllChilds().observe(this, new Observer<List<Child>>() {
             @Override
             public void onChanged(@Nullable List<Child> children) {
                 Log.d(TAG, "onChanged: child list size = " + children.size());
+
+                // Loop through all returned list items
+                for (int i = 0; i < children.size(); i++ ){
+                    Log.d(TAG, "chID = " + children.get(i).getChID() + ", child name = " + children.get(i).getName());
+                }
+
 
                 childListAdapter.setChildList(children);
                 if (children.size() > 0 ) {
@@ -60,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        childListAdapter = new ChildListAdapter(getApplicationContext());
-        recyclerView.setAdapter(childListAdapter);
+
 
 
 
@@ -86,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult: resultCode = " + resultCode);
+
+        childListAdapter.notifyDataSetChanged();
 
         if (requestCode == RC_CREATE_CHILD && resultCode == RESULT_OK) {
 
