@@ -12,6 +12,7 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="childpicture">ChildPicture</string>
+    <string name="no_child_profile_found_let_s_add_some">No Child Profile Found. Let\'s add some!</string>
 
 
 </resources>

@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         childListAdapter.notifyDataSetChanged();
 
         if (requestCode == RC_CREATE_CHILD && resultCode == RESULT_OK) {
-
+            Log.d(TAG, "onActivityResult: requestCode = " + RC_CREATE_CHILD  + ", resultCode = " + resultCode);
             //loadChildList();
         } else if (requestCode == RC_UPDATE_CHILD && resultCode == RESULT_OK) {
             //loadChildList();

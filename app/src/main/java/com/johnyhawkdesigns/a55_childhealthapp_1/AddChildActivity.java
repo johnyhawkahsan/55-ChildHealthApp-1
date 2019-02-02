@@ -1,5 +1,6 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1;
 
+import android.app.DatePickerDialog;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -16,9 +18,10 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
+import java.util.Calendar;
 import java.util.Date;
 
-public class AddChildActivity extends AppCompatActivity {
+public class AddChildActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private static final String TAG = AddChildActivity.class.getSimpleName();
     public static final String EXTRA_REPLY = "Add_child_extra";
@@ -35,6 +38,11 @@ public class AddChildActivity extends AppCompatActivity {
     private TextInputEditText textInputWeight;
     private TextView textInputProfileUpdateDate;
     private Button saveChildData;
+    private Button setDateOfBirth;
+
+    private DatePickerDialog datePickerDialog;
+    private Calendar calendar;
+    private Date dateOfBirth;
 
     Date currentDate;
     String profileUpdateDateString;
@@ -43,7 +51,7 @@ public class AddChildActivity extends AppCompatActivity {
     String name = "";
     String gender = "";
     String bloodGroup = "";
-    String dateOfBirth = "";
+    String dateOfBirthString = "";
     String age = "";
     String height =  "";
     String weight = "";
@@ -58,17 +66,23 @@ public class AddChildActivity extends AppCompatActivity {
 
         childViewModel = new ChildViewModel(getApplication());
 
+        calendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, AddChildActivity.this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH) );
+
         Log.d(TAG, "onCreate: ");
 
         textInputName = (TextInputEditText) findViewById(R.id.textInputName);
         textInputGender = (Spinner) findViewById(R.id.textInputGender);
         textInputBloodGroup = (TextInputEditText) findViewById(R.id.textInputBloodGroup);
         textInputDateOfBirth = (TextInputEditText) findViewById(R.id.textInputDateOfBirth);
+        textInputDateOfBirth.setEnabled(false); // I want it to be non editable
+        setDateOfBirth = (Button) findViewById(R.id.setDateOfBirth) ;
         textInputAge = (TextInputEditText) findViewById(R.id.textInputAge);
         textInputHeight = (TextInputEditText) findViewById(R.id.textInputHeight);
         textInputWeight = (TextInputEditText) findViewById(R.id.textInputWeight);
         textInputProfileUpdateDate = (TextView) findViewById(R.id.textInputProfileUpdateDate);
         saveChildData = (Button) findViewById(R.id.saveChildData);
+
 
         currentDate = AppUtils.getCurrentDateTime();
         profileUpdateDateString = AppUtils.getFormattedDateString(currentDate);
@@ -98,6 +112,13 @@ public class AddChildActivity extends AppCompatActivity {
             }
         });
 
+        setDateOfBirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialog.show();
+            }
+        });
+
         saveChildData.setOnClickListener(saveChildDataButtonClicked);
 
     }
@@ -110,13 +131,12 @@ public class AddChildActivity extends AppCompatActivity {
             name = textInputName.getText().toString();
             //gender = String.valueOf(textInputGender.getSelectedItem());
             bloodGroup = textInputBloodGroup.getText().toString();
-            dateOfBirth = textInputDateOfBirth.getText().toString();
             age = textInputAge.getText().toString();
             height = textInputHeight.getText().toString();
             weight = textInputWeight.getText().toString();
 
 
-            if (name.length() == 0 || gender.length() == 0 || bloodGroup.length() == 0 || dateOfBirth.length() == 0 || age.length() == 0 || height.length() == 0 || weight.length() == 0){
+            if (name.length() == 0 || gender.length() == 0 || bloodGroup.length() == 0 || dateOfBirth.toString().length() == 0 || age.length() == 0 || height.length() == 0 || weight.length() == 0){
 
                 Log.d(TAG, "onClick: any of the parameters is empty");
                 AppUtils.showMessage(getApplicationContext(), "Please fill all details!");
@@ -127,7 +147,7 @@ public class AddChildActivity extends AppCompatActivity {
                 child.setName(name);
                 child.setGender(gender);
                 child.setBloodGroup(bloodGroup);
-                child.setDateOfBirth(dateOfBirth);
+                child.setDateOfBirth(dateOfBirthString);
                 if (age.length() != 0){
                     child.setAge(Double.parseDouble(age));
                 }
@@ -157,5 +177,15 @@ public class AddChildActivity extends AppCompatActivity {
     };
 
 
-
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        dateOfBirth = calendar.getTime();
+        dateOfBirthString = AppUtils.getFormattedDateString(dateOfBirth);
+        Log.d(TAG, "onDateSet: dateOfBirthString = " + dateOfBirthString + " , from original dateOfBirth = " + dateOfBirth);
+        //dateOfBirthString = dateOfBirth.toLocaleString().substring(0, 11);
+        textInputDateOfBirth.setText(dateOfBirthString);
+    }
 }

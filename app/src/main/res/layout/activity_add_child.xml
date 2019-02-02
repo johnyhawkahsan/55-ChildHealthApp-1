@@ -83,13 +83,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
+                        <Button
+                            android:id="@+id/setDateOfBirth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Set Date"/>
+
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/textInputDateOfBirth"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Date of Birth"
                             android:inputType="text"
-                            android:lines="1" />
+                            android:lines="1"
+                            android:clickable="false"
+                            android:focusable="false" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -102,7 +110,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Age"
-                            android:inputType="numberDecimal"
+                            android:inputType="number"
                             android:lines="1" />
 
                     </android.support.design.widget.TextInputLayout>

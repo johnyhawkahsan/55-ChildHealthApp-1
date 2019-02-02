@@ -33,6 +33,7 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
     // Instead of using childList in a constructor, we use it here so we can use in MainActivity's observer.
     public void setChildList(List<Child> children){
         this.mChilds = children;
+        notifyDataSetChanged();
     }
 
     //ChildViewHolder class
@@ -57,6 +58,7 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
             Child child = mChilds.get(getAdapterPosition());
             AppUtils.showMessage(mContext, "Clicked on chName.getText() = " + chName.getText());
             Log.d(TAG, "onClick: Clicked on child.getName() = " + child.getName());
+
         }
     }
 
