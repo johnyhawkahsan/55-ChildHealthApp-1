@@ -58,6 +58,11 @@ public class ChildRepository {
         task.execute(chID);
     }
 
+    // This method is to avoid confusion caused by above asyncTask search method. Actually, it shouldn't take much effort to return only one child with specific id. The above asyncTask has no return type
+    public Child getChildWithID(int chID){
+        return childDao.getChildWithID(chID);
+    }
+
 
 
     private static class insertAsyncTask extends AsyncTask<Child, Void, Void> {

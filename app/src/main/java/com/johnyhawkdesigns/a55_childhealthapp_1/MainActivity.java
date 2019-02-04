@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -21,7 +20,7 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private static final String TAG = "MainActivity";
     private static final int RC_CREATE_CHILD = 1;
@@ -49,7 +48,17 @@ public class MainActivity extends AppCompatActivity {
 
         childViewModel = new ChildViewModel(getApplication());
 
-        childListAdapter = new ChildListAdapter(getApplicationContext());
+        childListAdapter = new ChildListAdapter(getApplicationContext(), new ChildListAdapter.ChildClickListener() {
+            @Override
+            public void onClick(int chID) {
+                //Child foundChild = childViewModel.findChildWithID(chID);
+                Log.d(TAG, "onClick: chID received in MainActivity = " + chID);
+
+                Intent intent = new Intent(getApplicationContext(), ChildDetailActivity.class);
+                intent.putExtra("chID", chID);
+                getApplicationContext().startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(childListAdapter);
 
         childViewModel.getAllChilds().observe(this, new Observer<List<Child>>() {
@@ -106,4 +115,6 @@ public class MainActivity extends AppCompatActivity {
             //loadChildList();
         }
     }
+
+
 }

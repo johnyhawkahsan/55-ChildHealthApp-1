@@ -1,6 +1,7 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1;
 
 import android.app.DatePickerDialog;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class AddChildActivity extends AppCompatActivity implements DatePickerDia
     private TextInputEditText textInputHeight;
     private TextInputEditText textInputWeight;
     private TextView textInputProfileUpdateDate;
-    private Button saveChildData;
+    private FloatingActionButton saveChildData;
     private Button setDateOfBirth;
 
     private DatePickerDialog datePickerDialog;
@@ -81,7 +82,7 @@ public class AddChildActivity extends AppCompatActivity implements DatePickerDia
         textInputHeight = (TextInputEditText) findViewById(R.id.textInputHeight);
         textInputWeight = (TextInputEditText) findViewById(R.id.textInputWeight);
         textInputProfileUpdateDate = (TextView) findViewById(R.id.textInputProfileUpdateDate);
-        saveChildData = (Button) findViewById(R.id.saveChildData);
+        saveChildData = (FloatingActionButton) findViewById(R.id.saveChildDataFab);
 
 
         currentDate = AppUtils.getCurrentDateTime();

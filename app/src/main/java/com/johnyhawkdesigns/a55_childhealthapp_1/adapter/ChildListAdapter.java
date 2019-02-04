@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
+import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
@@ -22,11 +23,18 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
     Context mContext;
     private final LayoutInflater mInflator;
     private List<Child> mChilds;
-    private int mSelectedItemIndex;
+
+    // interface implemented by MainActivity to respond when the user touches an item in the RecyclerView.
+    public interface ChildClickListener{
+        void onClick(int chID);
+    }
+
+    private final ChildClickListener childClickListener;
 
     //Constructor for WordListAdapter
-    public ChildListAdapter(Context context){
+    public ChildListAdapter(Context context, ChildClickListener childClickListener){
         mContext = context;
+        this.childClickListener = childClickListener;
         mInflator = LayoutInflater.from(context);
     }
 
@@ -56,8 +64,10 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
         @Override
         public void onClick(View v) {
             Child child = mChilds.get(getAdapterPosition());
-            AppUtils.showMessage(mContext, "Clicked on chName.getText() = " + chName.getText());
-            Log.d(TAG, "onClick: Clicked on child.getName() = " + child.getName());
+            AppUtils.showMessage(mContext, "Clicked on chName.getText() = " + chName.getText() + ", chID = " + child.getChID());
+            Log.d(TAG, "onClick: Clicked on child.getName() = " + child.getName() + ", chID = " + child.getChID() );
+
+            childClickListener.onClick(child.getChID());
 
         }
     }
