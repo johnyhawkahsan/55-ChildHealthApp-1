@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddChildActivity" />
+        <activity android:name=".AddEditChildActivity" />
         <activity android:name=".ChildDetailActivity"></activity>
     </application>
 

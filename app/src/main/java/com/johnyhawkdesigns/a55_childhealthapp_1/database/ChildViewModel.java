@@ -40,6 +40,11 @@ public class ChildViewModel extends AndroidViewModel{
         childRepository.insert(child);
     }
 
+    public void update(Child child){
+        childRepository.updateTask(child);
+    }
+
+
     // We first call this method to begin searchin in ChildRepository, and then returned results are stored within search result returned by AsyncTask
     public void findChildWithID(int chID) {
         childRepository.findChildWithID(chID);
@@ -50,8 +55,8 @@ public class ChildViewModel extends AndroidViewModel{
         return searchResults;
     }
 
-    public void deleteChild(Child child) {
-        childRepository.deleteChild(child);
+    public void deleteChildWithID(int chID) {
+        childRepository.deleteChildWithID(chID);
     }
 
 }

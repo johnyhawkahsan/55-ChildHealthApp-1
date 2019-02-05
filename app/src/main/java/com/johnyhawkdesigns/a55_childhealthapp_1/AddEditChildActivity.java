@@ -1,6 +1,8 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1;
 
 import android.app.DatePickerDialog;
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +16,6 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildRepository;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
@@ -22,13 +23,14 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddChildActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class AddEditChildActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    private static final String TAG = AddChildActivity.class.getSimpleName();
+    private static final String TAG = AddEditChildActivity.class.getSimpleName();
     public static final String EXTRA_REPLY = "Add_child_extra";
     public static ChildViewModel childViewModel;
 
     private boolean addingNewChild = true; // adding (true) or editing (false)
+    private int chID = 0;
 
     private TextInputEditText textInputName;
     private Spinner textInputGender;
@@ -61,16 +63,17 @@ public class AddChildActivity extends AppCompatActivity implements DatePickerDia
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_child);
+        setContentView(R.layout.activity_add_edit_child);
 
-        getSupportActionBar().setTitle("Add Child Profile");
+        if (addingNewChild){
+            getSupportActionBar().setTitle("Add Child Profile");
+        }
 
         childViewModel = new ChildViewModel(getApplication());
 
-        calendar = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(this, AddChildActivity.this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH) );
 
-        Log.d(TAG, "onCreate: ");
+        calendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, AddEditChildActivity.this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH) );
 
         textInputName = (TextInputEditText) findViewById(R.id.textInputName);
         textInputGender = (Spinner) findViewById(R.id.textInputGender);
@@ -83,6 +86,28 @@ public class AddChildActivity extends AppCompatActivity implements DatePickerDia
         textInputWeight = (TextInputEditText) findViewById(R.id.textInputWeight);
         textInputProfileUpdateDate = (TextView) findViewById(R.id.textInputProfileUpdateDate);
         saveChildData = (FloatingActionButton) findViewById(R.id.saveChildDataFab);
+
+        chID = (int) getIntent().getSerializableExtra("chID");
+        if (chID != 0){
+            addingNewChild = false;
+            getSupportActionBar().setTitle("Edit Child Profile");
+            Log.d(TAG, "onCreate: received chID = " + chID);
+
+            childViewModel.findChildWithID(chID);
+            childViewModel.getSearchResults().observe(this, new Observer<Child>() {
+                @Override
+                public void onChanged(@Nullable Child child) {
+                    textInputName.setText(child.getName());
+                    textInputBloodGroup.setText(child.getBloodGroup());
+                    textInputDateOfBirth.setText(child.getDateOfBirth());
+                    textInputAge.setText(String.valueOf(child.getAge()));
+                    textInputHeight.setText(String.valueOf(child.getHeight()));
+                    textInputWeight.setText(String.valueOf(child.getWeight()));
+                    textInputProfileUpdateDate.setText(AppUtils.getFormattedDateString(AppUtils.getCurrentDateTime()));
+
+                }
+            });
+        }
 
 
         currentDate = AppUtils.getCurrentDateTime();
@@ -125,7 +150,7 @@ public class AddChildActivity extends AppCompatActivity implements DatePickerDia
     }
 
 
-    // When Save button is cliked
+    // When Save button is clicked
     private final View.OnClickListener saveChildDataButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -136,6 +161,7 @@ public class AddChildActivity extends AppCompatActivity implements DatePickerDia
             height = textInputHeight.getText().toString();
             weight = textInputWeight.getText().toString();
 
+            final Child child = new Child();
 
             if (name.length() == 0 || gender.length() == 0 || bloodGroup.length() == 0 || dateOfBirth.toString().length() == 0 || age.length() == 0 || height.length() == 0 || weight.length() == 0){
 
@@ -144,11 +170,12 @@ public class AddChildActivity extends AppCompatActivity implements DatePickerDia
 
             } else {
 
-                final Child child = new Child();
+
                 child.setName(name);
                 child.setGender(gender);
                 child.setBloodGroup(bloodGroup);
                 child.setDateOfBirth(dateOfBirthString);
+
                 if (age.length() != 0){
                     child.setAge(Double.parseDouble(age));
                 }
@@ -171,6 +198,14 @@ public class AddChildActivity extends AppCompatActivity implements DatePickerDia
                     setResult(RESULT_OK);
                     finish();
 
+                } else {
+
+                    Log.d(TAG, "onClick: textInputDateOfBirth.getText().toString()" + textInputDateOfBirth.getText().toString());
+                    Log.d(TAG, "onClick: editing existing child");
+                    child.setDateOfBirth(textInputDateOfBirth.getText().toString());
+                    childViewModel.update(child);
+                    setResult(RESULT_OK);
+                    finish();
                 }
 
             }

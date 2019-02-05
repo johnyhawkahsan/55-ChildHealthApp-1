@@ -56,8 +56,8 @@ public class ChildRepository implements AsyncResult{
         new insertAsyncTask(childDao).execute(child);
     }
 
-    public void deleteChild(Child child) {
-        new deleteAsyncTask(childDao).execute(child);
+    public void deleteChildWithID(int chID) {
+        new deleteAsyncTask(childDao).execute(chID);
     }
 
     public void findChildWithID(int chID) {
@@ -109,6 +109,7 @@ public class ChildRepository implements AsyncResult{
         }
     }
 
+    // This is our interface's implemented method. It takes child object from onPostExecute and help us set value for childSearchResult.
     @Override
     public void asyncFinished(Child foundChild) {
         childSearchResult.setValue(foundChild); // setValue is a special method for "MutableLive Data". We set the found child value to childSearhResult object
@@ -116,7 +117,8 @@ public class ChildRepository implements AsyncResult{
 
 
 
-    private static class deleteAsyncTask extends AsyncTask<Child, Void, Void> {
+    private static class deleteAsyncTask extends AsyncTask<Integer, Void, Void> {
+
         private static final String TAG = deleteAsyncTask.class.getSimpleName();
         private ChildDao asyncTaskDao;
 
@@ -125,9 +127,9 @@ public class ChildRepository implements AsyncResult{
         }
 
         @Override
-        protected Void doInBackground(final Child... params) {
-            Log.d(TAG, "doInBackground: delete child with chID = " + params[0].getChID());
-            asyncTaskDao.delete(params[0]);
+        protected Void doInBackground(final Integer... params) {
+            Log.d(TAG, "doInBackground: delete child with chID = " + params[0]);
+            asyncTaskDao.deleteChildWithID(params[0]);
             return null;
         }
     }
@@ -136,12 +138,12 @@ public class ChildRepository implements AsyncResult{
 
     // I intentionally left this task as static from (anita-1990) sample to check this functionality as well
     public void updateTask(final Child child) {
-        child.setProfileUpdateDate(AppUtils.getCurrentDateTime()); // Set time to new time.
 
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
                 childDao.update(child);
+                Log.d("updateTask", "doInBackground: updating child with chID = " + child.getChID());
                 return null;
             }
         }.execute();

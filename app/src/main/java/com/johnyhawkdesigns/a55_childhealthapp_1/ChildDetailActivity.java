@@ -2,6 +2,7 @@ package com.johnyhawkdesigns.a55_childhealthapp_1;
 
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +18,6 @@ import android.widget.TextView;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
-
-import java.io.IOException;
 
 public class ChildDetailActivity extends AppCompatActivity {
 
@@ -116,6 +115,11 @@ public class ChildDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_edit:
                 Log.d(TAG, "onOptionsItemSelected: edit child profile");
+
+                Intent intent = new Intent(ChildDetailActivity.this, AddEditChildActivity.class);
+                intent.putExtra("chID", chID);
+                startActivity(intent);
+
                 return true;
             case R.id.action_delete:
                 Log.d(TAG, "onOptionsItemSelected: delete child profile");
@@ -126,7 +130,9 @@ public class ChildDetailActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        AppUtils.showMessage(ChildDetailActivity.this, "Delete the child success" );
+                        AppUtils.showMessage(ChildDetailActivity.this, "Delete child with chID = " + chID + " success" );
+                        childViewModel.deleteChildWithID(chID);
+                        finish();
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

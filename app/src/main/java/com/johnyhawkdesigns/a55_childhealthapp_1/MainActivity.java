@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.ChildListAdapter;
-import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildRepository;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
@@ -86,18 +85,18 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-        //When Floating button is clicked, we are redirected to AddChildActivity
+        //When Floating button is clicked, we are redirected to AddEditChildActivity
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddChildActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddEditChildActivity.class);
                 startActivityForResult(intent, RC_CREATE_CHILD);
 
                 AppUtils.showMessage(getApplicationContext(), "Launching AddNewChild Activity");
 
-                Log.d(TAG, "onClick: launching AddChildActivity");
+                Log.d(TAG, "onClick: launching AddEditChildActivity");
             }
         });
     }
