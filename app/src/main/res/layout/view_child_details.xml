@@ -266,10 +266,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/default_margin"
                         android:drawablePadding="@dimen/default_margin"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         style="@style/ContactLabelTextView"
                         android:layout_marginEnd="@dimen/default_margin"
-                        android:text="Last Profile Updated on"/>
+                        android:text="Profile Updated on"/>
 
                     <TextView
                         android:id="@+id/tvLastProfileUpdateDate"
@@ -281,14 +281,6 @@
                         tools:text="12-Jan-2019" />
 
                 </LinearLayout>
-
-
-                <Button
-                    android:id="@+id/editChildData"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Edit"/>
 
 
                 <LinearLayout

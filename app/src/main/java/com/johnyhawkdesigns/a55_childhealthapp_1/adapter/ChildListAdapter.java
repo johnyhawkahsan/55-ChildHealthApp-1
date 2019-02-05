@@ -64,10 +64,13 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
         @Override
         public void onClick(View v) {
             Child child = mChilds.get(getAdapterPosition());
-            AppUtils.showMessage(mContext, "Clicked on chName.getText() = " + chName.getText() + ", chID = " + child.getChID());
-            Log.d(TAG, "onClick: Clicked on child.getName() = " + child.getName() + ", chID = " + child.getChID() );
+            String chName = child.getName();
+            int chID = child.getChID();
+            AppUtils.showMessage(mContext, "Clicked on child with name = " + chName + ", chID = " + chID);
+            Log.d(TAG, "onClick: Clicked on child with name = " + chName + ", chID = " + chID);
 
-            childClickListener.onClick(child.getChID());
+            // This interface method sends chID to MainActivity's ChildListAdapter constructor method.
+            childClickListener.onClick(chID);
 
         }
     }

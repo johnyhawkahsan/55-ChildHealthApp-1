@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity{
     private static final String TAG = "MainActivity";
     private static final int RC_CREATE_CHILD = 1;
     private static final int RC_UPDATE_CHILD = 2;
+    private static final int RC_DELETE_CHILD = 3;
 
     private ChildViewModel childViewModel;
 
@@ -109,10 +110,15 @@ public class MainActivity extends AppCompatActivity{
         childListAdapter.notifyDataSetChanged();
 
         if (requestCode == RC_CREATE_CHILD && resultCode == RESULT_OK) {
-            Log.d(TAG, "onActivityResult: requestCode = " + RC_CREATE_CHILD  + ", resultCode = " + resultCode);
+            Log.d(TAG, "New child added. onActivityResult: requestCode = " + RC_CREATE_CHILD  + ", resultCode = " + resultCode);
             //loadChildList();
         } else if (requestCode == RC_UPDATE_CHILD && resultCode == RESULT_OK) {
+
             //loadChildList();
+        } else if (requestCode == RC_DELETE_CHILD && resultCode == RESULT_OK){
+            Log.d(TAG, "Child has been deleted . onActivityResult: requestCode = " + RC_DELETE_CHILD  + ", resultCode = " + resultCode);
+            // update list with new child data
+            childListAdapter.notifyDataSetChanged();
         }
     }
 

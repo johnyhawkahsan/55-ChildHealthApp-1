@@ -18,12 +18,14 @@ import java.util.List;
  * A Repository class handles data operations. It provides a clean API to the rest of the app for app data
  */
 
-public class ChildRepository {
+public class ChildRepository implements AsyncResult{
 
     // We declare a MutableLiveData variable named searchResults into which the results of a search operation are stored whenever a asynchronous search task completes
     private MutableLiveData<List<Child>> searchResults = new MutableLiveData<>();
     private ChildDao childDao;
     private LiveData<List<Child>> mAllChilds;
+    // We declare a MutableLiveData variable named searchResults into which the results of a search operation are stored whenever a asynchronous search task completes
+    private MutableLiveData<Child> childSearchResult = new MutableLiveData<>();
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -43,6 +45,11 @@ public class ChildRepository {
         return mAllChilds;
     }
 
+    // methods that the ViewModel can call to obtain a references to the searchResults live data objects
+    public MutableLiveData<Child> getSearchResults() {
+        return childSearchResult;
+    }
+
     // You must call this on a non-UI thread or your app will crash.
     // Like this, Room ensures that you're not doing any long running operations on the main thread, blocking the UI.
     public void insert(Child child){
@@ -55,12 +62,8 @@ public class ChildRepository {
 
     public void findChildWithID(int chID) {
         queryAsyncTask task = new queryAsyncTask(childDao);
+        task.delegate = this;
         task.execute(chID);
-    }
-
-    // This method is to avoid confusion caused by above asyncTask search method. Actually, it shouldn't take much effort to return only one child with specific id. The above asyncTask has no return type
-    public Child getChildWithID(int chID){
-        return childDao.getChildWithID(chID);
     }
 
 
@@ -86,6 +89,7 @@ public class ChildRepository {
         private static final String TAG = queryAsyncTask.class.getSimpleName();
 
         private ChildDao asyncTaskDao;
+        private ChildRepository delegate = null;
 
         // constructor method needs to be be passed a reference to the DAO object
         queryAsyncTask(ChildDao dao) {
@@ -99,7 +103,17 @@ public class ChildRepository {
             return asyncTaskDao.getChildWithID(params[0]);
         }
 
+        @Override
+        protected void onPostExecute(Child child) {
+            delegate.asyncFinished(child); // returned child result is interfaced through asyncFinished method
+        }
     }
+
+    @Override
+    public void asyncFinished(Child foundChild) {
+        childSearchResult.setValue(foundChild); // setValue is a special method for "MutableLive Data". We set the found child value to childSearhResult object
+    }
+
 
 
     private static class deleteAsyncTask extends AsyncTask<Child, Void, Void> {
