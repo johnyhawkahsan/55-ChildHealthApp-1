@@ -163,13 +163,15 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
 
             final Child child = new Child();
 
-            if (name.length() == 0 || gender.length() == 0 || bloodGroup.length() == 0 || dateOfBirth.toString().length() == 0 || age.length() == 0 || height.length() == 0 || weight.length() == 0){
+            if (name.length() == 0 || gender.length() == 0 || bloodGroup.length() == 0 || dateOfBirthString.length() == 0 || age.length() == 0 || height.length() == 0 || weight.length() == 0){
 
                 Log.d(TAG, "onClick: any of the parameters is empty");
                 AppUtils.showMessage(getApplicationContext(), "Please fill all details!");
 
-            } else {
 
+            }
+            //If no field is left empty and everything is filled
+            else {
 
                 child.setName(name);
                 child.setGender(gender);
@@ -198,11 +200,13 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                     setResult(RESULT_OK);
                     finish();
 
-                } else {
+                }
+                // if addingNewChild == false, we are editing existing child
+                else {
 
                     Log.d(TAG, "onClick: textInputDateOfBirth.getText().toString()" + textInputDateOfBirth.getText().toString());
                     Log.d(TAG, "onClick: editing existing child");
-                    child.setDateOfBirth(textInputDateOfBirth.getText().toString());
+                    child.setChID(chID);
                     childViewModel.update(child);
                     setResult(RESULT_OK);
                     finish();
