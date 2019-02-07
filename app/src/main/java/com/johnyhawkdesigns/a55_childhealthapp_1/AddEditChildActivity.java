@@ -69,6 +69,7 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
             getSupportActionBar().setTitle("Add Child Profile");
         }
 
+        // initialize childViewModel
         childViewModel = new ChildViewModel(getApplication());
 
 
@@ -87,11 +88,13 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
         textInputProfileUpdateDate = (TextView) findViewById(R.id.textInputProfileUpdateDate);
         saveChildData = (FloatingActionButton) findViewById(R.id.saveChildDataFab);
 
-        chID = (int) getIntent().getSerializableExtra("chID");
-        if (chID != 0){
+        // if we are adding new child, there should be no data in intent to assign to chID
+        if (getIntent().getSerializableExtra("chID") != null){
+            chID = (int) getIntent().getSerializableExtra("chID");
+            Log.d(TAG, "onCreate: received chID = " + chID);
+
             addingNewChild = false;
             getSupportActionBar().setTitle("Edit Child Profile");
-            Log.d(TAG, "onCreate: received chID = " + chID);
 
             childViewModel.findChildWithID(chID);
             childViewModel.getSearchResults().observe(this, new Observer<Child>() {
@@ -103,8 +106,9 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                     textInputAge.setText(String.valueOf(child.getAge()));
                     textInputHeight.setText(String.valueOf(child.getHeight()));
                     textInputWeight.setText(String.valueOf(child.getWeight()));
-                    textInputProfileUpdateDate.setText(AppUtils.getFormattedDateString(AppUtils.getCurrentDateTime()));
 
+                    Log.d(TAG, "onChanged: " + child.getDateOfBirth());
+                    textInputProfileUpdateDate.setText(child.getDateOfBirth());
                 }
             });
         }
@@ -114,8 +118,9 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
         profileUpdateDateString = AppUtils.getFormattedDateString(currentDate);
         textInputProfileUpdateDate.setText(profileUpdateDateString);
 
-
+        // Two options for spinner
         String[] genders = {"Male", "Female"};
+
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, genders);
 
@@ -154,6 +159,9 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
     private final View.OnClickListener saveChildDataButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+            final Child child = new Child();
+
             name = textInputName.getText().toString();
             //gender = String.valueOf(textInputGender.getSelectedItem());
             bloodGroup = textInputBloodGroup.getText().toString();
@@ -161,7 +169,8 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
             height = textInputHeight.getText().toString();
             weight = textInputWeight.getText().toString();
 
-            final Child child = new Child();
+
+
 
             if (name.length() == 0 || gender.length() == 0 || bloodGroup.length() == 0 || dateOfBirthString.length() == 0 || age.length() == 0 || height.length() == 0 || weight.length() == 0){
 
@@ -204,8 +213,7 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                 // if addingNewChild == false, we are editing existing child
                 else {
 
-                    Log.d(TAG, "onClick: textInputDateOfBirth.getText().toString()" + textInputDateOfBirth.getText().toString());
-                    Log.d(TAG, "onClick: editing existing child");
+                    Log.d(TAG, "onClick: editing existing child with chID = " + chID);
                     child.setChID(chID);
                     childViewModel.update(child);
                     setResult(RESULT_OK);

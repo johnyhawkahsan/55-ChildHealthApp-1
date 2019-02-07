@@ -20,6 +20,8 @@ import java.util.List;
 
 public class ChildRepository implements AsyncResult{
 
+    private static final String TAG = ChildRepository.class.getSimpleName();
+
     // We declare a MutableLiveData variable named searchResults into which the results of a search operation are stored whenever a asynchronous search task completes
     private MutableLiveData<List<Child>> searchResults = new MutableLiveData<>();
     private ChildDao childDao;
@@ -112,6 +114,7 @@ public class ChildRepository implements AsyncResult{
     // This is our interface's implemented method. It takes child object from onPostExecute and help us set value for childSearchResult.
     @Override
     public void asyncFinished(Child foundChild) {
+        Log.d(TAG, "asyncFinished: foundChild.getChID() = " + foundChild.getChID());
         childSearchResult.setValue(foundChild); // setValue is a special method for "MutableLive Data". We set the found child value to childSearhResult object
     }
 

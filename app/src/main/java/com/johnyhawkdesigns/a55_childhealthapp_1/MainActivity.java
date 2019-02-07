@@ -21,10 +21,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final int RC_CREATE_CHILD = 1;
     private static final int RC_UPDATE_CHILD = 2;
-    private static final int RC_DELETE_CHILD = 3;
+    //private static final int RC_DELETE_CHILD = 3; // Not needed. I tested but I'm launching delete method from AlertDialog builder, but it should be launched using startActivityForResult
+
+
 
     private ChildViewModel childViewModel;
 
@@ -106,17 +108,15 @@ public class MainActivity extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult: resultCode = " + resultCode);
 
-        childListAdapter.notifyDataSetChanged();
+        //childListAdapter.notifyDataSetChanged();
 
         if (requestCode == RC_CREATE_CHILD && resultCode == RESULT_OK) {
             Log.d(TAG, "New child added. onActivityResult: requestCode = " + RC_CREATE_CHILD  + ", resultCode = " + resultCode);
-            //loadChildList();
-        } else if (requestCode == RC_UPDATE_CHILD && resultCode == RESULT_OK) {
+            // Whenever new child is added, update our list
+            childListAdapter.notifyDataSetChanged();
+        } else if (requestCode == RC_UPDATE_CHILD && resultCode == RESULT_OK){
+            Log.d(TAG, "Child has been updated. onActivityResult: requestCode = " + RC_CREATE_CHILD  + ", resultCode = " + resultCode);
 
-            //loadChildList();
-        } else if (requestCode == RC_DELETE_CHILD && resultCode == RESULT_OK){
-            Log.d(TAG, "Child has been deleted . onActivityResult: requestCode = " + RC_DELETE_CHILD  + ", resultCode = " + resultCode);
-            // update list with new child data
             childListAdapter.notifyDataSetChanged();
         }
     }

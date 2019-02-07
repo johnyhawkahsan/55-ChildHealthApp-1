@@ -26,6 +26,8 @@ public class ChildDetailActivity extends AppCompatActivity {
     private int chID;
     private ChildViewModel childViewModel;
 
+    private static final int RC_UPDATE_CHILD = 2;
+
     private ImageView imageViewIcon;
     private TextView textViewName;
     private TextView textViewChID;
@@ -67,13 +69,14 @@ public class ChildDetailActivity extends AppCompatActivity {
         viewMedicalRecord = (Button) findViewById(R.id.viewMedicalRecord);
         viewVaccinationRecord = (Button) findViewById(R.id.viewVaccinationRecord);
 
+        // initialize childViewModel
         childViewModel = new ChildViewModel(getApplication());
 
         chID = (int) getIntent().getSerializableExtra("chID");
         Log.d(TAG, "onCreate: received chID = " + chID);
 
 
-
+        // initiate search method for chID
         childViewModel.findChildWithID(chID);
 
         // we simply get an instance of childSearchResult and use observer for this
@@ -92,8 +95,6 @@ public class ChildDetailActivity extends AppCompatActivity {
                 tvHeight.setText(String.valueOf(child.getHeight()) + " feet");
                 tvWeight.setText(String.valueOf(child.getWeight()) + " kg");
                 tvLastProfileUpdateDate.setText(AppUtils.getFormattedDateString(child.getProfileUpdateDate()));
-
-
 
             }
         });
@@ -118,9 +119,9 @@ public class ChildDetailActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(ChildDetailActivity.this, AddEditChildActivity.class);
                 intent.putExtra("chID", chID);
-                startActivity(intent);
-
+                startActivityForResult(intent, RC_UPDATE_CHILD);
                 return true;
+
             case R.id.action_delete:
                 Log.d(TAG, "onOptionsItemSelected: delete child profile");
 
@@ -149,5 +150,18 @@ public class ChildDetailActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: requestCode = " + requestCode + ", resultCode = " + resultCode);
+
+        if (requestCode == RC_UPDATE_CHILD && resultCode == RESULT_OK){
+            // if RC_UPDATE_CHILD , we again finish the activity with RC_UPDATE_CHILD to MainActivity so there, we can use notifyDataSetChanged() method to update list
+            setResult(RC_UPDATE_CHILD);
+            finish();
+        }
+
     }
 }
