@@ -18,9 +18,10 @@
             android:padding="@dimen/default_padding">
 
             <ImageView
-                android:id="@+id/imageViewIcon"
+                android:id="@+id/post_image"
                 android:layout_width="@dimen/profile_image_size"
                 android:layout_height="@dimen/profile_image_size"
+                android:layout_marginTop="15dp"
                 android:layout_gravity="center_horizontal"
                 app:srcCompat="@drawable/random_baby" />
 

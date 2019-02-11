@@ -1,14 +1,19 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1;
 
 import android.arch.lifecycle.Observer;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -68,15 +73,18 @@ public class MainActivity extends AppCompatActivity{
             public void onChanged(@Nullable List<Child> children) {
                 Log.d(TAG, "onChanged: child list size = " + children.size());
 
-                // Loop through all returned list items
+                // Loop through all returned list items and display in logs
                 for (int i = 0; i < children.size(); i++ ){
                     Log.d(TAG, "chID = " + children.get(i).getChID() + ", child name = " + children.get(i).getName());
                 }
 
 
                 childListAdapter.setChildList(children);
+
                 if (children.size() > 0 ) {
                     emptyTextView.setVisibility(View.GONE);
+                } else {
+                    emptyTextView.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -121,5 +129,45 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_delete:
+                Log.d(TAG, "onOptionsItemSelected: delete all children profiles");
+
+                // Build alert dialog for confirmation
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Do you want to delete all children data??");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AppUtils.showMessage(MainActivity.this, "Delete all children success" );
+                        childViewModel.deleteAllChilds();
+                        childListAdapter.notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog ad = builder.create();
+                ad.show();
+
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

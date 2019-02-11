@@ -2,6 +2,8 @@ package com.johnyhawkdesigns.a55_childhealthapp_1;
 
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
@@ -13,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,10 +26,9 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddEditChildActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class AddEditChildActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, SelectPhotoDialog.OnPhotoSelectedListener {
 
     private static final String TAG = AddEditChildActivity.class.getSimpleName();
-    public static final String EXTRA_REPLY = "Add_child_extra";
     public static ChildViewModel childViewModel;
 
     private boolean addingNewChild = true; // adding (true) or editing (false)
@@ -59,6 +61,9 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
     String height =  "";
     String weight = "";
 
+    private ImageView mPostImage;
+    private Bitmap mSelectedBitmap;
+    private Uri mSelectedUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,7 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
         calendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, AddEditChildActivity.this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH) );
 
+        mPostImage = (ImageView) findViewById(R.id.post_image);
         textInputName = (TextInputEditText) findViewById(R.id.textInputName);
         textInputGender = (Spinner) findViewById(R.id.textInputGender);
         textInputBloodGroup = (TextInputEditText) findViewById(R.id.textInputBloodGroup);
@@ -113,6 +119,17 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
             });
         }
 
+        mPostImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: opening dialog to choose new photo");
+
+                //Now run the select photo dialog box
+                SelectPhotoDialog dialog = new SelectPhotoDialog();
+                dialog.show(getSupportFragmentManager(), "Select Photo");
+
+            }
+        });
 
         currentDate = AppUtils.getCurrentDateTime();
         profileUpdateDateString = AppUtils.getFormattedDateString(currentDate);
@@ -204,8 +221,8 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                 if (addingNewChild){
 
                     childViewModel.insert(child);
-                    Log.d(TAG, "onClick: child added = " + child.getName() + ", chID = " + child.getChID());
-                    AppUtils.showMessage(getApplicationContext(), "Child named " + child.getName() + " with chID = " + child.getChID() + " added to database");
+                    Log.d(TAG, "onClick: child added = " + child.getName());
+                    AppUtils.showMessage(getApplicationContext(), "Child named " + child.getName() + " added to database");
                     setResult(RESULT_OK);
                     finish();
 
@@ -235,5 +252,10 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
         Log.d(TAG, "onDateSet: dateOfBirthString = " + dateOfBirthString + " , from original dateOfBirth = " + dateOfBirth);
         //dateOfBirthString = dateOfBirth.toLocaleString().substring(0, 11);
         textInputDateOfBirth.setText(dateOfBirthString);
+    }
+
+    @Override
+    public void getImagePath(Uri imagePath) {
+        Log.d(TAG, "getImagePath: " + imagePath);
     }
 }

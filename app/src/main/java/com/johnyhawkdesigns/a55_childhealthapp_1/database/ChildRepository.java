@@ -62,11 +62,18 @@ public class ChildRepository implements AsyncResult{
         new deleteAsyncTask(childDao).execute(chID);
     }
 
+    public void deleteAllChilds() {
+        new deleteAllAsyncTask(childDao).execute();
+    }
+
+
     public void findChildWithID(int chID) {
         queryAsyncTask task = new queryAsyncTask(childDao);
         task.delegate = this;
         task.execute(chID);
     }
+
+
 
 
 
@@ -133,6 +140,26 @@ public class ChildRepository implements AsyncResult{
         protected Void doInBackground(final Integer... params) {
             Log.d(TAG, "doInBackground: delete child with chID = " + params[0]);
             asyncTaskDao.deleteChildWithID(params[0]);
+            return null;
+        }
+    }
+
+
+
+    private static class deleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private static final String TAG = deleteAsyncTask.class.getSimpleName();
+        private ChildDao asyncTaskDao;
+
+        deleteAllAsyncTask(ChildDao dao) {
+            asyncTaskDao = dao;
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Log.d(TAG, "doInBackground: delete all childs");
+            asyncTaskDao.deleteAll();
             return null;
         }
     }

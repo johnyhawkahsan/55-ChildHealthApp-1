@@ -59,4 +59,8 @@ public class ChildViewModel extends AndroidViewModel{
         childRepository.deleteChildWithID(chID);
     }
 
+    public void deleteAllChilds() {
+        childRepository.deleteAllChilds();
+    }
+
 }
