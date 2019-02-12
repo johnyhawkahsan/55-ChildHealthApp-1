@@ -1,7 +1,9 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -10,15 +12,18 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
@@ -26,10 +31,12 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddEditChildActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, SelectPhotoDialog.OnPhotoSelectedListener {
+public class AddEditChildActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private static final String TAG = AddEditChildActivity.class.getSimpleName();
     public static ChildViewModel childViewModel;
+
+    private static final int PICKFILE_REQUEST_CODE = 1234;
 
     private boolean addingNewChild = true; // adding (true) or editing (false)
     private int chID = 0;
@@ -122,11 +129,31 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
         mPostImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: opening dialog to choose new photo");
+                Log.d(TAG, "onClick: Open popup menu to choose new photo");
 
-                //Now run the select photo dialog box
-                SelectPhotoDialog dialog = new SelectPhotoDialog();
-                dialog.show(getSupportFragmentManager(), "Select Photo");
+                PopupMenu popupMenu = new PopupMenu(AddEditChildActivity.this, mPostImage);
+                popupMenu.getMenuInflater().inflate(R.menu.menu_image, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_select_image:
+                                Log.d(TAG, "onMenuItemClick: ");
+
+                                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//Allow the user to select a particular kind of data and return it. This is different than ACTION_PICK in that here we just say what kind of data is desired, not a URI of existing data from which the user can pick.
+                                intent.setType("image/*");
+                                //startActivityForResult(intent, PICKFILE_REQUEST_CODE); // Both startActivityForResult do the same
+                                startActivityForResult(Intent.createChooser(intent, "Select a picture"), PICKFILE_REQUEST_CODE);
+
+                                return true;
+
+                            default:
+                                return true;
+                        }
+                    }
+                });
+
+                popupMenu.show(); //showing popup menu
 
             }
         });
@@ -255,7 +282,22 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
     }
 
     @Override
-    public void getImagePath(Uri imagePath) {
-        Log.d(TAG, "getImagePath: " + imagePath);
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Results when selecting a new image from memory
+        if (requestCode == PICKFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            Uri selectedImageUri = data.getData();
+
+            if (selectedImageUri != null){
+                Log.d(TAG, "onActivityResult: image uri: " + selectedImageUri);
+
+                Glide
+                        .with(AddEditChildActivity.this)
+                        .load(selectedImageUri)
+                        .into(mPostImage);
+            }
+
+        }
     }
 }

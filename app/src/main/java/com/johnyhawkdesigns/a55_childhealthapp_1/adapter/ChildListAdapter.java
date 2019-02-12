@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
@@ -92,6 +93,9 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
         childViewHolder.chName.setText(currentChild.getName());
         String ageStr = String.valueOf(currentChild.getAge());
         childViewHolder.age.setText(ageStr + " years");
+
+        // load image using Glide
+        //Glide.with(mContext).load(currentChild.getImagePath()).into(childViewHolder.childIcon);
 
         Log.d(TAG, "onBindViewHolder: currentChild.getChID() = " + currentChild.getChID() + ", currentChild.getChID() = " + currentChild.getName());
     }
