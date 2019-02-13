@@ -3,6 +3,7 @@ package com.johnyhawkdesigns.a55_childhealthapp_1;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
@@ -42,6 +44,8 @@ public class ChildDetailActivity extends AppCompatActivity {
 
     private Button viewMedicalRecord;
     private Button viewVaccinationRecord;
+
+    public Uri imageUri;
 
 
 
@@ -95,6 +99,16 @@ public class ChildDetailActivity extends AppCompatActivity {
                 tvHeight.setText(String.valueOf(child.getHeight()) + " feet");
                 tvWeight.setText(String.valueOf(child.getWeight()) + " kg");
                 tvLastProfileUpdateDate.setText(AppUtils.getFormattedDateString(child.getProfileUpdateDate()));
+
+                if (child.getImagePath() != null){
+                    imageUri = Uri.parse(child.getImagePath());
+                    Glide
+                            .with(ChildDetailActivity.this)
+                            .load(imageUri)
+                            .into(imageViewIcon);
+                }
+
+
 
             }
         });

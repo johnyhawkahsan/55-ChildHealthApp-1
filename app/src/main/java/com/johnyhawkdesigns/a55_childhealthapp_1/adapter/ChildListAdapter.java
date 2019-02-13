@@ -1,6 +1,7 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.johnyhawkdesigns.a55_childhealthapp_1.ChildDetailActivity;
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
@@ -94,8 +96,14 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
         String ageStr = String.valueOf(currentChild.getAge());
         childViewHolder.age.setText(ageStr + " years");
 
-        // load image using Glide
-        //Glide.with(mContext).load(currentChild.getImagePath()).into(childViewHolder.childIcon);
+        if (currentChild.getImagePath() != null){
+            Uri imageUri = Uri.parse(currentChild.getImagePath());
+            // load image using Glide
+            Glide
+                    .with(mContext)
+                    .load(imageUri)
+                    .into(childViewHolder.childIcon);
+        }
 
         Log.d(TAG, "onBindViewHolder: currentChild.getChID() = " + currentChild.getChID() + ", currentChild.getChID() = " + currentChild.getName());
     }

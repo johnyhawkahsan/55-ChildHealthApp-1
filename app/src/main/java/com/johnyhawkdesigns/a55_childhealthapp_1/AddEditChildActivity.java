@@ -82,8 +82,6 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
     String weight = "";
 
     private ImageView mPostImage;
-    private Bitmap mSelectedBitmap;
-    private Uri mSelectedUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +115,7 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
         // if we are adding new child, there should be no data in intent to assign to chID
         if (getIntent().getSerializableExtra("chID") != null){
             chID = (int) getIntent().getSerializableExtra("chID");
-            Log.d(TAG, "onCreate: received chID = " + chID);
+            Log.d(TAG, "onCreate: received chID = " + chID + ", addingNewChild = false");
 
             addingNewChild = false;
             getSupportActionBar().setTitle("Edit Child Profile");
@@ -128,10 +126,20 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                 public void onChanged(@Nullable Child child) {
                     textInputName.setText(child.getName());
                     textInputBloodGroup.setText(child.getBloodGroup());
-                    textInputDateOfBirth.setText(child.getDateOfBirth());
+                    //textInputDateOfBirth.setText(child.getDateOfBirth());
                     textInputAge.setText(String.valueOf(child.getAge()));
                     textInputHeight.setText(String.valueOf(child.getHeight()));
                     textInputWeight.setText(String.valueOf(child.getWeight()));
+
+                    if (child.getImagePath() != null){
+                        selectedImageUri = Uri.parse(child.getImagePath());
+                        Log.d(TAG, "onChanged: child already has image with path = " + selectedImageUri);
+                        Glide
+                                .with(AddEditChildActivity.this)
+                                .load(selectedImageUri)
+                                .into(mPostImage);
+
+                    }
 
                     Log.d(TAG, "onChanged: " + child.getDateOfBirth());
                     textInputProfileUpdateDate.setText(child.getDateOfBirth());
@@ -227,8 +235,6 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
             weight = textInputWeight.getText().toString();
 
 
-
-
             if (name.length() == 0 || gender.length() == 0 || bloodGroup.length() == 0 || dateOfBirthString.length() == 0 || age.length() == 0 || height.length() == 0 || weight.length() == 0){
 
                 Log.d(TAG, "onClick: any of the parameters is empty");
@@ -256,6 +262,10 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
 
                 child.setProfileUpdateDate(currentDate);
                 child.setGender(gender);
+
+                if (selectedImageUri != null){
+                    child.setImagePath(selectedImageUri.toString());
+                }
 
                 // If addingNewChild is true and we are not editing existing child
                 if (addingNewChild){
