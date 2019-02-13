@@ -1,14 +1,23 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
@@ -36,10 +46,13 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
     private static final String TAG = AddEditChildActivity.class.getSimpleName();
     public static ChildViewModel childViewModel;
 
-    private static final int PICKFILE_REQUEST_CODE = 1234;
+    private static final int PICKFILE_REQUEST_CODE = 1;
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 2;
+    public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 3;
 
     private boolean addingNewChild = true; // adding (true) or editing (false)
     private int chID = 0;
+    public Uri selectedImageUri;
 
     private TextInputEditText textInputName;
     private Spinner textInputGender;
@@ -287,17 +300,96 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
 
         //Results when selecting a new image from memory
         if (requestCode == PICKFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            Uri selectedImageUri = data.getData();
+            selectedImageUri = data.getData();
 
             if (selectedImageUri != null){
                 Log.d(TAG, "onActivityResult: image uri: " + selectedImageUri);
 
-                Glide
-                        .with(AddEditChildActivity.this)
-                        .load(selectedImageUri)
-                        .into(mPostImage);
+
+                if (checkPermissionREAD_EXTERNAL_STORAGE(this)){
+                    // if permission is granted, below lines will get executed.
+                    Glide
+                            .with(AddEditChildActivity.this)
+                            .load(selectedImageUri)
+                            .into(mPostImage);
+                }
+
             }
 
         }
     }
+
+
+    public boolean checkPermissionREAD_EXTERNAL_STORAGE(final Context context) {
+        int currentAPIVersion = Build.VERSION.SDK_INT; // Get current sdk version
+        Log.d(TAG, "checkPermissionREAD_EXTERNAL_STORAGE: currentAPIVersion = " + currentAPIVersion);
+
+        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) { // android M api is 23
+
+            // checks if the app does not have permission needed
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+                // shows an explanation of why permission is needed
+                if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    showDialog("External storage", context, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+                } else {
+                    ActivityCompat.requestPermissions((Activity) context,
+                                    new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
+                                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                }
+                return false;
+            } else {
+                return true;
+            }
+
+        } else {
+            // if app already has permission to write to external storage
+            return true;
+        }
+    }
+
+    // Show dialog for permissions
+    public void showDialog(final String msg, final Context context, final String permission) {
+
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setCancelable(true);
+        alertBuilder.setTitle("Permission necessary");
+        alertBuilder.setMessage(msg + " permission is necessary");
+        alertBuilder.setPositiveButton(android.R.string.yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActivityCompat.requestPermissions((Activity) context,
+                                new String[] { permission },
+                                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    }
+                });
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+
+
+    // called by the system when the user either grants or denies the permission for saving an image
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        // switch chooses appropriate action based on which feature requested permission
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "onRequestPermissionsResult: PackageManager.PERMISSION_GRANTED");
+                    // when user first time grants the permissions, these lines get executed
+                    Glide
+                            .with(AddEditChildActivity.this)
+                            .load(selectedImageUri)
+                            .into(mPostImage);
+
+                } else {
+                    Toast.makeText(AddEditChildActivity.this, "Get read permission denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
 }
