@@ -3,6 +3,7 @@ package com.johnyhawkdesigns.a55_childhealthapp_1;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity{
     private static final int RC_UPDATE_CHILD = 2;
     //private static final int RC_DELETE_CHILD = 3; // Not needed. I tested but I'm launching delete method from AlertDialog builder, but it should be launched using startActivityForResult
 
+    private static int SPLASH_TIMEOUT = 2000; //This is 2 seconds
+    Handler handler = new Handler();
+
 
 
     private ChildViewModel childViewModel;
@@ -44,10 +48,28 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // To add appropriate delay for screen.
+        try{
+            Thread.sleep(SPLASH_TIMEOUT);
+        } catch (Exception e){
+            Log.d(TAG, "onCreate: e = " + e);
+        }
+
+        // Make sure this is before calling super.onCreate
+        setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         emptyTextView =  findViewById(R.id.tv__empty);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }, SPLASH_TIMEOUT);
 
         //Setting up RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
