@@ -37,7 +37,7 @@ public class ChildMedicalHistory {
     private Date visitDate;
 
     @Nullable
-    @ColumnInfo(name = "diseaseDec")
+    @ColumnInfo(name = "diseaseDesc")
     private String diseaseDec;
 
     @Nullable

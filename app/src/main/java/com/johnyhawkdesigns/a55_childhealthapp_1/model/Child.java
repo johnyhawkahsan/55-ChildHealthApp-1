@@ -56,15 +56,15 @@ public class Child implements Serializable{
 
     @Nullable
     @ColumnInfo(name = "age")
-    private double age;
+    private int age;
 
     @Nullable
     @ColumnInfo(name = "height")
-    private double height;
+    private int height;
 
     @Nullable
     @ColumnInfo(name = "weight")
-    private double weight;
+    private int weight;
 
 
     @Nullable
@@ -126,29 +126,29 @@ public class Child implements Serializable{
     }
 
     @Nullable
-    public double getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(@Nullable double age) {
+    public void setAge(@Nullable int age) {
         this.age = age;
     }
 
     @Nullable
-    public double getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(@Nullable double height) {
+    public void setHeight(@Nullable int height) {
         this.height = height;
     }
 
     @Nullable
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(@Nullable double weight) {
+    public void setWeight(@Nullable int weight) {
         this.weight = weight;
     }
 

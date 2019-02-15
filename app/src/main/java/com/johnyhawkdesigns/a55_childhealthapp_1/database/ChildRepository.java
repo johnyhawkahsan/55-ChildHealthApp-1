@@ -75,8 +75,6 @@ public class ChildRepository implements AsyncResult{
 
 
 
-
-
     private static class insertAsyncTask extends AsyncTask<Child, Void, Void> {
         private ChildDao mAsyncTaskDao;
 

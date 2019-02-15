@@ -4,10 +4,10 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.ChildMedicalHistory;
 
 import java.util.List;
@@ -15,25 +15,28 @@ import java.util.List;
 @Dao
 public interface ChildMedicalHistoryDao {
 
-    @Query("Select * FROM medHistory_table")
-    //ChildMedicalHistory[] loadAllHistory();
-    LiveData<List<ChildMedicalHistory>> loadAllHistory();
-
     @Query("Select * FROM medHistory_table WHERE foreignChID == :foreignChID")
-    LiveData<ChildMedicalHistory> loadHistoryOfChild(int foreignChID);
+    LiveData<List<ChildMedicalHistory>> loadAllMedHistoryOfChild(int foreignChID);
 
-    @Insert
-    void insert(ChildMedicalHistory... childMedicalHistories);
+    @Query("Select * FROM medHistory_table WHERE medID == :medID")
+    ChildMedicalHistory getHistoryWithMedID(int medID);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertMedHistory(ChildMedicalHistory... childMedicalHistories);
 
     @Update
-    void update(ChildMedicalHistory... childMedicalHistories);
+    void updateMedHistory(ChildMedicalHistory... childMedicalHistories);
 
     @Delete
-    void delete(ChildMedicalHistory... childMedicalHistories);
+    void deleteMedHistory(ChildMedicalHistory... childMedicalHistories);
+
+    @Query("DELETE FROM medHistory_table WHERE foreignChID = :ChID")
+    void deleteAllHistoryOfChild(int ChID);
+
+    @Query("DELETE FROM medHistory_table WHERE medID = :medID")
+    void deleteMedHistoryWithID(int medID);
 
     @Query("DELETE FROM medHistory_table")
     void deleteAllMedicalHistories();
-
-
 
 }

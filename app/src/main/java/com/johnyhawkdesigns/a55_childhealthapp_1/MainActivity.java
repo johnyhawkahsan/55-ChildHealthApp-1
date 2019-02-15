@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.johnyhawkdesigns.a55_childhealthapp_1.activities.AddEditChildActivity;
+import com.johnyhawkdesigns.a55_childhealthapp_1.activities.ChildDetailActivity;
 import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.ChildListAdapter;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;

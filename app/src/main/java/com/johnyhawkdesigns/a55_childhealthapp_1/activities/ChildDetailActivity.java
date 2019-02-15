@@ -1,4 +1,4 @@
-package com.johnyhawkdesigns.a55_childhealthapp_1;
+package com.johnyhawkdesigns.a55_childhealthapp_1.activities;
 
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
@@ -46,7 +47,6 @@ public class ChildDetailActivity extends AppCompatActivity {
     private Button viewVaccinationRecord;
 
     public Uri imageUri;
-
 
 
     @Override

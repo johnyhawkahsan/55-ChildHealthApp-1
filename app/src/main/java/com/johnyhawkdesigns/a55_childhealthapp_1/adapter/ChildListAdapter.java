@@ -12,9 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.johnyhawkdesigns.a55_childhealthapp_1.ChildDetailActivity;
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
-import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
@@ -112,7 +110,12 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
     // mChilds has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
-        return mChilds.size();
+
+        if (mChilds == null)
+            return 0;
+        else
+            return  mChilds.size();
+
     }
 
 

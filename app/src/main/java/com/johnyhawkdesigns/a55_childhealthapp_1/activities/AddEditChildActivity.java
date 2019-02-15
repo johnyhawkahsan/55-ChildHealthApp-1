@@ -1,4 +1,4 @@
-package com.johnyhawkdesigns.a55_childhealthapp_1;
+package com.johnyhawkdesigns.a55_childhealthapp_1.activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -9,10 +9,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
@@ -34,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
@@ -251,13 +250,13 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                 child.setDateOfBirth(dateOfBirthString);
 
                 if (age.length() != 0){
-                    child.setAge(Double.parseDouble(age));
+                    child.setAge(Integer.parseInt(age));
                 }
                 if (height.length() != 0){
-                    child.setHeight(Double.parseDouble(height));
+                    child.setHeight(Integer.parseInt(height));
                 }
                 if (weight.length() != 0){
-                    child.setWeight(Double.parseDouble(weight));
+                    child.setWeight(Integer.parseInt(weight));
                 }
 
                 child.setProfileUpdateDate(currentDate);
