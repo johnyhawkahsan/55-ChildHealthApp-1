@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -114,7 +115,22 @@ public class ChildDetailActivity extends AppCompatActivity {
         });
 
 
+        viewMedicalRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
+                Intent intent = new Intent(getApplicationContext(), MedHistoryActivity.class);
+                startActivity(intent);
 
+            }
+        });
+
+        viewVaccinationRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
+            }
+        });
     }
 
 
