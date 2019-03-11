@@ -8,19 +8,25 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
+import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.MedHistoryAdapter;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
+import com.johnyhawkdesigns.a55_childhealthapp_1.database.MedHistoryViewModel;
 
 public class MedHistoryListFragment extends Fragment{
 
     // callback method implemented by MainActivity
     public interface MedHistoryListFragmentListener{
+
+        void onMedHistorySelected(int chID, int medID);
 
         // called when add button is pressed
         void onAddMedHistory();
@@ -31,7 +37,12 @@ public class MedHistoryListFragment extends Fragment{
 
     private static final String TAG = MedHistoryListFragment.class.getSimpleName();
 
-    private ChildViewModel childViewModel;
+    private TextView emptyTextView;
+    private RecyclerView recyclerView;
+
+    private MedHistoryAdapter medHistoryAdapter;
+
+    private MedHistoryViewModel medHistoryViewModel;
     FloatingActionButton floatingActionButton;
 
     @Nullable
@@ -41,8 +52,20 @@ public class MedHistoryListFragment extends Fragment{
         setHasOptionsMenu(true); // fragment has menu items to display
 
         // inflate GUI and get reference to the RecyclerView
+
         View view =  inflater.inflate(R.layout.med_history_list, container, false);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewMedHistory);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewMedHistory);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        medHistoryViewModel = new MedHistoryViewModel();
+
+        medHistoryAdapter = new MedHistoryAdapter(getActivity(), new MedHistoryAdapter.MedHistoryClickListener() {
+            @Override
+            public void onClick(int chID, int medID) {
+                Log.d(TAG, "onClick: received chID = " + chID + ", medID = " + medID);
+                listener.onMedHistorySelected(chID, medID);
+            }
+        });
 
         Log.d(TAG, "onCreateView: ");
 

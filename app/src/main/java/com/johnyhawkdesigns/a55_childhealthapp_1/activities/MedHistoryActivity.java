@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.johnyhawkdesigns.a55_childhealthapp_1.Fragments.AddEditMedHistoryFragment;
 import com.johnyhawkdesigns.a55_childhealthapp_1.Fragments.MedHistoryListFragment;
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
+import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.MedHistoryAdapter;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 
 public class MedHistoryActivity extends AppCompatActivity
@@ -21,11 +22,7 @@ public class MedHistoryActivity extends AppCompatActivity
     private static final String TAG = MedHistoryActivity.class.getSimpleName();
 
 
-
     private MedHistoryListFragment medHistoryListFragment;
-
-    private TextView emptyTextView;
-    private RecyclerView recyclerView;
 
 
     @Override
@@ -40,9 +37,13 @@ public class MedHistoryActivity extends AppCompatActivity
         transaction.add(R.id.medFragmentContainer, medHistoryListFragment);
         transaction.commit();
 
-
     }
 
+
+    @Override
+    public void onMedHistorySelected(int chID, int medID) {
+
+    }
 
     @Override
     public void onAddMedHistory() {

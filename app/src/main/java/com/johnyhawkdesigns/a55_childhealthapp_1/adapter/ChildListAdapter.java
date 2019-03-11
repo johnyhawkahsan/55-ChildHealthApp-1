@@ -32,7 +32,7 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
 
     private final ChildClickListener childClickListener;
 
-    //Constructor for WordListAdapter
+    //Constructor for ChildListAdapter
     public ChildListAdapter(Context context, ChildClickListener childClickListener){
         mContext = context;
         this.childClickListener = childClickListener;
