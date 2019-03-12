@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildDao;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
-import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
 import java.util.List;
 
@@ -17,16 +16,14 @@ import java.util.List;
  * The Repository is not part of the Architecture Components libraries, but is a suggested best practice for code separation and architecture.
  * A Repository class handles data operations. It provides a clean API to the rest of the app for app data
  */
-
 public class ChildRepository implements AsyncResult{
 
     private static final String TAG = ChildRepository.class.getSimpleName();
 
-    // We declare a MutableLiveData variable named searchResults into which the results of a search operation are stored whenever a asynchronous search task completes
-    private MutableLiveData<List<Child>> searchResults = new MutableLiveData<>();
     private ChildDao childDao;
     private LiveData<List<Child>> mAllChilds;
-    // We declare a MutableLiveData variable named searchResults into which the results of a search operation are stored whenever a asynchronous search task completes
+
+    // We declare a MutableLiveData variable named childSearchResult into which the results of a search operation are stored whenever a asynchronous search task completes
     private MutableLiveData<Child> childSearchResult = new MutableLiveData<>();
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
@@ -38,7 +35,6 @@ public class ChildRepository implements AsyncResult{
         childDao = childRoomDatabase.childDAO(); // we receive childDAO from childRoomDatabase
         mAllChilds = childDao.getAllChild(); // We are receiving all childs data in constructor
     }
-
 
 
     // Room executes all queries on a separate thread.

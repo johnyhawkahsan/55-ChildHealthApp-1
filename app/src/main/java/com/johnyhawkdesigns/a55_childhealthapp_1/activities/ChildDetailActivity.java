@@ -118,8 +118,9 @@ public class ChildDetailActivity extends AppCompatActivity {
         viewMedicalRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: ");
+                Log.d(TAG, "onClick: Launching MedHistoryActivity, sending chID = " + chID);
                 Intent intent = new Intent(getApplicationContext(), MedHistoryActivity.class);
+                intent.putExtra("chID", chID);
                 startActivity(intent);
 
             }

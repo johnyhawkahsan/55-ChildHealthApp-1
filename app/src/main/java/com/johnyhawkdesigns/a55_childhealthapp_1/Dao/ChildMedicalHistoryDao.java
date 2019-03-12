@@ -15,7 +15,7 @@ import java.util.List;
 @Dao
 public interface ChildMedicalHistoryDao {
 
-    @Query("Select * FROM medHistory_table WHERE foreignChID == :foreignChID")
+    @Query("Select * FROM medHistory_table WHERE foreignChID == :foreignChID ORDER BY medID DESC")
     LiveData<List<ChildMedicalHistory>> loadAllMedHistoryOfChild(int foreignChID);
 
     @Query("Select * FROM medHistory_table WHERE medID == :medID")
@@ -36,7 +36,7 @@ public interface ChildMedicalHistoryDao {
     @Query("DELETE FROM medHistory_table WHERE medID = :medID")
     void deleteMedHistoryWithID(int medID);
 
-    @Query("DELETE FROM medHistory_table")
-    void deleteAllMedicalHistories();
+    @Query("DELETE FROM medHistory_table WHERE foreignChID = :chID")
+    void deleteAllMedicalHistories(int chID);
 
 }

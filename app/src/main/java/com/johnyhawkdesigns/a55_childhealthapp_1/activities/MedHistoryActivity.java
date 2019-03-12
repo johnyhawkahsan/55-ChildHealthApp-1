@@ -4,35 +4,37 @@ package com.johnyhawkdesigns.a55_childhealthapp_1.activities;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-
-import android.widget.TextView;
 
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.Fragments.AddEditMedHistoryFragment;
 import com.johnyhawkdesigns.a55_childhealthapp_1.Fragments.MedHistoryListFragment;
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
-import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.MedHistoryAdapter;
-import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
+
 
 public class MedHistoryActivity extends AppCompatActivity
     implements MedHistoryListFragment.MedHistoryListFragmentListener{
 
     private static final String TAG = MedHistoryActivity.class.getSimpleName();
 
-
     private MedHistoryListFragment medHistoryListFragment;
 
+    public int chID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.med_history_container);
 
-        Log.d(TAG, "onCreate: ");
+        chID = (int) getIntent().getSerializableExtra("chID");
+        Log.d(TAG, "onCreate: received chID = " + chID);
 
         medHistoryListFragment = new MedHistoryListFragment();
+
+        Bundle args = new Bundle();
+        args.putInt("chID", chID);
+        medHistoryListFragment.setArguments(args);
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.medFragmentContainer, medHistoryListFragment);
         transaction.commit();

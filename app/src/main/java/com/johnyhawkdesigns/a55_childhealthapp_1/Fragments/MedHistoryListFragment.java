@@ -45,19 +45,22 @@ public class MedHistoryListFragment extends Fragment{
     private MedHistoryViewModel medHistoryViewModel;
     FloatingActionButton floatingActionButton;
 
+    public int chID;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         setHasOptionsMenu(true); // fragment has menu items to display
 
-        // inflate GUI and get reference to the RecyclerView
+        chID = getArguments().getInt("chID"); // receive chID
 
+        // inflate GUI and get reference to the RecyclerView
         View view =  inflater.inflate(R.layout.med_history_list, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewMedHistory);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        medHistoryViewModel = new MedHistoryViewModel();
+        medHistoryViewModel = new MedHistoryViewModel(getActivity().getApplication(), chID);
 
         medHistoryAdapter = new MedHistoryAdapter(getActivity(), new MedHistoryAdapter.MedHistoryClickListener() {
             @Override
