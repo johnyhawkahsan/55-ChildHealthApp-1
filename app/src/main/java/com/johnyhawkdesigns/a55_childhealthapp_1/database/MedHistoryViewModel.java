@@ -38,8 +38,8 @@ public class MedHistoryViewModel extends AndroidViewModel{
         medHistoryRepository.updateTask(childMedicalHistory);
     }
 
-    public void findMedHistoryWithID(int medID){
-        medHistoryRepository.findMedicalHistoryWithID(medID);
+    public void findMedHistoryWithID(int medID, int chID){
+        medHistoryRepository.findMedicalHistoryWithID(medID, chID);
     }
 
     public MutableLiveData<ChildMedicalHistory> getSearchResults() {

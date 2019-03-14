@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.johnyhawkdesigns.a55_childhealthapp_1.Fragments.AddEditMedHistoryFragment;
 import com.johnyhawkdesigns.a55_childhealthapp_1.activities.AddEditChildActivity;
 import com.johnyhawkdesigns.a55_childhealthapp_1.activities.ChildDetailActivity;
 import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.ChildListAdapter;
@@ -27,7 +28,7 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements AddEditMedHistoryFragment.AddEditFragmentListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int RC_CREATE_CHILD = 1;
@@ -194,4 +195,8 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    @Override
+    public void onAddEditCompleted(int medID) {
+        Log.d(TAG, "onAddEditCompleted: medID = " + medID);
+    }
 }

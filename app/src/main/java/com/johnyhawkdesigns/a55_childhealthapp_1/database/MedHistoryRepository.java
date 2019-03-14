@@ -26,7 +26,11 @@ public class MedHistoryRepository implements AsyncResultMedHistory{
     public MedHistoryRepository(Application application, int chID) {
         ChildRoomDatabase childRoomDatabase = ChildRoomDatabase.getDBINSTANCE(application);
         medicalHistoryDao = childRoomDatabase.medicalHistoryDao();
-        mAllMedicalHistories = medicalHistoryDao.loadAllMedHistoryOfChild(chID); // get history of this specific child
+        // Because in AddEditMedHistoryFragment instance, there is no chID yet.
+        if (chID != 0){
+            mAllMedicalHistories = medicalHistoryDao.loadAllMedHistoryOfChild(chID); // get history of this specific child
+        }
+
     }
 
     public LiveData<List<ChildMedicalHistory>> getAllMedicalHistories() {
@@ -49,10 +53,10 @@ public class MedHistoryRepository implements AsyncResultMedHistory{
         new deleteAllAsyncTask(medicalHistoryDao).execute(chID);
     }
 
-    public void findMedicalHistoryWithID(int medID){
+    public void findMedicalHistoryWithID(int medID, int chID){
         queryAsyncTask task = new queryAsyncTask(medicalHistoryDao);
         task.delegate = this;
-        task.execute(medID);
+        task.execute(medID, chID);
     }
 
 
@@ -89,7 +93,9 @@ public class MedHistoryRepository implements AsyncResultMedHistory{
         @Override
         protected ChildMedicalHistory doInBackground(Integer... params) {
             Log.d(TAG, "doInBackground: chID in params = " + params[0]);
-            return asyncTaskDao.getHistoryWithMedID(params[0]);
+            int medID = params[0];
+            int chID = params[1];
+            return asyncTaskDao.getHistoryWithMedID(medID,chID);
         }
 
         @Override

@@ -18,8 +18,8 @@ public interface ChildMedicalHistoryDao {
     @Query("Select * FROM medHistory_table WHERE foreignChID == :foreignChID ORDER BY medID DESC")
     LiveData<List<ChildMedicalHistory>> loadAllMedHistoryOfChild(int foreignChID);
 
-    @Query("Select * FROM medHistory_table WHERE medID == :medID")
-    ChildMedicalHistory getHistoryWithMedID(int medID);
+    @Query("Select * FROM medHistory_table WHERE medID == :medID AND foreignChID == :foreignChID")
+    ChildMedicalHistory getHistoryWithMedID(int medID, int foreignChID);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMedHistory(ChildMedicalHistory... childMedicalHistories);

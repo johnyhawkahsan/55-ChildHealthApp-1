@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.MedHistoryAdapter;
-import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.MedHistoryViewModel;
 
 public class MedHistoryListFragment extends Fragment{
@@ -54,6 +53,7 @@ public class MedHistoryListFragment extends Fragment{
         setHasOptionsMenu(true); // fragment has menu items to display
 
         chID = getArguments().getInt("chID"); // receive chID
+        Log.d(TAG, "onCreateView: chID received = " + chID);
 
         // inflate GUI and get reference to the RecyclerView
         View view =  inflater.inflate(R.layout.med_history_list, container, false);
@@ -70,7 +70,6 @@ public class MedHistoryListFragment extends Fragment{
             }
         });
 
-        Log.d(TAG, "onCreateView: ");
 
         //When Floating button is clicked, we are redirected to AddEditMedHistoryFragment
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.addMedHistory);

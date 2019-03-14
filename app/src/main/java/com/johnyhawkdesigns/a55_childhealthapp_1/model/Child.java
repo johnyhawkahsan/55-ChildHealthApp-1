@@ -50,9 +50,9 @@ public class Child implements Serializable{
 
     // To avoid complication, I'm converting Date of birth to string for now
     @Nullable
-    //@TypeConverters({DateTypeConverter.class})
+    @TypeConverters({DateTypeConverter.class})
     @ColumnInfo(name = "dateOfBirth")
-    private String dateOfBirth;
+    private Date dateOfBirth;
 
     @Nullable
     @ColumnInfo(name = "age")
@@ -117,11 +117,11 @@ public class Child implements Serializable{
     }
 
     @Nullable
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(@Nullable String dateOfBirth) {
+    public void setDateOfBirth(@Nullable Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

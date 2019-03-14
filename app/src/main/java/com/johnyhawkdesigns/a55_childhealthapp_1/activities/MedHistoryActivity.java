@@ -13,7 +13,7 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 
 
 public class MedHistoryActivity extends AppCompatActivity
-    implements MedHistoryListFragment.MedHistoryListFragmentListener{
+    implements MedHistoryListFragment.MedHistoryListFragmentListener, AddEditMedHistoryFragment.AddEditFragmentListener{
 
     private static final String TAG = MedHistoryActivity.class.getSimpleName();
 
@@ -69,5 +69,10 @@ public class MedHistoryActivity extends AppCompatActivity
         transaction.commit();
 
 
+    }
+
+    @Override
+    public void onAddEditCompleted(int medID) {
+        Log.d(TAG, "onAddEditCompleted: medID = " + medID);
     }
 }

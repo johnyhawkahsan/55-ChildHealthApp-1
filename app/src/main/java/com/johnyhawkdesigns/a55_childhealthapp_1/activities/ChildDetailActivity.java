@@ -95,7 +95,7 @@ public class ChildDetailActivity extends AppCompatActivity {
                 tvChName.setText(child.getName());
                 tvGender.setText(child.getGender());
                 tvBloodGroup.setText(child.getBloodGroup());
-                tvDOB.setText(child.getDateOfBirth());
+                tvDOB.setText(AppUtils.getFormattedDateString(child.getDateOfBirth()));
                 tvAge.setText(String.valueOf(child.getAge()) + " years");
                 tvHeight.setText(String.valueOf(child.getHeight()) + " feet");
                 tvWeight.setText(String.valueOf(child.getWeight()) + " kg");

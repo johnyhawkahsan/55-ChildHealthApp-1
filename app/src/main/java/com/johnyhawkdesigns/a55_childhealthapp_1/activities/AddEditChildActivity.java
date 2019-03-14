@@ -141,7 +141,7 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                     }
 
                     Log.d(TAG, "onChanged: " + child.getDateOfBirth());
-                    textInputProfileUpdateDate.setText(child.getDateOfBirth());
+                    textInputProfileUpdateDate.setText(profileUpdateDateString);
                 }
             });
         }
@@ -247,7 +247,7 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                 child.setName(name);
                 child.setGender(gender);
                 child.setBloodGroup(bloodGroup);
-                child.setDateOfBirth(dateOfBirthString);
+                child.setDateOfBirth(dateOfBirth);
 
                 if (age.length() != 0){
                     child.setAge(Integer.parseInt(age));
