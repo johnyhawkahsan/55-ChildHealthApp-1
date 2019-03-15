@@ -167,7 +167,7 @@ public class AddEditMedHistoryFragment extends android.support.v4.app.Fragment i
     private final View.OnClickListener saveButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            final ChildMedicalHistory childMedicalHistory = new ChildMedicalHistory();
+
 
             doctorName = textInputDoctorName.getText().toString();
             diseaseDesc = textInputDiseaseDesc.getText().toString();
@@ -182,11 +182,7 @@ public class AddEditMedHistoryFragment extends android.support.v4.app.Fragment i
 
             //If no field is left empty and everything is filled
             else {
-                childMedicalHistory.setDoctorName(doctorName);
-                childMedicalHistory.setDiseaseDec(diseaseDesc);
-                childMedicalHistory.setPrescMedicine(prescMedicine);
-                childMedicalHistory.setVisitDate(visitDate);
-                childMedicalHistory.setForeignChID(chID);
+                final ChildMedicalHistory childMedicalHistory = new ChildMedicalHistory(chID, doctorName, visitDate, diseaseDesc, prescMedicine);
 
                 if (selectedImageUri != null){
                     childMedicalHistory.setImagePath(selectedImageUri.toString());

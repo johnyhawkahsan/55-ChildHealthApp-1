@@ -3,6 +3,7 @@ package com.johnyhawkdesigns.a55_childhealthapp_1.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Relation;
@@ -54,6 +55,17 @@ public class ChildMedicalHistory {
     @ColumnInfo(name = "imagePath")
     private String imagePath;
 
+    public ChildMedicalHistory(int foreignChID, String doctorName, Date visitDate, String diseaseDec, String prescMedicine) {
+        this.foreignChID = foreignChID;
+        this.doctorName = doctorName;
+        this.visitDate = visitDate;
+        this.diseaseDec = diseaseDec;
+        this.prescMedicine = prescMedicine;
+    }
+
+    // Empty constructor
+    public ChildMedicalHistory() {
+    }
 
     public int getMedID() {
         return medID;
