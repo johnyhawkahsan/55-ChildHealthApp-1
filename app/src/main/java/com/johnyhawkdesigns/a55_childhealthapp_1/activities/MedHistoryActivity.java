@@ -57,11 +57,15 @@ public class MedHistoryActivity extends AppCompatActivity
         // if editing existing medHistory, provide medID as an argument
         if (medID != null){
             Bundle arguments = new Bundle();
-            arguments.putParcelable(MED_ID, medID);
-            addEditMedHistoryFragment.setArguments(arguments);
+            arguments.putInt("medID", medID);
         }
         */
-        Log.d(TAG, "onAddMedHistory: launching addEditMedHistoryFragment");
+
+        Bundle args = new Bundle();
+        args.putInt("chID", chID);
+        addEditMedHistoryFragment.setArguments(args);
+
+        Log.d(TAG, "onAddMedHistory: launching addEditMedHistoryFragment - sending chID = " + chID);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.medFragmentContainer, addEditMedHistoryFragment);
@@ -74,5 +78,6 @@ public class MedHistoryActivity extends AppCompatActivity
     @Override
     public void onAddEditCompleted(int medID) {
         Log.d(TAG, "onAddEditCompleted: medID = " + medID);
+        getSupportFragmentManager().popBackStack();
     }
 }

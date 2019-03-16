@@ -12,18 +12,21 @@ import android.support.annotation.Nullable;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.typeConverters.DateTypeConverter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
+
 //For tutorial, visit = https://android.jlelse.eu/android-architecture-components-room-relationships-bf473510c14a
 @Entity(tableName = "medHistory_table",
-        foreignKeys = @ForeignKey(entity = Child.class,
-                parentColumns = "chID",
-                childColumns = "foreignChID",
+        foreignKeys = @ForeignKey(entity = Child.class, //The entity that contains the foreign key.
+                parentColumns = "chID", // The column(s) of the parent entity object that contains the key.
+                childColumns = "foreignChID", //The column(s) of the current entity, which is the child, that specified the parent key.
                 onDelete = CASCADE),
         indices=@Index(value="foreignChID")) //onDelete = CASCADE tells if child row will be deleted, we’d like to delete also all of it repositories.
-public class ChildMedicalHistory {
+//@Entity(tableName = "medHistory_table")
+public class ChildMedicalHistory implements Serializable{
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "medID")

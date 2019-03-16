@@ -4,17 +4,24 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.Nullable;
+
+import com.johnyhawkdesigns.a55_childhealthapp_1.database.typeConverters.DateTypeConverter;
 
 import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
+/*
 @Entity(tableName = "vacRecord_table",
         foreignKeys = @ForeignKey(entity = Child.class,
                 parentColumns = "chID",
                 childColumns = "foreignChID",
                 onDelete = CASCADE)) //onDelete = CASCADE tells if child row will be deleted, we’d like to delete also all of it repositories.
+
+ */
+@Entity(tableName = "vacRecord_table")
 public class ChildVaccinationRecord {
 
     @PrimaryKey(autoGenerate = true)
@@ -33,12 +40,15 @@ public class ChildVaccinationRecord {
     @ColumnInfo(name = "vacDone")
     private String vacDone;
 
+
     @Nullable
     @ColumnInfo(name = "vacDoneDate")
+    @TypeConverters({DateTypeConverter.class})
     private Date vacDoneDate;
 
     @Nullable
     @ColumnInfo(name = "vacDueDate")
+    @TypeConverters({DateTypeConverter.class})
     private Date vacDueDate;
 
     @Nullable

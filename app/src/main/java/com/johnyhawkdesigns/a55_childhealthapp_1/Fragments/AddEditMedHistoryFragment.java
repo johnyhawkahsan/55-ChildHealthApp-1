@@ -98,12 +98,18 @@ public class AddEditMedHistoryFragment extends android.support.v4.app.Fragment i
         saveChildMedicalRecord = (FloatingActionButton) view.findViewById(R.id.saveChildMedicalRecord);
         mPostImage = (ImageView) view.findViewById(R.id.imageViewPrescription);
 
-        // if we are adding new MedHistory, there should be no data in getArguments to assign to chID
-        if (getArguments() != null){
-            chID = getArguments().getInt("chID"); // receive chID
-            medID = getArguments().getInt("medID"); // receive chID
+        // get Bundle of arguments then extract the contact's Uri
+        Bundle arguments = getArguments();
 
-            Log.d(TAG, "onCreateView: received chID = " + chID + ", addingNewMedRecord = false");
+        chID = arguments.getInt("chID"); // we should receive chID in case of adding new medRecord as well as editing existing record.
+        Log.d(TAG, "onCreateView: received chID = " + chID);
+
+        // if we are adding new MedHistory, there should be no data in getArguments to assign to chID
+        if (arguments.get("medID") != null){
+
+            medID = arguments.getInt("medID"); // receive chID
+
+            Log.d(TAG, "onCreateView: received medID = " + medID + ", addingNewMedRecord = false");
 
             addingNewMedRecord = false;
 

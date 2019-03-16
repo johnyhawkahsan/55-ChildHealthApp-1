@@ -8,7 +8,7 @@
     android:padding="@dimen/default_padding">
 
     <ImageView
-        android:id="@+id/imageViewPrescription"
+        android:id="@+id/imageViewVacRecord"
         android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="@android:dimen/thumbnail_width"
         android:layout_gravity="center_horizontal"
