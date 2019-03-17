@@ -88,7 +88,7 @@ public class ChildListAdapter extends RecyclerView.Adapter<ChildListAdapter.Chil
     public void onBindViewHolder(@NonNull ChildViewHolder childViewHolder, int position) {
         Child currentChild = mChilds.get(position);
         childViewHolder.childIcon.setImageResource(R.drawable.random_baby);
-        childViewHolder.chID.setText(String.valueOf(currentChild.getChID()));
+        childViewHolder.chID.setText("chID = " +String.valueOf(currentChild.getChID()));
         childViewHolder.gender.setText(currentChild.getGender());
         childViewHolder.chName.setText(currentChild.getName());
         String ageStr = String.valueOf(currentChild.getAge());

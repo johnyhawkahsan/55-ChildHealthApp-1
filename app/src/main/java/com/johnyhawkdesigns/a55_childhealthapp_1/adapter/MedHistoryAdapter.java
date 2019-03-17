@@ -87,8 +87,8 @@ public class MedHistoryAdapter extends RecyclerView.Adapter<MedHistoryAdapter.Me
     public void onBindViewHolder(@NonNull MedHistoryViewHolder medHistoryViewHolder, int position) {
         ChildMedicalHistory childMedicalHistory = medicalHistories.get(position);
         medHistoryViewHolder.medPrescriptionIcon.setImageResource(R.drawable.doctor_prescription);
-        medHistoryViewHolder.chID.setText(String.valueOf(childMedicalHistory.getForeignChID()));
-        medHistoryViewHolder.medID.setText(String.valueOf(childMedicalHistory.getMedID()));
+        medHistoryViewHolder.chID.setText("chID = " + String.valueOf(childMedicalHistory.getForeignChID()));
+        medHistoryViewHolder.medID.setText("medID = " + String.valueOf(childMedicalHistory.getMedID()));
         medHistoryViewHolder.visitDate.setText(AppUtils.getFormattedDateString(childMedicalHistory.getVisitDate()));
         medHistoryViewHolder.doctorName.setText(childMedicalHistory.getDoctorName());
 

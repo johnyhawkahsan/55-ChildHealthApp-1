@@ -85,7 +85,7 @@ public class AddEditMedHistoryFragment extends android.support.v4.app.Fragment i
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.add_edit_med_record, container, false);
 
-        medHistoryViewModel = new MedHistoryViewModel(getActivity().getApplication(), 0);
+        medHistoryViewModel = new MedHistoryViewModel(getActivity().getApplication());
 
         calendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(getActivity(), this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH) );
@@ -117,7 +117,21 @@ public class AddEditMedHistoryFragment extends android.support.v4.app.Fragment i
             medHistoryViewModel.getSearchResults().observe(this, new Observer<ChildMedicalHistory>() {
                 @Override
                 public void onChanged(@Nullable ChildMedicalHistory childMedicalHistory) {
+                    Log.d(TAG, "onChanged: found childMedicalHistory with doctorName = " + childMedicalHistory.getDoctorName());
 
+                    textInputDoctorName.setText(childMedicalHistory.getDoctorName());
+                    //textInputVisitDate.setText(AppUtils.getFormattedDateString(childMedicalHistory.getVisitDate()));
+                    textInputDiseaseDesc.setText(childMedicalHistory.getDiseaseDec());
+                    textPrescMedicine.setText(childMedicalHistory.getPrescMedicine());
+
+                    if (childMedicalHistory.getImagePath() != null){
+                        selectedImageUri = Uri.parse(childMedicalHistory.getImagePath());
+                        Log.d(TAG, "onChanged: childMedicalHistory already has image with path = " + selectedImageUri);
+                        Glide
+                                .with(getActivity())
+                                .load(selectedImageUri)
+                                .into(mPostImage);
+                    }
                 }
             });
 
@@ -188,7 +202,13 @@ public class AddEditMedHistoryFragment extends android.support.v4.app.Fragment i
 
             //If no field is left empty and everything is filled
             else {
-                final ChildMedicalHistory childMedicalHistory = new ChildMedicalHistory(chID, doctorName, visitDate, diseaseDesc, prescMedicine);
+                final ChildMedicalHistory childMedicalHistory = new ChildMedicalHistory();
+
+                childMedicalHistory.setForeignChID(chID);
+                childMedicalHistory.setDoctorName(doctorName);
+                childMedicalHistory.setVisitDate(visitDate);
+                childMedicalHistory.setDiseaseDec(diseaseDesc);
+                childMedicalHistory.setPrescMedicine(prescMedicine);
 
                 if (selectedImageUri != null){
                     childMedicalHistory.setImagePath(selectedImageUri.toString());
@@ -200,6 +220,7 @@ public class AddEditMedHistoryFragment extends android.support.v4.app.Fragment i
                     Log.d(TAG, "onClick: MedRecord added, medID = " + childMedicalHistory.getMedID());
                     AppUtils.showMessage(getActivity(), "Med Record added with meID = " + childMedicalHistory.getMedID());
                     addEditFragmentListener.onAddEditCompleted(childMedicalHistory.getMedID());
+                    getFragmentManager().popBackStack();
                 }
                 // if addingNewMedRecord == false, we are editing existing MedRecord
                 else {
@@ -207,7 +228,8 @@ public class AddEditMedHistoryFragment extends android.support.v4.app.Fragment i
                     Log.d(TAG, "onClick: editing existing MedRecord with medID = " + medID);
                     childMedicalHistory.setMedID(medID);
                     medHistoryViewModel.update(childMedicalHistory);
-                    addEditFragmentListener.onAddEditCompleted(childMedicalHistory.getMedID());
+                    addEditFragmentListener.onAddEditCompleted(medID);
+                    getFragmentManager().popBackStack();
                 }
 
             }

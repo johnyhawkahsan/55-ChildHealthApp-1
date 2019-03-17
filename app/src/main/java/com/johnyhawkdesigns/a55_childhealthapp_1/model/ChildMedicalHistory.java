@@ -25,7 +25,6 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
                 childColumns = "foreignChID", //The column(s) of the current entity, which is the child, that specified the parent key.
                 onDelete = CASCADE),
         indices=@Index(value="foreignChID")) //onDelete = CASCADE tells if child row will be deleted, we’d like to delete also all of it repositories.
-//@Entity(tableName = "medHistory_table")
 public class ChildMedicalHistory implements Serializable{
 
     @PrimaryKey(autoGenerate = true)
@@ -58,17 +57,6 @@ public class ChildMedicalHistory implements Serializable{
     @ColumnInfo(name = "imagePath")
     private String imagePath;
 
-    public ChildMedicalHistory(int foreignChID, String doctorName, Date visitDate, String diseaseDec, String prescMedicine) {
-        this.foreignChID = foreignChID;
-        this.doctorName = doctorName;
-        this.visitDate = visitDate;
-        this.diseaseDec = diseaseDec;
-        this.prescMedicine = prescMedicine;
-    }
-
-    // Empty constructor
-    public ChildMedicalHistory() {
-    }
 
     public int getMedID() {
         return medID;

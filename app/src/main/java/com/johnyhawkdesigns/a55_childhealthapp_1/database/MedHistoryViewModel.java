@@ -25,6 +25,13 @@ public class MedHistoryViewModel extends AndroidViewModel{
         searchResults = medHistoryRepository.getMedicalHistorySearchResult();
     }
 
+    // Constructor 2 of ViewModel without chID
+    public MedHistoryViewModel(@NonNull Application application) {
+        super(application);
+        medHistoryRepository = new MedHistoryRepository(application);
+        searchResults = medHistoryRepository.getMedicalHistorySearchResult();
+    }
+
     public LiveData<List<ChildMedicalHistory>> getAllMedicalHistories() {
         return mAllMedicalHistories;
     }
@@ -46,8 +53,8 @@ public class MedHistoryViewModel extends AndroidViewModel{
         return searchResults;
     }
 
-    public void deleteMedHistoryWithID(int medID){
-        medHistoryRepository.deleteMedHistoryWithID(medID);
+    public void deleteMedHistoryWithID(int chID, int medID){
+        medHistoryRepository.deleteMedHistoryWithID(chID, medID);
     }
 
     public void deleteAllMedHistories(int chID){

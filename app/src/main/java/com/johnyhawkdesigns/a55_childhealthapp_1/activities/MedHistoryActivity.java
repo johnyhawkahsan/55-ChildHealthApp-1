@@ -8,12 +8,13 @@ import android.util.Log;
 
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.Fragments.AddEditMedHistoryFragment;
+import com.johnyhawkdesigns.a55_childhealthapp_1.Fragments.MedHistoryDetailFragment;
 import com.johnyhawkdesigns.a55_childhealthapp_1.Fragments.MedHistoryListFragment;
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 
 
 public class MedHistoryActivity extends AppCompatActivity
-    implements MedHistoryListFragment.MedHistoryListFragmentListener, AddEditMedHistoryFragment.AddEditFragmentListener{
+    implements MedHistoryListFragment.MedHistoryListFragmentListener, AddEditMedHistoryFragment.AddEditFragmentListener, MedHistoryDetailFragment.MedHistoryDetailFragmentListener{
 
     private static final String TAG = MedHistoryActivity.class.getSimpleName();
 
@@ -25,6 +26,8 @@ public class MedHistoryActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.med_history_container);
+
+        getSupportActionBar().setTitle("Medical Records");
 
         chID = (int) getIntent().getSerializableExtra("chID");
         Log.d(TAG, "onCreate: received chID = " + chID);
@@ -44,22 +47,28 @@ public class MedHistoryActivity extends AppCompatActivity
 
     @Override
     public void onMedHistorySelected(int chID, int medID) {
+        Log.d(TAG, "onMedHistorySelected: chID = " + chID + ", medID = " + medID);
+
+        getSupportActionBar().setTitle("Medical Details");
+
+        MedHistoryDetailFragment medHistoryDetailFragment = new MedHistoryDetailFragment();
+        Bundle args = new Bundle();
+        args.putInt("chID", chID);
+        args.putInt("medID", medID);
+        medHistoryDetailFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.medFragmentContainer, medHistoryDetailFragment);
+        transaction.commit();
 
     }
 
     @Override
     public void onAddMedHistory() {
 
-        AddEditMedHistoryFragment addEditMedHistoryFragment = new AddEditMedHistoryFragment();
+        getSupportActionBar().setTitle("Add Medical Record");
 
-        // Now we need to verify if we are adding a new MedHistory or editing an existing one
-        /*
-        // if editing existing medHistory, provide medID as an argument
-        if (medID != null){
-            Bundle arguments = new Bundle();
-            arguments.putInt("medID", medID);
-        }
-        */
+        AddEditMedHistoryFragment addEditMedHistoryFragment = new AddEditMedHistoryFragment();
 
         Bundle args = new Bundle();
         args.putInt("chID", chID);
@@ -78,6 +87,31 @@ public class MedHistoryActivity extends AppCompatActivity
     @Override
     public void onAddEditCompleted(int medID) {
         Log.d(TAG, "onAddEditCompleted: medID = " + medID);
-        getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onMedHistoryDeleted() {
+        Log.d(TAG, "onMedHistoryDeleted: ");
+    }
+
+    @Override
+    public void onEditMedHistory(int chID, int medID) {
+        Log.d(TAG, "onEditMedHistory: chID = " + chID + ", medID = " + medID);
+
+        getSupportActionBar().setTitle("Editing Medical Record");
+
+        AddEditMedHistoryFragment addEditMedHistoryFragment = new AddEditMedHistoryFragment();
+        Bundle args = new Bundle();
+        args.putInt("chID", chID);
+        args.putInt("medID", medID);
+        addEditMedHistoryFragment.setArguments(args);
+
+        Log.d(TAG, "onEditMedHistory: edit record with chID = " + chID + ", medID = " + medID);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.medFragmentContainer, addEditMedHistoryFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
     }
 }

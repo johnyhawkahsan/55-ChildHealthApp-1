@@ -1,6 +1,8 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1.Fragments;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,17 +10,26 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.johnyhawkdesigns.a55_childhealthapp_1.MainActivity;
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.MedHistoryAdapter;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.MedHistoryViewModel;
+import com.johnyhawkdesigns.a55_childhealthapp_1.model.ChildMedicalHistory;
+import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
+
+import java.util.List;
 
 public class MedHistoryListFragment extends Fragment{
 
@@ -60,6 +71,8 @@ public class MedHistoryListFragment extends Fragment{
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewMedHistory);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        emptyTextView = view.findViewById(R.id.tv__empty_medHistory);
+
         medHistoryViewModel = new MedHistoryViewModel(getActivity().getApplication(), chID);
 
         medHistoryAdapter = new MedHistoryAdapter(getActivity(), new MedHistoryAdapter.MedHistoryClickListener() {
@@ -67,6 +80,29 @@ public class MedHistoryListFragment extends Fragment{
             public void onClick(int chID, int medID) {
                 Log.d(TAG, "onClick: received chID = " + chID + ", medID = " + medID);
                 listener.onMedHistorySelected(chID, medID);
+            }
+        });
+
+        recyclerView.setAdapter(medHistoryAdapter);
+
+        medHistoryViewModel.getAllMedicalHistories().observe(this, new Observer<List<ChildMedicalHistory>>() {
+            @Override
+            public void onChanged(@Nullable List<ChildMedicalHistory> childMedicalHistories) {
+                Log.d(TAG, "onChanged: med history list size = " + childMedicalHistories.size());
+
+                // Loop through all returned list items and display in logs
+                for (int i = 0; i < childMedicalHistories.size(); i++){
+                    Log.d(TAG, "medID = " + childMedicalHistories.get(i).getMedID());
+                }
+
+                medHistoryAdapter.setMedicalHistoryList(childMedicalHistories);
+
+                if (childMedicalHistories.size() > 0){
+                    emptyTextView.setVisibility(View.GONE);
+                } else {
+                    emptyTextView.setVisibility(View.VISIBLE);
+                }
+
             }
         });
 
@@ -100,5 +136,43 @@ public class MedHistoryListFragment extends Fragment{
         listener = null;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_delete:
+                Log.d(TAG, "onOptionsItemSelected: delete all med record");
+
+                // Build alert dialog for confirmation
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Do you want to delete all medical records??");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AppUtils.showMessage(getActivity(), "Delete all medical records success" );
+                        medHistoryViewModel.deleteAllMedHistories(chID);
+                        medHistoryAdapter.notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog ad = builder.create();
+                ad.show();
+
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

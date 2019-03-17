@@ -27,10 +27,13 @@ public class MedHistoryRepository implements AsyncResultMedHistory{
         ChildRoomDatabase childRoomDatabase = ChildRoomDatabase.getDBINSTANCE(application);
         medicalHistoryDao = childRoomDatabase.medicalHistoryDao();
         // Because in AddEditMedHistoryFragment instance, there is no chID yet.
-        if (chID != 0){
-            mAllMedicalHistories = medicalHistoryDao.loadAllMedHistoryOfChild(chID); // get history of this specific child
-        }
+        mAllMedicalHistories = medicalHistoryDao.loadAllMedHistoryOfChild(chID); // get history of this specific child
+    }
 
+    //constructor 2 without chID
+    public MedHistoryRepository(Application application) {
+        ChildRoomDatabase childRoomDatabase = ChildRoomDatabase.getDBINSTANCE(application);
+        medicalHistoryDao = childRoomDatabase.medicalHistoryDao();
     }
 
     public LiveData<List<ChildMedicalHistory>> getAllMedicalHistories() {
@@ -45,8 +48,8 @@ public class MedHistoryRepository implements AsyncResultMedHistory{
         new insertAsyncTask(medicalHistoryDao).execute(childMedicalHistory);
     }
 
-    public void deleteMedHistoryWithID(int medID){
-        new deleteAsyncTask(medicalHistoryDao).execute(medID);
+    public void deleteMedHistoryWithID(int chID, int medID){
+        new deleteAsyncTask(medicalHistoryDao).execute(chID, medID);
     }
 
     public void deleteAllMedicalHistories(int chID){
@@ -92,9 +95,9 @@ public class MedHistoryRepository implements AsyncResultMedHistory{
         // passed a String containing the product name for which the search is to be performed, passes it to the findProduct() method of the DAO and returns a list of matching Product entity objects findProduct() method of the DAO
         @Override
         protected ChildMedicalHistory doInBackground(Integer... params) {
-            Log.d(TAG, "doInBackground: chID in params = " + params[0]);
             int medID = params[0];
             int chID = params[1];
+            Log.d(TAG, "doInBackground: chID = " + chID + ", medID = " + medID);
             return asyncTaskDao.getHistoryWithMedID(medID,chID);
         }
 
@@ -121,8 +124,10 @@ public class MedHistoryRepository implements AsyncResultMedHistory{
 
         @Override
         protected Void doInBackground(final Integer... params) {
-            Log.d(TAG, "doInBackground: delete child with chID = " + params[0]);
-            asyncTaskDao.deleteMedHistoryWithID(params[0]);
+            int chID = params[0];
+            int medID = params[1];
+            Log.d(TAG, "doInBackground: delete MedicalHistory with chID = " + chID + ", medID = " + medID);
+            asyncTaskDao.deleteMedHistoryWithID(chID, medID);
             return null;
         }
     }
@@ -139,8 +144,9 @@ public class MedHistoryRepository implements AsyncResultMedHistory{
 
         @Override
         protected Void doInBackground(Integer... params) {
-            Log.d(TAG, "doInBackground: delete all childs");
-            asyncTaskDao.deleteAllMedicalHistories(params[0]);
+            int chID = params[0];
+            Log.d(TAG, "doInBackground: delete all MedicalHistories of this chID= " + chID);
+            asyncTaskDao.deleteAllMedicalHistories(chID);
             return null;
         }
     }

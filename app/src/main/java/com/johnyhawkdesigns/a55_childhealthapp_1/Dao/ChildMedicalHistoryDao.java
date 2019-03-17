@@ -30,11 +30,8 @@ public interface ChildMedicalHistoryDao {
     @Delete
     void deleteMedHistory(ChildMedicalHistory... childMedicalHistories);
 
-    @Query("DELETE FROM medHistory_table WHERE foreignChID = :ChID")
-    void deleteAllHistoryOfChild(int ChID);
-
-    @Query("DELETE FROM medHistory_table WHERE medID = :medID")
-    void deleteMedHistoryWithID(int medID);
+    @Query("DELETE FROM medHistory_table WHERE foreignChID = :chID AND medID = :medID")
+    void deleteMedHistoryWithID(int chID, int medID);
 
     @Query("DELETE FROM medHistory_table WHERE foreignChID = :chID")
     void deleteAllMedicalHistories(int chID);
