@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -69,7 +70,8 @@ public class MedHistoryListFragment extends Fragment{
         // inflate GUI and get reference to the RecyclerView
         View view =  inflater.inflate(R.layout.med_history_list, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewMedHistory);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        //recyclerView.addItemDecoration();
 
         emptyTextView = view.findViewById(R.id.tv__empty_medHistory);
 

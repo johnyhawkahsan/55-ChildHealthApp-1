@@ -4,7 +4,9 @@ import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -71,8 +73,27 @@ public class ChildDetailActivity extends AppCompatActivity {
         tvLastProfileUpdateDate = (TextView) findViewById(R.id.tvLastProfileUpdateDate);
 
 
-        viewMedicalRecord = (Button) findViewById(R.id.viewMedicalRecord);
-        viewVaccinationRecord = (Button) findViewById(R.id.viewVaccinationRecord);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.view_medical_record:
+                        Log.d(TAG, "onNavigationItemSelected: Launching MedHistoryActivity, sending chID = " + chID);
+                        Intent medHistoryIntent = new Intent(getApplicationContext(), MedHistoryActivity.class);
+                        medHistoryIntent.putExtra("chID", chID);
+                        startActivity(medHistoryIntent);
+                        break;
+                    case R.id.view_vaccination_record:
+                        Log.d(TAG, "onNavigationItemSelected: Launching VaccinationRecord, sending chID = " + chID);
+                        Intent vaccinationIntent = new Intent(getApplicationContext(), VaccinationRecordActivity.class);
+                        vaccinationIntent.putExtra("chID", chID);
+                        startActivity(vaccinationIntent);
+                        break;
+                }
+                return false;
+            }
+        });
 
         // initialize childViewModel
         childViewModel = new ChildViewModel(getApplication());
@@ -114,24 +135,6 @@ public class ChildDetailActivity extends AppCompatActivity {
             }
         });
 
-
-        viewMedicalRecord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: Launching MedHistoryActivity, sending chID = " + chID);
-                Intent intent = new Intent(getApplicationContext(), MedHistoryActivity.class);
-                intent.putExtra("chID", chID);
-                startActivity(intent);
-
-            }
-        });
-
-        viewVaccinationRecord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: ");
-            }
-        });
     }
 
 

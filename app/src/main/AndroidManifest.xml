@@ -25,7 +25,8 @@
         </activity>
         <activity android:name=".activities.AddEditChildActivity" />
         <activity android:name=".activities.ChildDetailActivity" />
-        <activity android:name=".activities.MedHistoryActivity"/>
+        <activity android:name=".activities.MedHistoryActivity" />
+        <activity android:name=".activities.VaccinationRecordActivity"></activity>
     </application>
 
 </manifest>

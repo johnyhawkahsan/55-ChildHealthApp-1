@@ -125,7 +125,7 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                 public void onChanged(@Nullable Child child) {
                     textInputName.setText(child.getName());
                     textInputBloodGroup.setText(child.getBloodGroup());
-                    //textInputDateOfBirth.setText(child.getDateOfBirth());
+                    //textInputDateOfBirth.setText(AppUtils.getFormattedDateString(child.getDateOfBirth()));
                     textInputAge.setText(String.valueOf(child.getAge()));
                     textInputHeight.setText(String.valueOf(child.getHeight()));
                     textInputWeight.setText(String.valueOf(child.getWeight()));

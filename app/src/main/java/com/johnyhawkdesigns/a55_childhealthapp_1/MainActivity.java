@@ -188,8 +188,12 @@ public class MainActivity extends AppCompatActivity implements AddEditMedHistory
                 AlertDialog ad = builder.create();
                 ad.show();
 
+                return true;
+            case R.id.action_settings:
+                Log.d(TAG, "onOptionsItemSelected: open settings");
 
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
