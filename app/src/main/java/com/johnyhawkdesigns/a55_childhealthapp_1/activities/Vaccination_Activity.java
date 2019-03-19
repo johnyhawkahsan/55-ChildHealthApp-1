@@ -2,15 +2,19 @@ package com.johnyhawkdesigns.a55_childhealthapp_1.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 
-public class VaccinationRecordActivity extends AppCompatActivity {
 
-    private static final String TAG = VaccinationRecordActivity.class.getSimpleName();
+public class Vaccination_Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_vaccination);
 
-        //setContentView(R.layout.activity_vaccination_record);
+        getSupportActionBar().setTitle("Child Vaccination Record");
+
+
+
     }
 }

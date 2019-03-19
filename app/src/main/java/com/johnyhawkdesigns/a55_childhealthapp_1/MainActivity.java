@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.johnyhawkdesigns.a55_childhealthapp_1.Fragments.AddEditMedHistoryFragment;
 import com.johnyhawkdesigns.a55_childhealthapp_1.activities.AddEditChildActivity;
 import com.johnyhawkdesigns.a55_childhealthapp_1.activities.ChildDetailActivity;
+import com.johnyhawkdesigns.a55_childhealthapp_1.activities.SettingsActivity;
 import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.ChildListAdapter;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
@@ -191,6 +192,9 @@ public class MainActivity extends AppCompatActivity implements AddEditMedHistory
                 return true;
             case R.id.action_settings:
                 Log.d(TAG, "onOptionsItemSelected: open settings");
+
+                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
 
                 return true;
 

@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -86,7 +85,7 @@ public class ChildDetailActivity extends AppCompatActivity {
                         break;
                     case R.id.view_vaccination_record:
                         Log.d(TAG, "onNavigationItemSelected: Launching VaccinationRecord, sending chID = " + chID);
-                        Intent vaccinationIntent = new Intent(getApplicationContext(), VaccinationRecordActivity.class);
+                        Intent vaccinationIntent = new Intent(getApplicationContext(), Vaccination_Activity.class);
                         vaccinationIntent.putExtra("chID", chID);
                         startActivity(vaccinationIntent);
                         break;

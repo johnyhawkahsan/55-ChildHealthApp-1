@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.VaccinationRecordActivity">
+    tools:context=".activities.Vaccination_Activity">
 
     <TextView
-        android:id="@+id/tv__empty"
+        android:id="@+id/tv__empty_vacHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="40sp"
         android:gravity="center"
-        android:text="No Vaccination Record Found"
+        android:text="@string/NoMedHistory"
         android:drawableTop="@drawable/ic_empty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
