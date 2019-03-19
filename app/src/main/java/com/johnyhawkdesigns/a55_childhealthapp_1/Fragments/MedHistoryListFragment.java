@@ -141,14 +141,14 @@ public class MedHistoryListFragment extends Fragment{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_med_record, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.action_delete:
+            case R.id.delete_med_record:
                 Log.d(TAG, "onOptionsItemSelected: delete all med record");
 
                 // Build alert dialog for confirmation

@@ -29,15 +29,6 @@
         <activity android:name=".activities.Vaccination_Activity" />
 
         <activity
-            android:name=".activities.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.johnyhawkdesigns.a55_childhealthapp_1.MainActivity" />
-        </activity>
-
-        <activity
             android:name=".activities.PreferenceActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".MainActivity">

@@ -1,64 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <?xml version="1.0" encoding="utf-8"?>
     <PreferenceScreen
         xmlns:android="http://schemas.android.com/apk/res/android">
         <PreferenceCategory
-            android:title="Login"
+            android:title="Notifications Settings"
             android:key="pref_key_login_settings">
 
-            <Preference
-                android:key="Login"
-                android:title="Change Password"
-                />
-
-            <EditTextPreference
-                android:key="Login"
-                android:title="Change Password Hint"
-                />
-        </PreferenceCategory>
-
-        <PreferenceCategory
-            android:title="Security"
-            android:key="pref_key_security_settings">
-
-            <SwitchPreference
-                android:key="Login"
-                android:title="Auto Lock"
-                android:summary="Always prompt password login when the app is inactive for a while"
-                />
+            <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to dismiss it. -->
+            <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+            <ListPreference
+                android:defaultValue="1"
+                android:entries="@array/pref_profile_update_time"
+                android:entryValues="@array/pref_month_times"
+                android:key="@string/pref_key_duration"
+                android:negativeButtonText="Cancel"
+                android:positiveButtonText="OK"
+                android:title="@string/pref_notification_duration"
+                android:summary="@string/pref_description"/>
 
         </PreferenceCategory>
+
 
         <PreferenceCategory
             android:title="About"
             android:key="pref_key_about_settings">
 
             <Preference
-                android:key="Login"
-                android:title="Upgrade"
-                android:summary="Pro for peace of mind or be a Patron to support our work"
-                />
-
-            <Preference
-                android:key="Login"
-                android:title="❤ LuaPass"
-                android:summary="Rate LuaPass on Play Store"
-                />
-
-            <Preference
-                android:key="Login"
-                android:title="Feedback"
-                android:summary="Email us for question, suggestion or bug report"
-                />
-
-            <Preference
-                android:key="Login"
-                android:title="Version"
-                />
+                android:key="about"
+                android:title="Child Health Care Monitering App"
+                android:summary="Developed by Muhammad Ahsan Taqveem" />
 
         </PreferenceCategory>
     </PreferenceScreen>
 
-</PreferenceScreen>

@@ -140,7 +140,7 @@ public class ChildDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_child_details, menu);
+        inflater.inflate(R.menu.menu_children, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
