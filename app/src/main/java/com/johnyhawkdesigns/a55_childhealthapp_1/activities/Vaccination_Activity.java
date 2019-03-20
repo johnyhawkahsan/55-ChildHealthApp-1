@@ -10,7 +10,7 @@ public class Vaccination_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vaccination);
+        setContentView(R.layout.view_vaccination_record);
 
         getSupportActionBar().setTitle("Child Vaccination Record");
 

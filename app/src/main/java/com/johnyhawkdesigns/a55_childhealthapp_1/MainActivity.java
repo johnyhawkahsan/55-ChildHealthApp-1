@@ -3,7 +3,11 @@ package com.johnyhawkdesigns.a55_childhealthapp_1;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -118,9 +122,6 @@ public class MainActivity extends AppCompatActivity implements AddEditMedHistory
 
 
 
-
-
-
         //When Floating button is clicked, we are redirected to AddEditChildActivity
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -135,7 +136,15 @@ public class MainActivity extends AppCompatActivity implements AddEditMedHistory
                 Log.d(TAG, "onClick: launching AddEditChildActivity");
             }
         });
+
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String preferenceValue = prefs.getString(getString(R.string.pref_key_duration), "1");
+        Log.d(TAG, "onCreate: preferenceValue = " + preferenceValue);
+
+
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
