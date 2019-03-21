@@ -17,7 +17,7 @@ app:cardElevation="@dimen/cardview_default_elevation">
     android:layout_height="wrap_content"
     android:padding="@dimen/default_padding">
 
-    <ImageView
+    <com.johnyhawkdesigns.a55_childhealthapp_1.util.CircleImageView
         android:id="@+id/childIcon"
         android:layout_width="@dimen/profile_image_size"
         android:layout_height="@dimen/profile_image_size"
@@ -25,6 +25,7 @@ app:cardElevation="@dimen/cardview_default_elevation">
         android:layout_marginEnd="@dimen/default_margin"
         android:contentDescription="@string/childpicture"
         app:srcCompat="@drawable/random_baby" />
+
 
     <TextView
         android:id="@+id/chID"

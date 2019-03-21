@@ -16,7 +16,9 @@
         android:orientation="vertical">
 
 
-        <ImageView
+
+
+        <com.johnyhawkdesigns.a55_childhealthapp_1.util.CircleImageView
             android:id="@+id/imageViewIcon"
             android:layout_width="@android:dimen/thumbnail_width"
             android:layout_height="@android:dimen/thumbnail_width"
