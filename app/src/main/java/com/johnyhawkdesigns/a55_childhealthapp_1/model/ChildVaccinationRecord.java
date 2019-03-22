@@ -38,13 +38,11 @@ public class ChildVaccinationRecord {
 
     @Nullable
     @ColumnInfo(name = "vacDone")
-    private String vacDone;
-
+    private Boolean vacDone;
 
     @Nullable
-    @ColumnInfo(name = "vacDoneDate")
-    @TypeConverters({DateTypeConverter.class})
-    private Date vacDoneDate;
+    @ColumnInfo(name = "dose")
+    private String dose;
 
     @Nullable
     @ColumnInfo(name = "vacDueDate")
@@ -52,8 +50,11 @@ public class ChildVaccinationRecord {
     private Date vacDueDate;
 
     @Nullable
-    @ColumnInfo(name = "dose")
-    private String dose;
+    @ColumnInfo(name = "vacDoneDate")
+    @TypeConverters({DateTypeConverter.class})
+    private Date vacDoneDate;
+
+
 
 
     public int getVacID() {
@@ -82,11 +83,11 @@ public class ChildVaccinationRecord {
     }
 
     @Nullable
-    public String getVacDone() {
+    public Boolean getVacDone() {
         return vacDone;
     }
 
-    public void setVacDone(@Nullable String vacDone) {
+    public void setVacDone(@Nullable Boolean vacDone) {
         this.vacDone = vacDone;
     }
 

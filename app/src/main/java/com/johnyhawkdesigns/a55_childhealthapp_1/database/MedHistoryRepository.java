@@ -22,7 +22,7 @@ public class MedHistoryRepository implements AsyncResultMedHistory{
     // We declare a MutableLiveData variable named childSearchResult into which the results of a search operation are stored whenever a asynchronous search task completes
     private MutableLiveData<ChildMedicalHistory> medicalHistorySearchResult = new MutableLiveData<>();
 
-    // constructor
+    // constructor 1 with chID
     public MedHistoryRepository(Application application, int chID) {
         ChildRoomDatabase childRoomDatabase = ChildRoomDatabase.getDBINSTANCE(application);
         medicalHistoryDao = childRoomDatabase.medicalHistoryDao();
