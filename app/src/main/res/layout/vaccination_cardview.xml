@@ -18,7 +18,7 @@
         android:background="@color/green2">
 
         <TextView
-            android:id="@+id/primary_text"
+            android:id="@+id/dose"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/sub_text1"
+            android:id="@+id/doseTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -42,10 +42,10 @@
             android:textColor="@color/DarkGrey"
             app:layout_constraintEnd_toStartOf="@+id/media_image"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/primary_text" />
+            app:layout_constraintTop_toBottomOf="@+id/dose" />
 
         <TextView
-            android:id="@+id/sub_text2"
+            android:id="@+id/vac1"
             android:layout_width="0dp"
             android:layout_height="22dp"
             android:layout_marginEnd="16dp"
@@ -56,10 +56,10 @@
             android:textColor="@color/colorAccent"
             app:layout_constraintEnd_toStartOf="@+id/media_image"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sub_text1" />
+            app:layout_constraintTop_toBottomOf="@+id/doseTime" />
 
         <TextView
-            android:id="@+id/sub_text3"
+            android:id="@+id/vac2"
             android:layout_width="0dp"
             android:layout_height="22dp"
             android:layout_marginEnd="16dp"
@@ -69,7 +69,7 @@
             android:textColor="@color/colorAccent"
             app:layout_constraintEnd_toStartOf="@+id/media_image"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sub_text2" />
+            app:layout_constraintTop_toBottomOf="@+id/vac1" />
 
         <TextView
             android:id="@+id/vac_date"
@@ -82,10 +82,10 @@
             android:textColor="@color/purple1"
             app:layout_constraintEnd_toStartOf="@+id/media_image"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sub_text3" />
+            app:layout_constraintTop_toBottomOf="@+id/vac2" />
 
         <CheckBox
-            android:id="@+id/checkbox"
+            android:id="@+id/vacCheckbox"
             android:layout_width="0dp"
             android:layout_height="22dp"
             android:layout_marginBottom="8dp"
@@ -97,8 +97,7 @@
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/media_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sub_text4" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/media_image"
@@ -120,12 +119,12 @@
             android:paddingStart="8dp"
             android:text="Status"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/sub_text2"
+            app:layout_constraintStart_toEndOf="@+id/vac1"
             app:layout_constraintTop_toBottomOf="@+id/media_image"
             app:layout_constraintVertical_bias="0.0" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/action_button_2"
+            android:id="@+id/vacStatus"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

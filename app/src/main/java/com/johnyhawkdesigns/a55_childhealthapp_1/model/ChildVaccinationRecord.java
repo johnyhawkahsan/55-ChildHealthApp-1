@@ -33,16 +33,24 @@ public class ChildVaccinationRecord {
     private int foreignChID;
 
     @Nullable
-    @ColumnInfo(name = "vacType")
-    private String vacType;
+    @ColumnInfo(name = "dose")
+    private String dose;
+
+    @Nullable
+    @ColumnInfo(name = "doseTime")
+    private String doseTime;
+
+    @Nullable
+    @ColumnInfo(name = "vac1")
+    private String vac1;
+
+    @Nullable
+    @ColumnInfo(name = "vac2")
+    private String vac2;
 
     @Nullable
     @ColumnInfo(name = "vacDone")
     private Boolean vacDone;
-
-    @Nullable
-    @ColumnInfo(name = "dose")
-    private String dose;
 
     @Nullable
     @ColumnInfo(name = "vacDueDate")
@@ -53,9 +61,6 @@ public class ChildVaccinationRecord {
     @ColumnInfo(name = "vacDoneDate")
     @TypeConverters({DateTypeConverter.class})
     private Date vacDoneDate;
-
-
-
 
     public int getVacID() {
         return vacID;
@@ -74,12 +79,39 @@ public class ChildVaccinationRecord {
     }
 
     @Nullable
-    public String getVacType() {
-        return vacType;
+    public String getDose() {
+        return dose;
     }
 
-    public void setVacType(@Nullable String vacType) {
-        this.vacType = vacType;
+    public void setDose(@Nullable String dose) {
+        this.dose = dose;
+    }
+
+    @Nullable
+    public String getDoseTime() {
+        return doseTime;
+    }
+
+    public void setDoseTime(@Nullable String doseTime) {
+        this.doseTime = doseTime;
+    }
+
+    @Nullable
+    public String getVac1() {
+        return vac1;
+    }
+
+    public void setVac1(@Nullable String vac1) {
+        this.vac1 = vac1;
+    }
+
+    @Nullable
+    public String getVac2() {
+        return vac2;
+    }
+
+    public void setVac2(@Nullable String vac2) {
+        this.vac2 = vac2;
     }
 
     @Nullable
@@ -92,15 +124,6 @@ public class ChildVaccinationRecord {
     }
 
     @Nullable
-    public Date getVacDoneDate() {
-        return vacDoneDate;
-    }
-
-    public void setVacDoneDate(@Nullable Date vacDoneDate) {
-        this.vacDoneDate = vacDoneDate;
-    }
-
-    @Nullable
     public Date getVacDueDate() {
         return vacDueDate;
     }
@@ -110,11 +133,11 @@ public class ChildVaccinationRecord {
     }
 
     @Nullable
-    public String getDose() {
-        return dose;
+    public Date getVacDoneDate() {
+        return vacDoneDate;
     }
 
-    public void setDose(@Nullable String dose) {
-        this.dose = dose;
+    public void setVacDoneDate(@Nullable Date vacDoneDate) {
+        this.vacDoneDate = vacDoneDate;
     }
 }

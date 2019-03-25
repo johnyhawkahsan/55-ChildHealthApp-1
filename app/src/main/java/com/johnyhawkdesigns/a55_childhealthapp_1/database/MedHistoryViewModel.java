@@ -17,7 +17,7 @@ public class MedHistoryViewModel extends AndroidViewModel{
     private LiveData<List<ChildMedicalHistory>> mAllMedicalHistories;
     private MutableLiveData<ChildMedicalHistory> searchResults;
 
-    // Constructor of ViewModel
+    // Constructor 1 of ViewModel with chID
     public MedHistoryViewModel(@NonNull Application application, int chID) {
         super(application);
         medHistoryRepository = new MedHistoryRepository(application, chID);
