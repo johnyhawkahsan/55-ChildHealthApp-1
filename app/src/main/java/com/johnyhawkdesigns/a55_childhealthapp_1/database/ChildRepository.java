@@ -23,6 +23,8 @@ public class ChildRepository implements AsyncResult{
     private ChildDao childDao;
     private LiveData<List<Child>> mAllChilds;
 
+    private long chID;
+
     // We declare a MutableLiveData variable named childSearchResult into which the results of a search operation are stored whenever a asynchronous search task completes
     private MutableLiveData<Child> childSearchResult = new MutableLiveData<>();
 
@@ -50,8 +52,17 @@ public class ChildRepository implements AsyncResult{
 
     // You must call this on a non-UI thread or your app will crash.
     // Like this, Room ensures that you're not doing any long running operations on the main thread, blocking the UI.
-    public void insert(Child child){
-        new insertAsyncTask(childDao).execute(child);
+    public long insert(Child child){
+
+        insertAsyncTask insertTask = new insertAsyncTask(childDao, new insertAsyncTask.AsyncResponseChID() {
+            @Override
+            public void insertFinished(long returnedChID) {
+                chID = returnedChID;
+            }
+        });
+        insertTask.execute(child);
+
+        return chID;
     }
 
     public void deleteChildWithID(int chID) {
@@ -71,20 +82,37 @@ public class ChildRepository implements AsyncResult{
 
 
 
-    private static class insertAsyncTask extends AsyncTask<Child, Void, Void> {
+    private static class insertAsyncTask extends AsyncTask<Child, Void, Long> {
         private ChildDao mAsyncTaskDao;
 
+        public interface AsyncResponseChID {
+            void insertFinished(long chID);
+        }
+
+        public AsyncResponseChID delegate = null;
+
         //Constructor
-        insertAsyncTask(ChildDao dao){
+        insertAsyncTask(ChildDao dao, AsyncResponseChID delegate){
             mAsyncTaskDao = dao;
+            this.delegate = delegate;
         }
 
         @Override
-        protected Void doInBackground(Child... params) {
+        protected Long doInBackground(Child... params) {
             mAsyncTaskDao.insert(params[0]);//Insert
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Long chID) {
+            Log.d(TAG, "onPostExecute: chID = " + chID);
+            delegate.insertFinished(chID);
+        }
+
+
     }
+
+
 
 
     // We pass this "Integer" primitive type and in return, we receive Child object

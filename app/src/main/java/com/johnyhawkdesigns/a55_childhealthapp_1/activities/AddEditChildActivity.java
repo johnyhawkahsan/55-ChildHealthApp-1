@@ -34,7 +34,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
+import com.johnyhawkdesigns.a55_childhealthapp_1.database.VacRecordViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
+import com.johnyhawkdesigns.a55_childhealthapp_1.model.ChildVaccinationRecord;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
 import java.util.Calendar;
@@ -269,9 +271,17 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                 // If addingNewChild is true and we are not editing existing child
                 if (addingNewChild){
 
-                    childViewModel.insert(child);
-                    Log.d(TAG, "onClick: child added = " + child.getName());
+                    long chID = childViewModel.insert(child);
+                    Log.d(TAG, "onClick: child added chID = " + chID + ", chName = " +  child.getName() );
                     AppUtils.showMessage(getApplicationContext(), "Child named " + child.getName() + " added to database");
+
+                    //-------------We also want to create appropriate record for vaccination----------------//
+                    VacRecordViewModel vacRecordViewModel = new VacRecordViewModel(getApplication());
+                    ChildVaccinationRecord childVaccinationRecord_1 = new ChildVaccinationRecord((int)chID, "Dose", "After Birth", "BCG", "OPV");
+
+                    vacRecordViewModel.insert(childVaccinationRecord_1);
+
+
                     setResult(RESULT_OK);
                     finish();
 

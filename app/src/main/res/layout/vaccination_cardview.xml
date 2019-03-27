@@ -123,7 +123,7 @@
             app:layout_constraintTop_toBottomOf="@+id/media_image"
             app:layout_constraintVertical_bias="0.0" />
 
-        <android.support.design.widget.FloatingActionButton
+        <ImageView
             android:id="@+id/vacStatus"
             android:layout_width="80dp"
             android:layout_height="wrap_content"

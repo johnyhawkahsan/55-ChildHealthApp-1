@@ -3,6 +3,7 @@ package com.johnyhawkdesigns.a55_childhealthapp_1.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.Nullable;
@@ -139,5 +140,18 @@ public class ChildVaccinationRecord {
 
     public void setVacDoneDate(@Nullable Date vacDoneDate) {
         this.vacDoneDate = vacDoneDate;
+    }
+
+    // Empty constructor
+    public ChildVaccinationRecord() {
+    }
+
+    @Ignore
+    public ChildVaccinationRecord(int foreignChID, String dose, String doseTime, String vac1, String vac2) {
+        this.foreignChID = foreignChID;
+        this.dose = dose;
+        this.doseTime = doseTime;
+        this.vac1 = vac1;
+        this.vac2 = vac2;
     }
 }

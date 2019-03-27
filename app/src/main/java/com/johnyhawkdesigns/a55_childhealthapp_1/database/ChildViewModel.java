@@ -36,8 +36,8 @@ public class ChildViewModel extends AndroidViewModel{
     }
 
     //Insert method
-    public void insert(Child child){
-        childRepository.insert(child);
+    public long insert(Child child){
+       return childRepository.insert(child);
     }
 
     public void update(Child child){
