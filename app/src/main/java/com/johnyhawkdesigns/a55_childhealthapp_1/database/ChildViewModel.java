@@ -20,6 +20,7 @@ public class ChildViewModel extends AndroidViewModel{
     // - Repository is completely separated from the UI through the ViewModel.
     private LiveData<List<Child>> mAllChilds;
     private MutableLiveData<Child> searchResults;
+    private MutableLiveData<Long> getChID;
 
 
     // Constructor of ViewModel
@@ -28,6 +29,7 @@ public class ChildViewModel extends AndroidViewModel{
         childRepository = new ChildRepository(application);
         mAllChilds = childRepository.getAllChilds(); // This will hold all child records
         searchResults = childRepository.getSearchResults(); // This will hold searchResults
+        getChID = childRepository.getReturnedChIDLiveData(); // This will hold chID of inserted record
     }
 
     //Getter method for getting all words.
@@ -36,13 +38,15 @@ public class ChildViewModel extends AndroidViewModel{
     }
 
     //Insert method
-    public long insert(Child child){
-       return childRepository.insert(child);
+    public void insert(Child child){
+       childRepository.insert(child);
     }
 
-    public void update(Child child){
-        childRepository.updateTask(child);
+
+    public MutableLiveData<Long> getGetChID() {
+        return getChID;
     }
+
 
 
     // We first call this method to begin searchin in ChildRepository, and then returned results are stored within search result returned by AsyncTask
@@ -50,10 +54,10 @@ public class ChildViewModel extends AndroidViewModel{
         childRepository.findChildWithID(chID);
     }
 
-
     public MutableLiveData<Child> getSearchResults(){
         return searchResults;
     }
+
 
     public void deleteChildWithID(int chID) {
         childRepository.deleteChildWithID(chID);
@@ -63,4 +67,7 @@ public class ChildViewModel extends AndroidViewModel{
         childRepository.deleteAllChilds();
     }
 
+    public void update(Child child){
+        childRepository.updateTask(child);
+    }
 }

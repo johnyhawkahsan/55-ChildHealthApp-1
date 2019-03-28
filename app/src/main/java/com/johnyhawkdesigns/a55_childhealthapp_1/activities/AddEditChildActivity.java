@@ -271,9 +271,15 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                 // If addingNewChild is true and we are not editing existing child
                 if (addingNewChild){
 
-                    long newChID = childViewModel.insert(child);
-                    Log.d(TAG, "onClick: child added chID = " + newChID + ", chName = " +  child.getName() );
-                    AppUtils.showMessage(getApplicationContext(), "Child named " + child.getName() + " added to database");
+                    childViewModel.insert(child);
+                    childViewModel.getGetChID().observe(AddEditChildActivity.this, new Observer<Long>() {
+                        @Override
+                        public void onChanged(@Nullable Long chID) {
+                            Log.d(TAG, "onChanged: child added chID = " + chID + ", chName = " +  child.getName() );
+                            AppUtils.showMessage(getApplicationContext(), "New Child chID = " + chID + "Child name =  " + child.getName());
+
+                        }
+                    });
 
                     //-------------We also want to create appropriate record for vaccination----------------//
                     /*

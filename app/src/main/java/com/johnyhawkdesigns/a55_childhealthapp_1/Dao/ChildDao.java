@@ -42,8 +42,8 @@ public interface ChildDao {
     // We do not need a conflict strategy, because the word is our primary key, and you cannot
     // add two items with the same primary key to the database. If the table has more than one
     // column, you can use @Insert(onConflict = OnConflictStrategy.REPLACE) to update a row.
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insert(Child... child);
+    //@Insert(onConflict = OnConflictStrategy.REPLACE)
+    //long[] insert(Child... child);
 
     // We do not need a conflict strategy, because the word is our primary key, and you cannot
     // add two items with the same primary key to the database. If the table has more than one
