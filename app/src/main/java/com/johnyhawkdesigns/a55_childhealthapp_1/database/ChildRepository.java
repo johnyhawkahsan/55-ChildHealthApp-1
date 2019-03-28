@@ -9,6 +9,7 @@ import android.util.Log;
 import com.johnyhawkdesigns.a55_childhealthapp_1.Dao.ChildDao;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -23,7 +24,7 @@ public class ChildRepository implements AsyncResult{
     private ChildDao childDao;
     private LiveData<List<Child>> mAllChilds;
 
-    private long chID;
+
 
     // We declare a MutableLiveData variable named childSearchResult into which the results of a search operation are stored whenever a asynchronous search task completes
     private MutableLiveData<Child> childSearchResult = new MutableLiveData<>();
@@ -52,16 +53,23 @@ public class ChildRepository implements AsyncResult{
 
     // You must call this on a non-UI thread or your app will crash.
     // Like this, Room ensures that you're not doing any long running operations on the main thread, blocking the UI.
+
+    long chID = 0 ;
+
     public long insert(Child child){
 
-        insertAsyncTask insertTask = new insertAsyncTask(childDao, new insertAsyncTask.AsyncResponseChID() {
+        insertAsyncTask insertTask = new insertAsyncTask(childDao);
+        insertTask.setAsyncResponseListener(new insertAsyncTask.AsyncResponseChID() {
             @Override
             public void insertFinished(long returnedChID) {
                 chID = returnedChID;
+                Log.d(TAG, "insertFinished: returnedChID = " + returnedChID);
+                Log.d(TAG, "insertFinished: chID = " + chID);
             }
         });
         insertTask.execute(child);
 
+        Log.d(TAG, "insert: chID = " + chID);
         return chID;
     }
 
@@ -91,16 +99,22 @@ public class ChildRepository implements AsyncResult{
 
         public AsyncResponseChID delegate = null;
 
+        public void setAsyncResponseListener(AsyncResponseChID onAsyncResponse){
+            if (onAsyncResponse != null){
+                this.delegate = onAsyncResponse;
+            }
+        }
+
         //Constructor
-        insertAsyncTask(ChildDao dao, AsyncResponseChID delegate){
+        insertAsyncTask(ChildDao dao){
             mAsyncTaskDao = dao;
-            this.delegate = delegate;
         }
 
         @Override
         protected Long doInBackground(Child... params) {
-            mAsyncTaskDao.insert(params[0]);//Insert
-            return null;
+            long chID = mAsyncTaskDao.insert(params[0]);//Insert
+            Log.d(TAG, "doInBackground: returned chID = " + chID);
+            return chID;
         }
 
         @Override
