@@ -16,7 +16,7 @@ import java.util.List;
 public interface ChildVaccinationRecordDao {
 
 
-    @Query("Select * FROM vacRecord_table WHERE foreignChID == :foreignChID ORDER BY vacID DESC")
+    @Query("Select * FROM vacRecord_table WHERE foreignChID == :foreignChID ORDER BY vacID ASC")
     LiveData<List<ChildVaccinationRecord>> loadVacRecordOfChild(int foreignChID);
 
     @Query("Select * FROM vacRecord_table WHERE vacID == :vacID AND foreignChID == :foreignChID")

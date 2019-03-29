@@ -48,7 +48,7 @@ public class VacRecordAdapter extends RecyclerView.Adapter<VacRecordAdapter.VacR
     }
 
     //VacRecordViewHolder class
-    class VacRecordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class VacRecordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private final TextView dose, doseTime, vac1, vac2, vac_date;
         private final CheckBox vacCheckbox;
@@ -65,11 +65,30 @@ public class VacRecordAdapter extends RecyclerView.Adapter<VacRecordAdapter.VacR
             vacStatus = itemView.findViewById(R.id.vacStatus);
 
             itemView.setOnClickListener(this);
+
             vacCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                    Log.d(TAG, "onCheckedChanged: isChecked = " + isChecked);
+                    ChildVaccinationRecord childVaccinationRecord = vaccinationRecords.get(getAdapterPosition());
+                    int chID = childVaccinationRecord.getForeignChID();
+                    int vacID = childVaccinationRecord.getVacID();
+
+                    Log.d(TAG, "onCheckedChanged: chID = " + chID + ", vacID = " + vacID + ", isChecked = " + isChecked);
+
+                    vacRecordCheckListener.onCheck(chID, vacID);
+
+                    if (isChecked ){
+                        Glide
+                                .with(mContext)
+                                .load(R.drawable.ic_checked)
+                                .into(vacStatus);
+                    } else {
+                        Glide
+                                .with(mContext)
+                                .load(R.drawable.ic_close)
+                                .into(vacStatus);
+                    }
                 }
             });
         }
@@ -85,6 +104,8 @@ public class VacRecordAdapter extends RecyclerView.Adapter<VacRecordAdapter.VacR
 
 
         }
+
+
     }
 
 

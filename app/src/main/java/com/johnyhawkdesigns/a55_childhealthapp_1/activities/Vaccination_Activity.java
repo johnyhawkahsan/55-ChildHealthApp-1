@@ -47,6 +47,15 @@ public class Vaccination_Activity extends AppCompatActivity {
                 Log.d(TAG, "onCheck: chID = " + chID + ", vacID = " + vacID);
 
                 // get this vacID item and set it's status to done.
+                vacRecordViewModel.findVacRecordWithID(chID, vacID);
+                vacRecordViewModel.getSearchResults().observe(Vaccination_Activity.this, new Observer<ChildVaccinationRecord>() {
+                    @Override
+                    public void onChanged(@Nullable ChildVaccinationRecord childVaccinationRecord) {
+                        Log.d(TAG, "onChanged: found vacRecord with chID = " + childVaccinationRecord.getForeignChID() + ", vacID = " + childVaccinationRecord.getVacID());
+                        childVaccinationRecord.setVacDone(true);
+                        vacRecordViewModel.update(childVaccinationRecord);
+                    }
+                });
 
             }
         });
