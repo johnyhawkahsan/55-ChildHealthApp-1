@@ -25,17 +25,13 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 @Entity(tableName = "vacRecord_table")
 public class ChildVaccinationRecord {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "vacID")
     private int vacID;
 
     // This column stores foreign key as chID. We can also use @ForeignKey here but we used it on start
     @ColumnInfo(name = "foreignChID")
     private int foreignChID;
-
-    @Nullable
-    @ColumnInfo(name = "dose")
-    private String dose;
 
     @Nullable
     @ColumnInfo(name = "doseTime")
@@ -77,15 +73,6 @@ public class ChildVaccinationRecord {
 
     public void setForeignChID(int foreignChID) {
         this.foreignChID = foreignChID;
-    }
-
-    @Nullable
-    public String getDose() {
-        return dose;
-    }
-
-    public void setDose(@Nullable String dose) {
-        this.dose = dose;
     }
 
     @Nullable
@@ -147,11 +134,12 @@ public class ChildVaccinationRecord {
     }
 
     @Ignore
-    public ChildVaccinationRecord(int foreignChID, String dose, String doseTime, String vac1, String vac2) {
+    public ChildVaccinationRecord(int foreignChID, int vacID, String doseTime, String vac1, String vac2, Boolean vacDone) {
         this.foreignChID = foreignChID;
-        this.dose = dose;
+        this.vacID = vacID;
         this.doseTime = doseTime;
         this.vac1 = vac1;
         this.vac2 = vac2;
+        this.vacDone = vacDone;
     }
 }

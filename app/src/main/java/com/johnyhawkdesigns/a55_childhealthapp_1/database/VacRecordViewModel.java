@@ -37,7 +37,7 @@ public class VacRecordViewModel extends AndroidViewModel{
         return mAllVacRecords;
     }
 
-    public void insert(ChildVaccinationRecord childVaccinationRecord){
+    public void insert(ChildVaccinationRecord... childVaccinationRecord){
         vacRecordRepository.insert(childVaccinationRecord);
     }
 

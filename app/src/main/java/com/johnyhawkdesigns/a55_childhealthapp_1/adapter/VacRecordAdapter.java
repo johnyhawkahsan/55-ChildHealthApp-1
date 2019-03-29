@@ -23,7 +23,6 @@ import java.util.List;
 public class VacRecordAdapter extends RecyclerView.Adapter<VacRecordAdapter.VacRecordViewHolder> {
 
     private static final String TAG = VacRecordAdapter.class.getSimpleName();
-
     Context mContext;
     private final LayoutInflater mInflator;
     private List<ChildVaccinationRecord> vaccinationRecords;
@@ -99,19 +98,21 @@ public class VacRecordAdapter extends RecyclerView.Adapter<VacRecordAdapter.VacR
     @Override
     public void onBindViewHolder(@NonNull VacRecordViewHolder vacRecordViewHolder, int position) {
         ChildVaccinationRecord childVaccinationRecord = vaccinationRecords.get(position);
+        Log.d(TAG, "onBindViewHolder: childVaccinationRecord vacID = " + childVaccinationRecord.getVacID());
         vacRecordViewHolder.dose.setText("Dose - " + String.valueOf(childVaccinationRecord.getVacID()));
         vacRecordViewHolder.doseTime.setText(childVaccinationRecord.getDoseTime());
         vacRecordViewHolder.vac1.setText(childVaccinationRecord.getVac1());
         vacRecordViewHolder.vac2.setText(childVaccinationRecord.getVac2());
+
         if (childVaccinationRecord.getVacDone() == false){
-            vacRecordViewHolder.vac_date.setText("Upcoming Vac Date = " + AppUtils.getFormattedDateString(childVaccinationRecord.getVacDueDate()));
+            //vacRecordViewHolder.vac_date.setText("Upcoming Vac Date = " + AppUtils.getFormattedDateString(childVaccinationRecord.getVacDueDate()));
             // Set cross button for ImageView
             Glide
                     .with(mContext)
                     .load(R.drawable.ic_close)
                     .into(vacRecordViewHolder.vacStatus);
         } else {
-            vacRecordViewHolder.vac_date.setText("Vac Done On = " + AppUtils.getFormattedDateString(childVaccinationRecord.getVacDoneDate()));
+            //vacRecordViewHolder.vac_date.setText("Vac Done On = " + AppUtils.getFormattedDateString(childVaccinationRecord.getVacDoneDate()));
             // Set checked image for completed vaccination
             Glide
                     .with(mContext)

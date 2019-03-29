@@ -44,7 +44,7 @@ public class VacRecordRepository implements AsyncResultVacRecord {
         return vacRecordsSearchResult;
     }
 
-    public void insert(ChildVaccinationRecord childVaccinationRecord){
+    public void insert(ChildVaccinationRecord... childVaccinationRecord){
         new insertAsyncTask(childVaccinationRecordDao).execute(childVaccinationRecord);
     }
 
@@ -75,7 +75,7 @@ public class VacRecordRepository implements AsyncResultVacRecord {
 
         @Override
         protected Void doInBackground(ChildVaccinationRecord... params) {
-            mAsyncTaskDao.insert(params[0]);//Insert
+            mAsyncTaskDao.insert(params);//Insert
             return null;
         }
     }

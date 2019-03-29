@@ -4,10 +4,12 @@ import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
+import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.VacRecordAdapter;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.VacRecordViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.ChildVaccinationRecord;
 
@@ -19,6 +21,7 @@ public class Vaccination_Activity extends AppCompatActivity {
     private static final String TAG = Vaccination_Activity.class.getSimpleName();
 
     private RecyclerView recyclerView;
+    private VacRecordAdapter vacRecordAdapter;
     private VacRecordViewModel vacRecordViewModel;
 
     public int chID;
@@ -34,6 +37,21 @@ public class Vaccination_Activity extends AppCompatActivity {
         Log.d(TAG, "onCreate: received chID = " + chID);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewVaccination);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        vacRecordViewModel = new VacRecordViewModel(getApplication(), chID);
+        
+        vacRecordAdapter = new VacRecordAdapter(Vaccination_Activity.this, new VacRecordAdapter.VacRecordCheckListener() {
+            @Override
+            public void onCheck(int chID, int vacID) {
+                Log.d(TAG, "onCheck: chID = " + chID + ", vacID = " + vacID);
+
+                // get this vacID item and set it's status to done.
+
+            }
+        });
+
+        recyclerView.setAdapter(vacRecordAdapter);
 
         vacRecordViewModel.getAllVacRecords().observe(this, new Observer<List<ChildVaccinationRecord>>() {
             @Override
@@ -51,7 +69,10 @@ public class Vaccination_Activity extends AppCompatActivity {
                     } else {
                         Log.d(TAG, "foundVacRecord.getVacDone() == false");
                     }
+
                 }
+
+                vacRecordAdapter.setVacRecordList(childVaccinationRecords);
                 
             }
         });

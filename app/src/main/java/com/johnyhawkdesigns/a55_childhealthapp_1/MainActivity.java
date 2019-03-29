@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements AddEditMedHistory
             }
         }, SPLASH_TIMEOUT);
 
+        getSupportActionBar().setTitle("Child Health App");
+
         //Setting up RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

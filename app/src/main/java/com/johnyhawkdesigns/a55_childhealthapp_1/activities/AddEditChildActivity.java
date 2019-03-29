@@ -276,18 +276,23 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                         @Override
                         public void onChanged(@Nullable Long chID) {
                             Log.d(TAG, "onChanged: child added chID = " + chID + ", chName = " +  child.getName() );
-                            AppUtils.showMessage(getApplicationContext(), "New Child chID = " + chID + "Child name =  " + child.getName());
+                            AppUtils.showMessage(getApplicationContext(), "New Child chID = " + chID + ", Child name =  " + child.getName());
+
+                            int chIDint = chID.intValue();
+                            //-------------We also want to create appropriate record for vaccination----------------//
+                            VacRecordViewModel vacRecordViewModel = new VacRecordViewModel(getApplication());
+                            ChildVaccinationRecord childVaccinationRecord_1 = new ChildVaccinationRecord(chIDint, 1, "After Birth", "BCG", "OPV-0", false);
+                            ChildVaccinationRecord childVaccinationRecord_2 = new ChildVaccinationRecord(chIDint, 2, "6 Weeks/ 1.5 Month", "Pentavalent-1", "OPV-1", false);
+                            ChildVaccinationRecord childVaccinationRecord_3 = new ChildVaccinationRecord(chIDint, 3, "10 Weeks/ 2.5 Month", "Pentavalent-2", "OPV-2", false);
+                            ChildVaccinationRecord childVaccinationRecord_4 = new ChildVaccinationRecord(chIDint, 4, "14 Weeks/ 3.5 Month", "Pentavalent-3", "OPV-3", false);
+                            ChildVaccinationRecord childVaccinationRecord_5 = new ChildVaccinationRecord(chIDint, 5, "9 Month", "Measles-1", "NIL", false);
+                            ChildVaccinationRecord childVaccinationRecord_6 = new ChildVaccinationRecord(chIDint, 6, "15 Month", "Measles-2", "NIL", false);
+
+                            vacRecordViewModel.insert(childVaccinationRecord_1, childVaccinationRecord_2, childVaccinationRecord_3, childVaccinationRecord_4, childVaccinationRecord_5, childVaccinationRecord_6);
+
 
                         }
                     });
-
-                    //-------------We also want to create appropriate record for vaccination----------------//
-                    /*
-                    VacRecordViewModel vacRecordViewModel = new VacRecordViewModel(getApplication());
-                    ChildVaccinationRecord childVaccinationRecord_1 = new ChildVaccinationRecord((int)chID, "Dose", "After Birth", "BCG", "OPV");
-
-                    vacRecordViewModel.insert(childVaccinationRecord_1);
-                     */
 
 
 
