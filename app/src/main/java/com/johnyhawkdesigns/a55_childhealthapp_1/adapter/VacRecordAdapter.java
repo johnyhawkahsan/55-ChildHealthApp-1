@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -78,17 +77,32 @@ public class VacRecordAdapter extends RecyclerView.Adapter<VacRecordAdapter.VacR
 
                     vacRecordCheckListener.onCheck(chID, vacID);
 
-                    if (isChecked ){
+/*
+                    // This work should be done in onBindViewHolder
+
+                    Boolean isCheckedAlready = childVaccinationRecord.getVacDone();
+                    Log.d(TAG, "onCheckedChanged: isCheckedAlready = " + isCheckedAlready);
+
+                    // If user just clicked checked button, or this record is store as already done in DB
+                    if (isChecked || isCheckedAlready ){
                         Glide
                                 .with(mContext)
                                 .load(R.drawable.ic_checked)
                                 .into(vacStatus);
+                        //vacCheckbox.setChecked(true);
+                        vacCheckbox.setEnabled(false); // Now disable this checkbox once it's checked.
                     } else {
                         Glide
                                 .with(mContext)
                                 .load(R.drawable.ic_close)
                                 .into(vacStatus);
+                        //vacCheckbox.setChecked(false);
                     }
+
+*/
+
+
+
                 }
             });
         }
@@ -125,21 +139,36 @@ public class VacRecordAdapter extends RecyclerView.Adapter<VacRecordAdapter.VacR
         vacRecordViewHolder.vac1.setText(childVaccinationRecord.getVac1());
         vacRecordViewHolder.vac2.setText(childVaccinationRecord.getVac2());
 
-        if (childVaccinationRecord.getVacDone() == false){
+        Boolean isCheckedAlready = childVaccinationRecord.getVacDone();
+        Log.d(TAG, "onCheckedChanged: isCheckedAlready = " + isCheckedAlready);
+
+
+        if (isCheckedAlready){
             //vacRecordViewHolder.vac_date.setText("Upcoming Vac Date = " + AppUtils.getFormattedDateString(childVaccinationRecord.getVacDueDate()));
-            // Set cross button for ImageView
-            Glide
-                    .with(mContext)
-                    .load(R.drawable.ic_close)
-                    .into(vacRecordViewHolder.vacStatus);
-        } else {
-            //vacRecordViewHolder.vac_date.setText("Vac Done On = " + AppUtils.getFormattedDateString(childVaccinationRecord.getVacDoneDate()));
+
             // Set checked image for completed vaccination
             Glide
                     .with(mContext)
                     .load(R.drawable.ic_checked)
                     .into(vacRecordViewHolder.vacStatus);
+          vacRecordViewHolder.vacCheckbox.setEnabled(false); // Now disable this checkbox once it's checked.
+         // vacRecordViewHolder.vacCheckbox.setChecked(true); // This causes problem of repeatedly changing values in logs
+
+         vacRecordViewHolder.vacCheckbox.setText("Vaccination Completed");
+
+        } else {
+            //vacRecordViewHolder.vac_date.setText("Vac Done On = " + AppUtils.getFormattedDateString(childVaccinationRecord.getVacDoneDate()));
+
+            // Set cross button for ImageView
+            Glide
+                    .with(mContext)
+                    .load(R.drawable.ic_close)
+                    .into(vacRecordViewHolder.vacStatus);
+
         }
+
+
+
 
     }
 

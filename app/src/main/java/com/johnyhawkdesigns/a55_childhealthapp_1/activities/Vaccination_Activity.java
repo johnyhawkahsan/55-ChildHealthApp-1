@@ -1,17 +1,23 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1.activities;
 
 import android.arch.lifecycle.Observer;
+import android.content.DialogInterface;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.VacRecordAdapter;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.VacRecordViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.ChildVaccinationRecord;
+import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
 import java.util.List;
 
@@ -70,6 +76,7 @@ public class Vaccination_Activity extends AppCompatActivity {
 
                 // Loop through all returned list items and display in logs
                 for (int i = 0; i < childVaccinationRecords.size(); i++){
+
                     ChildVaccinationRecord foundVacRecord = childVaccinationRecords.get(i);
                     Log.d(TAG, "vacID = " + foundVacRecord.getVacID());
 
@@ -88,5 +95,58 @@ public class Vaccination_Activity extends AppCompatActivity {
 
 
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_vaccination, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.resetVaccination:
+
+                Log.d(TAG, "onOptionsItemSelected: reset vaccination data");
+
+                // Build alert dialog for confirmation
+                AlertDialog.Builder builder = new AlertDialog.Builder(Vaccination_Activity.this);
+                builder.setTitle("Do you want to reset vaccination data??");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AppUtils.showMessage(Vaccination_Activity.this, "Reset Vaccination Success" );
+                        vacRecordViewModel.getAllVacRecords().observe(Vaccination_Activity.this, new Observer<List<ChildVaccinationRecord>>() {
+                            @Override
+                            public void onChanged(@Nullable List<ChildVaccinationRecord> childVaccinationRecords) {
+                                for (int i = 0; i < childVaccinationRecords.size(); i++){
+                                    ChildVaccinationRecord foundVacRecord = childVaccinationRecords.get(i);
+                                    Log.d(TAG, "onChanged: foundVacRecord = " + foundVacRecord.getVacID());
+                                    foundVacRecord.setVacDone(false); // Set all vaccination records to false
+                                    vacRecordViewModel.update(foundVacRecord);
+                                }
+
+                            }
+                        });
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog ad = builder.create();
+                ad.show();
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
