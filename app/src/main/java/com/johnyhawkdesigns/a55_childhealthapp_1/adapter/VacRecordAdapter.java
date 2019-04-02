@@ -142,12 +142,14 @@ public class VacRecordAdapter extends RecyclerView.Adapter<VacRecordAdapter.VacR
         vacRecordViewHolder.vac1.setText(childVaccinationRecord.getVac1());
         vacRecordViewHolder.vac2.setText(childVaccinationRecord.getVac2());
 
+        vacRecordViewHolder.vac_date.setText("Vac Due date " + AppUtils.getFormattedDateString(childVaccinationRecord.getVacDueDate()));
+
+
         Boolean isCheckedAlready = childVaccinationRecord.getVacDone();
         Log.d(TAG, "onCheckedChanged: isCheckedAlready = " + isCheckedAlready);
 
 
         if (isCheckedAlready){
-            //vacRecordViewHolder.vac_date.setText("Upcoming Vac Date = " + AppUtils.getFormattedDateString(childVaccinationRecord.getVacDueDate()));
 
             // Set checked image for completed vaccination
             Glide
@@ -161,7 +163,6 @@ public class VacRecordAdapter extends RecyclerView.Adapter<VacRecordAdapter.VacR
          vacRecordViewHolder.cardViewConstraint.setBackgroundResource(R.color.green2);
 
         } else {
-            //vacRecordViewHolder.vac_date.setText("Vac Done On = " + AppUtils.getFormattedDateString(childVaccinationRecord.getVacDoneDate()));
 
             // Set cross button for ImageView
             Glide

@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/child_icon"
@@ -36,6 +37,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.johnyhawkdesigns.a55_childhealthapp_1.MainActivity" />
         </activity>
+
+        <receiver
+            android:name=".util.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
+
+        <service
+            android:name=".util.IntentService"
+            android:exported="false" >
+        </service>
+
     </application>
 
 </manifest>

@@ -141,12 +141,11 @@ public class ChildDetailActivity extends AppCompatActivity {
                 Log.d(TAG, "onChanged: getAge = " + getAge(year, month, day));
 
 
-
-
             }
         });
 
     }
+
 
     // Input date of birth, and method returns age in years.
     private String getAge(int year, int month, int day){
@@ -169,6 +168,8 @@ public class ChildDetailActivity extends AppCompatActivity {
 
         return ageS;
     }
+
+
 
 
     @Override

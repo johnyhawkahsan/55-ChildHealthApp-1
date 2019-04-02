@@ -54,11 +54,6 @@ public class ChildVaccinationRecord {
     @TypeConverters({DateTypeConverter.class})
     private Date vacDueDate;
 
-    @Nullable
-    @ColumnInfo(name = "vacDoneDate")
-    @TypeConverters({DateTypeConverter.class})
-    private Date vacDoneDate;
-
     public int getVacID() {
         return vacID;
     }
@@ -120,14 +115,6 @@ public class ChildVaccinationRecord {
         this.vacDueDate = vacDueDate;
     }
 
-    @Nullable
-    public Date getVacDoneDate() {
-        return vacDoneDate;
-    }
-
-    public void setVacDoneDate(@Nullable Date vacDoneDate) {
-        this.vacDoneDate = vacDoneDate;
-    }
 
     // Empty constructor
     public ChildVaccinationRecord() {

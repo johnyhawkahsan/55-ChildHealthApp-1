@@ -280,6 +280,8 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                             AppUtils.showMessage(getApplicationContext(), "New Child chID = " + chID + ", Child name =  " + child.getName());
 
                             int chIDint = chID.intValue();
+                            Date dateOfBirthOfChild = child.getDateOfBirth();
+
                             //-------------We also want to create appropriate record for vaccination----------------//
                             VacRecordViewModel vacRecordViewModel = new VacRecordViewModel(getApplication());
                             ChildVaccinationRecord childVaccinationRecord_1 = new ChildVaccinationRecord(chIDint, 1, "After Birth", "BCG", "OPV-0", false);
@@ -290,20 +292,18 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                             ChildVaccinationRecord childVaccinationRecord_6 = new ChildVaccinationRecord(chIDint, 6, "15 Month", "Measles-2", "NIL", false);
 
                             // Set vaccination due dates to child vaccination records
+
                             childVaccinationRecord_1.setVacDueDate(child.getDateOfBirth());// Because this vaccination due date is on the same day of child birth
-                            //childVaccinationRecord_2.setVacDueDate();
-
-                            Calendar dateOfBirthCalender = new GregorianCalendar();
-                            dateOfBirthCalender.setTime(child.getDateOfBirth());
-                            dateOfBirthCalender.add(Calendar.DATE, 42); // 6 weeks = 42 days
-
+                            childVaccinationRecord_2.setVacDueDate(setVaccinationTime(dateOfBirthOfChild, 42)); // 6 weeks = 42 days
+                            childVaccinationRecord_3.setVacDueDate(setVaccinationTime(dateOfBirthOfChild, 70)); // 10 Weeks = 70 days
+                            childVaccinationRecord_4.setVacDueDate(setVaccinationTime(dateOfBirthOfChild, 98)); // 14 Weeks = 98 days
+                            childVaccinationRecord_5.setVacDueDate(setVaccinationTime(dateOfBirthOfChild, 270)); // 9 Month = 270 days
+                            childVaccinationRecord_6.setVacDueDate(setVaccinationTime(dateOfBirthOfChild, 450)); // 15 Month = 450 days
 
                             vacRecordViewModel.insert(childVaccinationRecord_1, childVaccinationRecord_2, childVaccinationRecord_3, childVaccinationRecord_4, childVaccinationRecord_5, childVaccinationRecord_6);
 
-
                         }
                     });
-
 
 
                     setResult(RESULT_OK);
@@ -324,6 +324,14 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
         }
     };
 
+
+    // Get date of birth and amount of days and add those additional days to the calender
+    public Date setVaccinationTime(Date dateOfBirth, int amountOfDays){
+        Calendar calender = new GregorianCalendar();
+        calender.setTime(dateOfBirth);
+        calender.add(Calendar.DATE, amountOfDays);
+        return calender.getTime();
+    }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

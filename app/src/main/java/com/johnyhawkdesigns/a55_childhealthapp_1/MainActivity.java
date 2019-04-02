@@ -1,6 +1,9 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,8 +32,11 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.activities.PreferenceActivity;
 import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.ChildListAdapter;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
+import com.johnyhawkdesigns.a55_childhealthapp_1.util.AlarmReceiver;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AddEditMedHistoryFragment.AddEditFragmentListener{
@@ -145,8 +151,20 @@ public class MainActivity extends AppCompatActivity implements AddEditMedHistory
         Log.d(TAG, "onCreate: preferenceValue = " + preferenceValue);
 
         //Todo: Generate notification based on this preference value
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT); // PendingIntent.FLAG_UPDATE_CURRENT could be 0
 
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
+        Calendar calendar = new GregorianCalendar(); // Calendar.getInstance(); also correct
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        //calendar.set(Calendar.HOUR_OF_DAY, 7);
+        //calendar.set(Calendar.MINUTE, 0);
+        //calendar.set(Calendar.SECOND, 1);
+        calendar.add(Calendar.SECOND, 5);// Generate Notification after 5 seconds
+
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  System.currentTimeMillis(), 1000 * 60 * 60 * 24, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
 
