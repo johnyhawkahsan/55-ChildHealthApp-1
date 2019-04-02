@@ -2,6 +2,7 @@ package com.johnyhawkdesigns.a55_childhealthapp_1.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,9 +53,11 @@ public class VacRecordAdapter extends RecyclerView.Adapter<VacRecordAdapter.VacR
         private final TextView dose, doseTime, vac1, vac2, vac_date;
         private final CheckBox vacCheckbox;
         private final ImageView vacStatus;
+        private final ConstraintLayout cardViewConstraint;
 
         public VacRecordViewHolder(@NonNull View itemView) {
             super(itemView);
+            cardViewConstraint = itemView.findViewById(R.id.vac_cardview_coordinator);
             dose = itemView.findViewById(R.id.dose);
             doseTime = itemView.findViewById(R.id.doseTime);
             vac1 = itemView.findViewById(R.id.vac1);
@@ -155,6 +158,7 @@ public class VacRecordAdapter extends RecyclerView.Adapter<VacRecordAdapter.VacR
          // vacRecordViewHolder.vacCheckbox.setChecked(true); // This causes problem of repeatedly changing values in logs
 
          vacRecordViewHolder.vacCheckbox.setText("Vaccination Completed");
+         vacRecordViewHolder.cardViewConstraint.setBackgroundResource(R.color.green2);
 
         } else {
             //vacRecordViewHolder.vac_date.setText("Vac Done On = " + AppUtils.getFormattedDateString(childVaccinationRecord.getVacDoneDate()));

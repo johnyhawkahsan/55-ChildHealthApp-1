@@ -41,6 +41,7 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class AddEditChildActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -287,6 +288,15 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                             ChildVaccinationRecord childVaccinationRecord_4 = new ChildVaccinationRecord(chIDint, 4, "14 Weeks/ 3.5 Month", "Pentavalent-3", "OPV-3", false);
                             ChildVaccinationRecord childVaccinationRecord_5 = new ChildVaccinationRecord(chIDint, 5, "9 Month", "Measles-1", "NIL", false);
                             ChildVaccinationRecord childVaccinationRecord_6 = new ChildVaccinationRecord(chIDint, 6, "15 Month", "Measles-2", "NIL", false);
+
+                            // Set vaccination due dates to child vaccination records
+                            childVaccinationRecord_1.setVacDueDate(child.getDateOfBirth());// Because this vaccination due date is on the same day of child birth
+                            //childVaccinationRecord_2.setVacDueDate();
+
+                            Calendar dateOfBirthCalender = new GregorianCalendar();
+                            dateOfBirthCalender.setTime(child.getDateOfBirth());
+                            dateOfBirthCalender.add(Calendar.DATE, 42); // 6 weeks = 42 days
+
 
                             vacRecordViewModel.insert(childVaccinationRecord_1, childVaccinationRecord_2, childVaccinationRecord_3, childVaccinationRecord_4, childVaccinationRecord_5, childVaccinationRecord_6);
 

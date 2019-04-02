@@ -144,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements AddEditMedHistory
         String preferenceValue = prefs.getString(getString(R.string.pref_key_duration), "1");
         Log.d(TAG, "onCreate: preferenceValue = " + preferenceValue);
 
+        //Todo: Generate notification based on this preference value
+
 
     }
 

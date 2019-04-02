@@ -24,6 +24,9 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.database.ChildViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class ChildDetailActivity extends AppCompatActivity {
 
     private static final String TAG = ChildDetailActivity.class.getSimpleName();
@@ -44,9 +47,6 @@ public class ChildDetailActivity extends AppCompatActivity {
     private TextView tvHeight;
     private TextView tvWeight;
     private TextView tvLastProfileUpdateDate;
-
-    private Button viewMedicalRecord;
-    private Button viewVaccinationRecord;
 
     public Uri imageUri;
 
@@ -130,10 +130,44 @@ public class ChildDetailActivity extends AppCompatActivity {
                 }
 
 
+                // Testing methods to calculate child age
+                Calendar dateOfBirthCalender = new GregorianCalendar();
+                dateOfBirthCalender.setTime(child.getDateOfBirth());
+                int year = dateOfBirthCalender.get(Calendar.YEAR);
+                int month = dateOfBirthCalender.get(Calendar.MONTH) + 1; //Add one to month {0 - 11}
+                int day = dateOfBirthCalender.get(Calendar.DAY_OF_MONTH);
+
+                Log.d(TAG, "onChanged: " + "\nyear = " + year +"\nMonth = " + month +"\nday = " + day);
+                Log.d(TAG, "onChanged: getAge = " + getAge(year, month, day));
+
+
+
 
             }
         });
 
+    }
+
+    // Input date of birth, and method returns age in years.
+    private String getAge(int year, int month, int day){
+
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR); // 2019 - 2017
+        Log.d(TAG, "getAge: " + "\ntoday.get(Calendar.YEAR) = " + today.get(Calendar.YEAR) + "\ndob.get(Calendar.YEAR) = " + dob.get(Calendar.YEAR) + "\nage = " + age);
+
+        // If today is 2 April and dob is 1 April, then we need to decrement the date because simple 2019- 2017 won't display correct date
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        Integer ageInt = new Integer(age);
+        String ageS = ageInt.toString();
+
+        return ageS;
     }
 
 
