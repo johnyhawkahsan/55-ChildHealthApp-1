@@ -35,7 +35,9 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AlarmReceiver;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -148,23 +150,34 @@ public class MainActivity extends AppCompatActivity implements AddEditMedHistory
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String preferenceValue = prefs.getString(getString(R.string.pref_key_duration), "1");
-        Log.d(TAG, "onCreate: preferenceValue = " + preferenceValue);
+        int preferenceInt = Integer.parseInt(preferenceValue);
+        Log.d(TAG, "onCreate: preferenceValue = " + preferenceInt);
 
         //Todo: Generate notification based on this preference value
-        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        generateNotification(preferenceInt); // Note: I am using Calendar.SECOND instead of alendar.MONTH.
+
+    }
+
+    private void generateNotification(int duration) {
+
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class); // This intent will be created at a specific time and will launch AlarmReceiver which is a Broadcast receiver - AlarmReceiver will launch IntentService which holds our Notification.
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT); // PendingIntent.FLAG_UPDATE_CURRENT could be 0
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         Calendar calendar = new GregorianCalendar(); // Calendar.getInstance(); also correct
         calendar.setTimeInMillis(System.currentTimeMillis());
-        //calendar.set(Calendar.HOUR_OF_DAY, 7);
-        //calendar.set(Calendar.MINUTE, 0);
-        //calendar.set(Calendar.SECOND, 1);
-        calendar.add(Calendar.SECOND, 5);// Generate Notification after 5 seconds
+        calendar.add(Calendar.SECOND, duration);// Generate Notification after these seconds. We can change this to Month as well.
 
         //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  System.currentTimeMillis(), 1000 * 60 * 60 * 24, pendingIntent);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+        // This is just to test formatted date function
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = calendar.getTime();
+        String formattedDate= dateFormat.format(date); // format(calendar.getTime() ) is also correct
+        Log.d(TAG, "onChanged: todays formattedDate = " + formattedDate);
+
     }
 
 

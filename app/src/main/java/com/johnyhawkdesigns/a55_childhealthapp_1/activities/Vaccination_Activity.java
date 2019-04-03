@@ -1,7 +1,11 @@
 package com.johnyhawkdesigns.a55_childhealthapp_1.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +21,13 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.R;
 import com.johnyhawkdesigns.a55_childhealthapp_1.adapter.VacRecordAdapter;
 import com.johnyhawkdesigns.a55_childhealthapp_1.database.VacRecordViewModel;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.ChildVaccinationRecord;
+import com.johnyhawkdesigns.a55_childhealthapp_1.util.AlarmReceiver;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -86,6 +95,23 @@ public class Vaccination_Activity extends AppCompatActivity {
                         Log.d(TAG, "foundVacRecord.getVacDone() == false");
                     }
 
+                    Calendar calendar = new GregorianCalendar();
+                    calendar.setTimeInMillis(System.currentTimeMillis());
+
+                    Log.d(TAG, "onChanged: foundVacRecord.getVacDueDate() = " + foundVacRecord.getVacDueDate());
+                    Log.d(TAG, "onChanged: calendar.getTime() = " + calendar.getTime());
+
+
+                    if (foundVacRecord.getVacDueDate() == calendar.getTime() ){
+                        // Generate Notification
+                        Log.d(TAG, "onChanged: foundVacRecord.getVacDueDate() = " + foundVacRecord.getVacDueDate());
+                        Log.d(TAG, "onChanged: calendar.getTime() = " + calendar.getTime());
+
+                        generateNotification(foundVacRecord.getDoseTime());
+
+
+                    }
+
                 }
 
                 vacRecordAdapter.setVacRecordList(childVaccinationRecords);
@@ -93,7 +119,23 @@ public class Vaccination_Activity extends AppCompatActivity {
             }
         });
 
+    }
 
+
+
+    private void generateNotification(String vaccinationDetails){
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class); // This intent will be created at a specific time and will launch AlarmReceiver which is a Broadcast receiver - AlarmReceiver will launch IntentService which holds our Notification.
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT); // PendingIntent.FLAG_UPDATE_CURRENT could be 0
+
+
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = new GregorianCalendar(); // Calendar.getInstance(); also correct
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, 0);// Generate Notification after these seconds. We can change this to Month as well.
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
     }
 

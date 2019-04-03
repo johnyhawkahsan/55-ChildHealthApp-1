@@ -23,7 +23,7 @@ public class IntentService extends android.app.IntentService{
     protected void onHandleIntent(@Nullable Intent intent) {
 
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("My Title");
+        builder.setContentTitle("Child Health App");
         builder.setContentText("Update child profile please");
         builder.setSmallIcon(R.drawable.ic_firstaidkit);
 

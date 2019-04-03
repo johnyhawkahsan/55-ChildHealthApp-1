@@ -15,12 +15,12 @@
         android:roundIcon="@mipmap/child_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,7 +28,6 @@
         <activity android:name=".activities.ChildDetailActivity" />
         <activity android:name=".activities.MedHistoryActivity" />
         <activity android:name=".activities.Vaccination_Activity" />
-
         <activity
             android:name=".activities.PreferenceActivity"
             android:label="@string/title_activity_settings"
@@ -46,7 +45,7 @@
 
         <service
             android:name=".util.IntentService"
-            android:exported="false" >
+            android:exported="false">
         </service>
 
     </application>
