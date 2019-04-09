@@ -24,6 +24,7 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.model.ChildVaccinationRecord;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AlarmReceiver;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -101,17 +102,29 @@ public class Vaccination_Activity extends AppCompatActivity {
                     Log.d(TAG, "onChanged: foundVacRecord.getVacDueDate() = " + foundVacRecord.getVacDueDate());
                     Log.d(TAG, "onChanged: calendar.getTime() = " + calendar.getTime());
 
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-                    if (foundVacRecord.getVacDueDate() == calendar.getTime() ){
-                        // Generate Notification
-                        Log.d(TAG, "onChanged: foundVacRecord.getVacDueDate() = " + foundVacRecord.getVacDueDate());
-                        Log.d(TAG, "onChanged: calendar.getTime() = " + calendar.getTime());
+                    Date vacDueDateWithoutTime = null;
+                    Date currentDate = null;
 
-                        generateNotification(foundVacRecord.getDoseTime());
-
-
+                    // Set time to 00:00:00 and get only pure date
+                    try {
+                        vacDueDateWithoutTime = sdf.parse(sdf.format(foundVacRecord.getVacDueDate()));
+                        currentDate = sdf.parse(sdf.format(calendar.getTime()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
 
+
+                    if (vacDueDateWithoutTime == currentDate ){
+                        // Generate Notification
+                        Log.d(TAG, "onChanged: vacDueDateWithoutTime = " + vacDueDateWithoutTime);
+                        Log.d(TAG, "onChanged: currentDate = " + currentDate);
+
+                        // Todo: Generate Notification at this time
+                        //generateNotification(foundVacRecord.getDoseTime());
+
+                    }
                 }
 
                 vacRecordAdapter.setVacRecordList(childVaccinationRecords);
@@ -119,15 +132,19 @@ public class Vaccination_Activity extends AppCompatActivity {
             }
         });
 
+        // Testing Notification
+        generateNotification("Soon After Birth");
+
     }
 
 
 
     private void generateNotification(String vaccinationDetails){
+
         Intent alarmIntent = new Intent(this, AlarmReceiver.class); // This intent will be created at a specific time and will launch AlarmReceiver which is a Broadcast receiver - AlarmReceiver will launch IntentService which holds our Notification.
+        alarmIntent.putExtra("vaccinationDetails", vaccinationDetails);
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT); // PendingIntent.FLAG_UPDATE_CURRENT could be 0
-
-
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
@@ -135,7 +152,7 @@ public class Vaccination_Activity extends AppCompatActivity {
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.SECOND, 0);// Generate Notification after these seconds. We can change this to Month as well.
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+3000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
 
     }
 

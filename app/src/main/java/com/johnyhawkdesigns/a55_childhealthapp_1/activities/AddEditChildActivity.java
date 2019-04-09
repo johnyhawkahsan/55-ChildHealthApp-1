@@ -292,7 +292,6 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                             ChildVaccinationRecord childVaccinationRecord_6 = new ChildVaccinationRecord(chIDint, 6, "15 Month", "Measles-2", "NIL", false);
 
                             // Set vaccination due dates to child vaccination records
-
                             childVaccinationRecord_1.setVacDueDate(child.getDateOfBirth());// Because this vaccination due date is on the same day of child birth
                             childVaccinationRecord_2.setVacDueDate(setVaccinationTime(dateOfBirthOfChild, 42)); // 6 weeks = 42 days
                             childVaccinationRecord_3.setVacDueDate(setVaccinationTime(dateOfBirthOfChild, 70)); // 10 Weeks = 70 days
