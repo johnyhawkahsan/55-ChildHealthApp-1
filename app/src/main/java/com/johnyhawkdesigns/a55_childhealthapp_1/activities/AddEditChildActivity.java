@@ -39,6 +39,7 @@ import com.johnyhawkdesigns.a55_childhealthapp_1.model.Child;
 import com.johnyhawkdesigns.a55_childhealthapp_1.model.ChildVaccinationRecord;
 import com.johnyhawkdesigns.a55_childhealthapp_1.util.AppUtils;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -250,7 +251,12 @@ public class AddEditChildActivity extends AppCompatActivity implements DatePicke
                 child.setName(name);
                 child.setGender(gender);
                 child.setBloodGroup(bloodGroup);
-                child.setDateOfBirth(dateOfBirth);
+
+                try {
+                    child.setDateOfBirth(AppUtils.getDateWithoutTime(dateOfBirth));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 if (age.length() != 0){
                     child.setAge(Integer.parseInt(age));

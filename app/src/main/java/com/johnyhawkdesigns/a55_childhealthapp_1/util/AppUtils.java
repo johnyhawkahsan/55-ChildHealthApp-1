@@ -37,6 +37,12 @@ public class AppUtils {
         return null;
     }
 
+    // Get Date with time set to 00:00:00 - https://stackoverflow.com/questions/5050170/how-do-i-get-a-date-without-time-in-java
+    public static Date getDateWithoutTime(Date dateWithTime) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateWithoutTime = sdf.parse(sdf.format(dateWithTime));
+        return dateWithoutTime;
+    }
 
     // Toast message outline
     public static void showMessage(Context context, String message) {

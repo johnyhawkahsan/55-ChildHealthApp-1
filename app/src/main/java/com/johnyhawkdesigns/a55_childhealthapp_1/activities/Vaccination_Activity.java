@@ -102,15 +102,14 @@ public class Vaccination_Activity extends AppCompatActivity {
                     Log.d(TAG, "onChanged: foundVacRecord.getVacDueDate() = " + foundVacRecord.getVacDueDate());
                     Log.d(TAG, "onChanged: calendar.getTime() = " + calendar.getTime());
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
                     Date vacDueDateWithoutTime = null;
                     Date currentDate = null;
 
                     // Set time to 00:00:00 and get only pure date
                     try {
-                        vacDueDateWithoutTime = sdf.parse(sdf.format(foundVacRecord.getVacDueDate()));
-                        currentDate = sdf.parse(sdf.format(calendar.getTime()));
+                        vacDueDateWithoutTime = AppUtils.getDateWithoutTime(foundVacRecord.getVacDueDate());
+                        currentDate = AppUtils.getDateWithoutTime(calendar.getTime());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -122,7 +121,7 @@ public class Vaccination_Activity extends AppCompatActivity {
                         Log.d(TAG, "onChanged: currentDate = " + currentDate);
 
                         // Todo: Generate Notification at this time
-                        //generateNotification(foundVacRecord.getDoseTime());
+                        generateNotification(foundVacRecord.getDoseTime());
 
                     }
                 }
